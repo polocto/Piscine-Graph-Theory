@@ -9,6 +9,8 @@ class Arete
 public:
     Arete(Sommet* s1, Sommet* s2);
     virtual ~Arete() = default;
+    void ponderation(std::stringstream& ifs);
+
 private:
     Sommet* m_ext1,* m_ext2;
     double m_poids;

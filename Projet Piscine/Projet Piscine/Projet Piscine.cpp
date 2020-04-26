@@ -1,7 +1,10 @@
 // Projet Piscine.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
+
 #include "Menu.h"
+#include <iostream>
+#include"Graph.h"
 
 int main()
 {
@@ -11,6 +14,7 @@ int main()
 
     return 0;
 }
+
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage

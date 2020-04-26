@@ -32,7 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Arete.cpp" />
+		<Unit filename="Arete.h" />
+		<Unit filename="Graph.cpp" />
+		<Unit filename="Graph.h" />
 		<Unit filename="Projet Piscine.cpp" />
+		<Unit filename="Sommet.cpp" />
+		<Unit filename="Sommet.h" />
+		<Unit filename="biblio.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -6,10 +6,9 @@
 Graph::Graph(std::ifstream&ifs)
 {
     std::string line;
-    bool oriente;
     size_t ot=0;
     if(!std::getline(ifs,line) || !is_int(line))throw(1);
-        oriente=(bool)std::stoi(line);
+        m_oriente=(bool)std::stoi(line);
     if(!std::getline(ifs,line) || !is_int(line))throw(1);
         ot=(size_t)std::stoi(line);
     if(ifs.fail())throw(1);

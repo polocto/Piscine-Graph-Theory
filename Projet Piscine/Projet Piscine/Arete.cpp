@@ -3,8 +3,8 @@
 
 
 Arete::Arete(Sommet* s1, Sommet* s2)
-    :m_suivant(s1),m_precedent(s2)
+    :m_ext1(s1),m_ext2(s2)
 {
-    m_suivant->ajoutP(this);
-    m_precedent->ajoutS(this);
+    m_ext1->ajout(this);
+    m_ext2->ajout(this);
 }

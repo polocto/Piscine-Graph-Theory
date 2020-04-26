@@ -8,9 +8,9 @@ class Arete
 {
 public:
     Arete(Sommet* s1, Sommet* s2);
-    ~Arete() = default;
+    virtual ~Arete() = default;
 private:
-    Sommet* m_suivant,* m_precedent;
+    Sommet* m_ext1,* m_ext2;
     double m_poids;
 };
 

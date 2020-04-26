@@ -14,6 +14,7 @@ public:
 private:
     std::vector<Sommet*> m_sommets;
     std::vector<Arete*> m_aretes;
+    bool m_oriente;
 };
 
 #endif

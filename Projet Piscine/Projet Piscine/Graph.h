@@ -9,7 +9,7 @@ class Arete;
 class Graph
 {
 public:
-    Graph();
+    Graph(std::ifstream&ifs);
     ~Graph();
 private:
     std::vector<Sommet*> m_sommets;

@@ -3,7 +3,7 @@
 #include "Sommet.h"
 
 
-Graph::Graph()
+Graph::Graph(std::ifstream&ifs)
 {
 
 }

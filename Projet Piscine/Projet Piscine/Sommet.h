@@ -9,6 +9,8 @@ class Sommet
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
     ~Sommet() = default;
+    void ajoutS(Arete*suivant);
+    void ajoutP(Arete*prece);
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants,m_precedents;

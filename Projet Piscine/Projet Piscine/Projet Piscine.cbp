@@ -42,6 +42,7 @@
 		<Unit filename="Projet Piscine.cpp" />
 		<Unit filename="Sommet.cpp" />
 		<Unit filename="Sommet.h" />
+		<Unit filename="biblio.cpp" />
 		<Unit filename="biblio.h" />
 		<Extensions>
 			<code_completion />

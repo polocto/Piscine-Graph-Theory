@@ -11,6 +11,7 @@ class Graph
 public:
     Graph();
     ~Graph();
+    void chargementPonderation(std::string nomfichier);
 private:
     std::vector<Sommet*> m_sommets;
     std::vector<Arete*> m_aretes;

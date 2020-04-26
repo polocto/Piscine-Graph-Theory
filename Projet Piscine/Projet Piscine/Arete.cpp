@@ -7,3 +7,13 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 {
 
 }
+
+void Arete::ponderation(std::stringstream& iss)
+{
+        double tampon;
+        iss>>tampon;
+
+        if (iss.fail())
+            throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
+        m_poids=tampon;
+}

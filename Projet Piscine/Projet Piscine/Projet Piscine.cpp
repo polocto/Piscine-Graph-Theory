@@ -2,16 +2,18 @@
 //
 
 #include <iostream>
+#include"Graph.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Graph graph1;
+    graph1.chargementPonderation("Ponderation Arete.txt");
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
 
-// Astuces pour bien démarrer : 
+// Astuces pour bien démarrer :
 //   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
 //   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
 //   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.

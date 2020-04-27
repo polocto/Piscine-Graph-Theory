@@ -13,3 +13,8 @@ void Sommet::ajout(Arete*suivant)
     m_suivants.push_back(suivant);
 }
 
+
+void Sommet::affichageconsole()
+{
+    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<std::endl;
+}

@@ -12,6 +12,7 @@ public:
     Graph(std::ifstream&ifs);
     ~Graph();
     void chargementPonderation(std::string nomfichier);
+    void affichageconsole();
 private:
     std::vector<Sommet*> m_sommets;
     std::vector<Arete*> m_aretes;

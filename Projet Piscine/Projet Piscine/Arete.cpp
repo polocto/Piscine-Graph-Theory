@@ -18,3 +18,8 @@ void Arete::ponderation(std::stringstream& iss)
             throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
         m_poids=tampon;
 }
+
+void Arete::affichageconsole()
+{
+    std::cout<<m_ext1<<" "<<m_ext2<<" "<<m_poids;
+}

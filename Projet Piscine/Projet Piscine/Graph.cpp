@@ -85,3 +85,20 @@ void Graph::chargementPonderation(std::string nomfichier)
 	    std::cout<<probleme;
 	}
 }
+
+
+void Graph::affichageconsole()
+{
+    std::cout<<" Sommet composant le graf :"<<std::endl;
+    for( auto s:m_sommets)
+    {
+        s->affichageconsole();
+        std::cout<<std::endl;
+    }
+    std::cout <<" Arete composant le graph : "<<std::endl;
+    for (auto s:m_aretes)
+    {
+        s->affichageconsole();
+        std::cout<<std::endl;
+    }
+}

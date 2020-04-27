@@ -10,6 +10,7 @@ public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
     virtual ~Sommet() = default;
     virtual void ajout(Arete*suivant);
+    void affichageconsole();
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

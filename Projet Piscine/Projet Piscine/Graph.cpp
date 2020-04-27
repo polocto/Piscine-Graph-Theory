@@ -58,11 +58,10 @@ void Graph::affichage(Svgfile& svgout)
     for (Sommet* S:m_sommets)
     {
         S->affichage(svgout);
-
     }
-    for (Arete* S:m_aretes)
+    for (Arete* A:m_aretes)
     {
-        S->affichage(svgout);
+        A->affichage(svgout);
     }
 }
 

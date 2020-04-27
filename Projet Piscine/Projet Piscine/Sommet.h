@@ -11,9 +11,12 @@ public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
     ~Sommet() = default;
     void affichage(Svgfile& svgout);
-    double getx();
-    double getY();
+
+
     std::string getnom();
+    double getx()const;
+    double getY()const;
+
     virtual void ajout(Arete*suivant);
     void affichageconsole()const;
 private:

@@ -26,12 +26,12 @@ void Sommet::affichage(Svgfile& svgout)
 }
 
 
-double Sommet::getx()
+double Sommet::getx()const
 {
     return m_x;
 }
 
-double Sommet::getY()
+double Sommet::getY()const
 {
     return m_y;
 }

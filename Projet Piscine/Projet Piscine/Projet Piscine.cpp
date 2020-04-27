@@ -2,12 +2,20 @@
 //
 
 #include "Menu.h"
+#include"svgfile.h"
+#include"Graph.h"
 
 int main()
 {
+    Svgfile svgout;
+    svgout.addGrid();
+
+
+
     Menu test;
 
     test.menu();
+
 
     return 0;
 }

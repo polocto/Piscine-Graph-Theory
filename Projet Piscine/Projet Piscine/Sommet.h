@@ -2,6 +2,7 @@
 #define SOMMET_H_INCLUDED
 
 #include "biblio.h"
+#include "svgfile.h"
 class Arete;
 
 class Sommet
@@ -9,6 +10,9 @@ class Sommet
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
     ~Sommet() = default;
+    void affichage(Svgfile* svgout);
+    double getx();
+    double getY();
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants,m_precedents;

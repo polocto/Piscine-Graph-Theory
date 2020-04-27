@@ -101,6 +101,31 @@ void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pai
     }
 }
 
+int Sommet::k_connexe(const Sommet* arrive)const
+{
+    int nombre_chemin=0;
+    std::map<const Arete*,bool> arete;
+    std::map<const Sommet*,bool>sommet;
+
+    k_connexe(nombre_chemin,arete,sommet,arrive);
+    return nombre_chemin;
+}
+
+
+void Sommet::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const
+{
+    if(sommet.count(this))
+        return;
+    if(arrive==this)
+    {
+        nombre_chemin++;
+        return;
+    }
+    sommet[this]=true;
+    for(Arete* a : m_suivants)
+        a->k_connexe(nombre_chemin,arete,sommet,arrive);
+}
+
 ///retourne une arete avec les deux sommet aux extremiter
 Arete* Sommet::trouverArete(Sommet* ext1)
 {

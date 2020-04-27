@@ -18,6 +18,7 @@ public:
     Sommet* getsuivant(Sommet* Som)const;
     Sommet* getext1();
     Sommet* getext2();
+    void k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const;
 private:
     Sommet* m_ext1,* m_ext2;//extemit� des Arete
     double m_poids;

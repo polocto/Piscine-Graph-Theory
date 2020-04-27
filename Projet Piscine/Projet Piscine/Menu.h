@@ -14,6 +14,7 @@ public:
     bool choix();//choix
     void chargementGraph();//chargement du graph
     void chargementPonderation();//chargement du poids des aretes du graphe
+    void vulnerabilite();
 private:
     Graph* m_etude;
 };

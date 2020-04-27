@@ -13,7 +13,7 @@ void Arete::ponderation(std::stringstream& iss)
 {
         double tampon;
         iss>>tampon;
-
+        std::cout <<tampon;
         if (iss.fail())
             throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
         m_poids=tampon;
@@ -21,7 +21,7 @@ void Arete::ponderation(std::stringstream& iss)
 
 void Arete::affichageconsole()const
 {
-    std::cout<<m_ext1<<" "<<m_ext2<<" "<<m_poids;
+    std::cout<<m_ext1->getnom()<<" "<<m_ext2->getnom()<<" "<<m_poids;
 }
 
 void Arete::affichage(Svgfile& svgout)

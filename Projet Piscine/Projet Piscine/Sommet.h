@@ -13,6 +13,7 @@ public:
     void affichage(Svgfile& svgout);
     double getx();
     double getY();
+    std::string getnom();
     virtual void ajout(Arete*suivant);
     void affichageconsole()const;
 private:

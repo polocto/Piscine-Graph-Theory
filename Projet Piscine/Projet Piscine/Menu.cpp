@@ -70,6 +70,7 @@ void Menu::calculIndices()
     Svgfile svgout;
     svgout.addGrid();
     m_etude->affichage(svgout);
+    m_etude->affichageconsole();
 }
 
 void Menu::chargementGraph()
@@ -79,6 +80,8 @@ void Menu::chargementGraph()
     Graph* tampon=nullptr;
     std::cout<<"Entrez le nom du fichier a charger : ";
     std::cin>>nom_fichier;
+    if (nom_fichier=="oui")
+        nom_fichier="graphe_etoile1_topo.txt";
     ifs.open(nom_fichier);
     if(!ifs.is_open())
     {
@@ -108,6 +111,9 @@ void Menu::chargementPonderation()
 
     std::cout<<"entrer le nom du fichier de ponderation : ";
     std::cin>>nom_fichier;
+
+    if (nom_fichier=="oui")
+        nom_fichier="graphe_etoile1_Ponderation.txt";
 
     ifs.open(nom_fichier);
     if(!ifs.is_open())

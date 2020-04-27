@@ -35,3 +35,7 @@ double Sommet::getY()
 {
     return m_y;
 }
+std::string Sommet:: getnom()
+{
+    return m_nom;
+}

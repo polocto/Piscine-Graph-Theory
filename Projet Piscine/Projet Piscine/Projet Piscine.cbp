@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -32,7 +33,19 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Arete.cpp" />
+		<Unit filename="Arete.h" />
+		<Unit filename="Graph.cpp" />
+		<Unit filename="Graph.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="Projet Piscine.cpp" />
+		<Unit filename="Sommet.cpp" />
+		<Unit filename="Sommet.h" />
+		<Unit filename="biblio.cpp" />
+		<Unit filename="biblio.h" />
+		<Unit filename="svgfile.cpp" />
+		<Unit filename="svgfile.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

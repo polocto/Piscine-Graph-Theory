@@ -1,0 +1,5 @@
+Sommet : 0 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0;
+Sommet : 1 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0;
+Sommet : 2 indice de centrailite de degre : (4, 0.8); indice de vecteur propre : 0.894427; indice de proximite : 0;
+Sommet : 3 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0;
+Sommet : 4 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0;

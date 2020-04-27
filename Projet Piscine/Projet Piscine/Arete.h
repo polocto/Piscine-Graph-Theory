@@ -10,7 +10,7 @@ class Arete
 public:
     Arete(Sommet* s1, Sommet* s2);
     virtual  ~Arete() = default;
-    void affichage(Svgfile& svgout);
+    void affichage(Svgfile& svgout)const;
     void ponderation(std::stringstream& ifs);
     void affichageconsole()const;
     double get_vp(Sommet*precedent)const;

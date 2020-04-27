@@ -46,6 +46,7 @@ bool Menu::choix()
         break;
     }
     case 2:
+        chargementPonderation();
         break;
     case 3:
         break;
@@ -84,4 +85,24 @@ void Menu::chargementGraph()
             delete tampon;
         std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;
     }
+
+}
+
+void Menu::chargementPonderation()
+{
+    std::ifstream ifs;
+    std::string nom_fichier;
+
+    std::cout<<"entrer le nom du fichier de ponderation : ";
+    std::cin>>nom_fichier;
+
+    ifs.open(nom_fichier);
+    if(!ifs.is_open())
+    {
+        std::cout<<"Probleme d'ouverture du fichier : "<<nom_fichier<<std::endl;
+        return;
+    }
+
+    m_etude->chargementPonderation(nom_fichier);
+
 }

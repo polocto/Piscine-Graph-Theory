@@ -12,6 +12,7 @@ public:
     void affichage()const;
     bool choix();
     void chargementGraph();
+    void chargementPonderation();
 private:
     Graph* m_etude;
 };

@@ -26,5 +26,5 @@ void Arete::affichageconsole()const
 
 void Arete::affichage(Svgfile& svgout)
 {
-    svgout.addLine(m_precedent->getx(),m_precedent->getY(),m_suivant->getx(),m_suivant->getY());
+    svgout.addLine(m_ext1->getx(),m_ext1->getY(),m_ext2->getx(),m_ext2->getY());
 }

@@ -11,12 +11,10 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 
 void Arete::ponderation(std::stringstream& iss)
 {
-        double tampon;
-        iss>>tampon;
-        std::cout <<tampon;
+        iss>>m_poids;
+
         if (iss.fail())
             throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
-        m_poids=tampon;
 }
 
 void Arete::affichageconsole()const

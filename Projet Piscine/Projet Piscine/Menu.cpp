@@ -55,6 +55,7 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3:
+        calculIndices();
         break;
     case 4:
         break;
@@ -64,6 +65,12 @@ bool Menu::choix()
     return true;
 }
 
+void Menu::calculIndices()
+{
+    Svgfile svgout;
+    svgout.addGrid();
+    m_etude->affichage(svgout);
+}
 
 void Menu::chargementGraph()
 {

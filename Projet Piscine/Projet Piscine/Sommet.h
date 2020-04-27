@@ -2,13 +2,17 @@
 #define SOMMET_H_INCLUDED
 
 #include "biblio.h"
+#include "svgfile.h"
 class Arete;
 
 class Sommet
 {
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
-    virtual ~Sommet() = default;
+    ~Sommet() = default;
+    void affichage(Svgfile& svgout);
+    double getx();
+    double getY();
     virtual void ajout(Arete*suivant);
     void affichageconsole()const;
 private:

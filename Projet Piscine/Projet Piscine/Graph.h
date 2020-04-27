@@ -2,7 +2,7 @@
 #define GRAPH_H_INCLUDED
 
 #include "biblio.h"
-
+#include "svgfile.h"
 class Sommet;
 class Arete;
 
@@ -11,6 +11,7 @@ class Graph
 public:
     Graph(std::ifstream&ifs);
     ~Graph();
+    void affichage(Svgfile& svgout);
     void chargementPonderation(std::string nomfichier);
     void affichageconsole();
 private:

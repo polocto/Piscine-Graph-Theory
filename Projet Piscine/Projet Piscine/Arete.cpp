@@ -28,7 +28,7 @@ void Arete::affichageconsole()const
 }
 
 /// Affichage au format svg d'une Arete du graph
-void Arete::affichage(Svgfile& svgout)
+void Arete::affichage(Svgfile& svgout)const
 {
     svgout.addLine(m_ext1->getx()*100,m_ext1->getY()*100,m_ext2->getx()*100,m_ext2->getY()*100,"BLACK");
 }

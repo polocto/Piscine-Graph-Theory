@@ -18,7 +18,7 @@ void Sommet::ajout(Arete*suivant)
 /**Affichage console*/
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d;
+    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d<< " icp "<<m_i_p;
 }
 /**Affichage SVG*/
 void Sommet::affichage(Svgfile& svgout)
@@ -52,3 +52,36 @@ void Sommet::calc_icd()
 {
     m_i_d=m_suivants.size();
 }
+
+void Sommet::calc_icp(double distance,double total)
+{
+    m_i_p=distance/total;
+}
+
+void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids)
+{
+    Sommet* tampon;
+    for (auto s: m_suivants)
+    {
+        tampon=s->getsuivant(this);
+        if (marque[tampon->getnom()].first==0)//si le sommet n'est pas marquer
+           {
+            Som.push_back(tampon);
+            marque[tampon->getnom()].second=this;
+            poids[tampon->getnom()]=poids[this->getnom()]+s->get_poid();
+           }
+    }
+}
+
+Arete* Sommet::trouverArete(Sommet* ext1)
+{
+    Arete* Art=nullptr;
+    for(auto s:m_suivants)
+    {
+        if (s->getext1()==this || s->getext1()==ext1)
+            if (s->getext2()==this || s->getext2()==ext1)
+                Art=s;
+    }
+    return Art;
+}
+

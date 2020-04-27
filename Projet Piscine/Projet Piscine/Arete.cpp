@@ -32,3 +32,24 @@ void Arete::affichage(Svgfile& svgout)
 {
     svgout.addLine(m_ext1->getx()*100,m_ext1->getY()*100,m_ext2->getx()*100,m_ext2->getY()*100,"BLACK");
 }
+
+double Arete::get_poid()const
+{
+    return m_poids;
+}
+
+Sommet* Arete::getsuivant(Sommet* Som)const
+{
+    if (Som==m_ext1)
+        return m_ext2;
+    return m_ext1;
+}
+
+Sommet* Arete::getext1()
+{
+    return m_ext1;
+}
+Sommet*Arete::getext2()
+{
+    return m_ext2;
+}

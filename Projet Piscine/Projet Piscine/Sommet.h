@@ -3,6 +3,7 @@
 
 #include "biblio.h"
 #include "svgfile.h"
+#include "myComparator.h"
 class Arete;
 
 class Sommet
@@ -25,6 +26,10 @@ public:
 
     /**calcule indice*/
     void calc_icd();
+    void calc_icp(double distance,double total);
+    //void dijkstra(std::map<char,std::pair<bool,Sommet*> marque);
+   void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
+   Arete* trouverArete(Sommet* ext1);
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

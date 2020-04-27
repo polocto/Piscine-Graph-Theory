@@ -11,10 +11,10 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 
 void Arete::ponderation(std::stringstream& iss)
 {
-        iss>>m_poids;
+    iss>>m_poids;
 
-        if (iss.fail())
-            throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
+    if (iss.fail())
+        throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
 }
 
 void Arete::affichageconsole()const

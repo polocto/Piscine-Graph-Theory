@@ -82,6 +82,9 @@ void Graph::chargementPonderation(std::string nomfichier)
         else
             throw("probleme dans la lecture de la ligne du "+nomfichier+" : fichier corompu");
 
+        if(taille>(int)m_aretes.size())
+            throw(nomfichier+" non comforme : trops d'arrete pour la taille du graph // fichier peu etre corompu");
+
         for (int i=0;i<taille;i++)
         {
             std::getline(ifs, line);

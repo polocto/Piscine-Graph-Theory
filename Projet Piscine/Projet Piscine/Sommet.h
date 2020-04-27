@@ -15,6 +15,7 @@ public:
     std::string getnom()const;
     double getx()const;
     double getY()const;
+    double get_vp()const;
 
     /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);
@@ -25,6 +26,8 @@ public:
 
     /**calcule indice*/
     void calc_icd();
+    void calc_vp(std::map<Sommet*,double>&somme);
+    void indice_vp(std::map<Sommet*,double>&somme,const double& lambda);
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

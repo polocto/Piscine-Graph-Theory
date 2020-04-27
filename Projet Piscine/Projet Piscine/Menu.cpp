@@ -83,8 +83,10 @@ void Menu::calculIndices()
 {
     Svgfile svgout;//fichier svg pour l'affichage
     //svgout.addGrid();
+    m_etude->calc_icd();
     m_etude->affichage(svgout);//affichage sur fichier svg
     m_etude->affichageconsole();//affichage console
+
 }
 
 /**

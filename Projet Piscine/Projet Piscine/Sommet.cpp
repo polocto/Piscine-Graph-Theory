@@ -18,7 +18,7 @@ void Sommet::ajout(Arete*suivant)
 /**Affichage console*/
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" "<<m_x<<" "<<m_y;
+    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d;
 }
 /**Affichage SVG*/
 void Sommet::affichage(Svgfile& svgout)
@@ -45,4 +45,10 @@ double Sommet::getY()const
 std::string Sommet:: getnom()const
 {
     return m_nom;
+}
+
+/** Calcule icd indice de centralité de degré*/
+void Sommet::calc_icd()
+{
+    m_i_d=m_suivants.size();
 }

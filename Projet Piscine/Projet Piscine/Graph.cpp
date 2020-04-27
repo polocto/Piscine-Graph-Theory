@@ -131,3 +131,10 @@ void Graph::affichageconsole()
         std::cout<<std::endl;
     }
 }
+
+///Calcule de l'indice de centralité de degrée
+void Graph::calc_icd()
+{
+    for (auto s:m_sommets)
+        s->calc_icd();
+}

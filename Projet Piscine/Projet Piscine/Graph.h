@@ -14,6 +14,7 @@ public:
     void affichage(Svgfile& svgout);
     void chargementPonderation(std::string nomfichier);
     void affichageconsole();
+    void calc_icd();
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

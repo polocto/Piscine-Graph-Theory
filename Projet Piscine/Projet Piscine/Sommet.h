@@ -22,6 +22,9 @@ public:
     /**Affichage*/
     void affichageconsole()const;
     void affichage(Svgfile& svgout);
+
+    /**calcule indice*/
+    void calc_icd();
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

@@ -2,7 +2,7 @@
 #include "Arete.h"
 #include "Sommet.h"
 #include "svgfile.h"
-
+#include "myComparator.h"
 ///Constructeur de graph:
 ///Prend en paramettre le nom du fichier utilisé
 /// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
@@ -133,6 +133,8 @@ void Graph::affichageconsole()const
         s->affichageconsole();//Appel de l'affichage de aretes qui affiche ces attribues
         std::cout<<std::endl;
     }
+
+
 }
 
 ///Calcule de l'indice de centralité de degrée
@@ -172,4 +174,77 @@ void Graph::sauvegarde(std::ofstream&fichier)const
         s->sauvegarde(fichier);
         fichier<<std::endl;
     }
+}
+
+void Graph::calc_icp()
+{
+
+    for (auto i:m_sommets)
+    {
+        double distance=0;
+        for(auto s:m_sommets)
+        {
+            if (s!=i)
+                 distance+=Dijkstra(i,s);
+
+        }
+        i->calc_icp(distance,m_sommets.size()-1);
+    }
+}
+
+
+double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
+{
+	std::vector<Sommet*> Som;
+	std::map<std::string,std::pair<bool,Sommet*>> marque;
+	std::map<std::string,double> poids;
+
+	double poidarete=0;
+
+	Sommet* sommetActif;//poid total du chemin
+    Arete* areteactive;
+
+	Som.push_back(depart);
+
+	for (auto s: m_sommets)
+    {
+        marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
+        poids[s->getnom()]=0;
+    }
+
+	while (marque[arriver->getnom()].first==0 && !Som.empty())
+        {
+            sommetActif=Som[0];
+
+            for (auto s:Som)
+            {
+                if (poids[s->getnom()]<poids[sommetActif->getnom()])
+                    sommetActif=s;
+            }
+
+            sommetActif->ajoutvoisin(Som,marque,poids);
+            marque[sommetActif->getnom()].first=1;
+
+            if (marque[sommetActif->getnom()].second!=nullptr)
+            {
+                areteactive=sommetActif->trouverArete(marque[sommetActif->getnom()].second);
+                poidarete=areteactive->get_poid();
+            }
+
+            if (marque[sommetActif->getnom()].second==nullptr)
+            {
+                poids[sommetActif->getnom()]=poidarete;
+            }
+            else{
+                    poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
+            }
+
+            for (size_t i=0;i<Som.size();i++)
+            {
+                if (Som[i]==sommetActif)
+                        Som.erase(Som.begin()+i);
+            }
+        }
+
+    return poids[arriver->getnom()];
 }

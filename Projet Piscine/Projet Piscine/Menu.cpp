@@ -2,7 +2,7 @@
 #include "Menu.h"
 
 /**Constructeur de menu
-initialise le graph à nullptr*/
+initialise le graph ï¿½ nullptr*/
 Menu::Menu()
     :m_etude(nullptr)
 {
@@ -19,16 +19,16 @@ Menu::~Menu()
 void Menu::menu()
 {
     do//faire
-        affichage();//affichage des différentes option du menu
+        affichage();//affichage des diffï¿½rentes option du menu
     while(choix());//tant qu'on ne quitte pas
 
 }
 
-/**Affiche les différentes options proposer pour l'etude d'un graphe
+/**Affiche les diffï¿½rentes options proposer pour l'etude d'un graphe
 son chargement
-chargement de pondération
-calcul de ses différents indices
-sa vulnérabilité
+chargement de pondï¿½ration
+calcul de ses diffï¿½rents indices
+sa vulnï¿½rabilitï¿½
 ainsi que l'option pour quitter*/
 void Menu::affichage()const
 {
@@ -40,7 +40,7 @@ void Menu::affichage()const
 }
 
 /**Saisie du choix et appel en fonction du choix
-retourn un booléen:
+retourn un boolï¿½en:
 faux si quitter
 sinon vrai*/
 bool Menu::choix()
@@ -48,7 +48,7 @@ bool Menu::choix()
     std::string saisie;
     std::cin>>saisie;//saisie utilisateur
     if(!is_int(saisie))//si la saisie n'est pas un nombre entier naturel
-        saisie="99";//metre saisie à 99
+        saisie="99";//metre saisie ï¿½ 99
     if(!m_etude && std::stoi(saisie)>1)//si etude est null et qu'on ne quitte pas ou qu'on ne charge pas de graph
     {
         std::cout<<"Veuillez charger un Graph."<<std::endl;//message console
@@ -62,15 +62,15 @@ bool Menu::choix()
     case 1://Chargement d'un Graph
         chargementGraph();
         break;
-    case 2://Chargement d'une pondération pour graph
+    case 2://Chargement d'une pondï¿½ration pour graph
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
         calculIndices();
         break;
-    case 4://Test la vulnérabilité du graph
+    case 4://Test la vulnï¿½rabilitï¿½ du graph
         break;
-    default://si la saisie ne correspond à aucune case
+    default://si la saisie ne correspond ï¿½ aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
     }
     return true;//retourne vrai par default
@@ -86,6 +86,8 @@ void Menu::calculIndices()
     //svgout.addGrid();
     m_etude->calc_icd();
     m_etude->calc_vect_propre();
+
+    m_etude->calc_icp();
     m_etude->affichage(svgout);//affichage sur fichier svg
     m_etude->affichageconsole();//affichage console
 
@@ -97,7 +99,7 @@ void Menu::calculIndices()
 
 /**
 Chargement du graph
-Chargement du graph à paritir d'un fichier dont le nom est à saisir
+Chargement du graph ï¿½ paritir d'un fichier dont le nom est ï¿½ saisir
 */
 void Menu::chargementGraph()
 {
@@ -131,7 +133,7 @@ void Menu::chargementGraph()
 }
 
 /**
-Chargement pondération du graph
+Chargement pondï¿½ration du graph
 change le poids des aretes
 */
 
@@ -153,5 +155,5 @@ void Menu::chargementPonderation()
         return;
     }
 
-    m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pondération d'un graph
+    m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pondï¿½ration d'un graph
 }

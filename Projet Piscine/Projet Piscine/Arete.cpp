@@ -3,8 +3,8 @@
 #include "svgfile.h"
 
 ///Constructeur de la class Arete
-///Prend en parametre les adresses des deux extremitée pour initialiser arrete et pour ajouter l'arrete a leur liste de suivant
-///initialisation du poids a 1 cas d'un graph non ponderé
+///Prend en parametre les adresses des deux extremitï¿½e pour initialiser arrete et pour ajouter l'arrete a leur liste de suivant
+///initialisation du poids a 1 cas d'un graph non ponderï¿½
 Arete::Arete(Sommet* s1, Sommet* s2)
     :m_ext1(s1),m_ext2(s2),m_poids(1)
 {
@@ -39,4 +39,25 @@ double Arete::get_vp(Sommet*precedent)const
     if(precedent==m_ext1)
         return m_ext2->get_vp();
     return m_ext1->get_vp();
+
+double Arete::get_poid()const
+{
+    return m_poids;
+}
+
+Sommet* Arete::getsuivant(Sommet* Som)const
+{
+    if (Som==m_ext1)
+        return m_ext2;
+    return m_ext1;
+}
+
+Sommet* Arete::getext1()
+{
+    return m_ext1;
+}
+Sommet*Arete::getext2()
+{
+    return m_ext2;
+
 }

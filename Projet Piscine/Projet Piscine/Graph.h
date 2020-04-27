@@ -16,7 +16,12 @@ public:
     void affichageconsole()const;
     void calc_icd();
     void calc_vect_propre();
+    
+    void calc_icp();
+    double Dijkstra(Sommet* depart,Sommet* arriver);
+
     void sauvegarde(std::ofstream&fichier)const;
+
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

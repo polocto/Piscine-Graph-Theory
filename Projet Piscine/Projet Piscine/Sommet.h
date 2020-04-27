@@ -3,6 +3,7 @@
 
 #include "biblio.h"
 #include "svgfile.h"
+#include "myComparator.h"
 class Arete;
 
 class Sommet
@@ -28,9 +29,15 @@ public:
     void affichage(Svgfile& svgout)const;
 
     /**calcule indice*/
+
     void calc_icd(const size_t&ordre);
     void calc_vp(std::map<Sommet*,double>&somme);
     void indice_vp(std::map<Sommet*,double>&somme,const double& lambda);
+
+    void calc_icp(double distance,double total);
+   void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
+   Arete* trouverArete(Sommet* ext1);
+
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

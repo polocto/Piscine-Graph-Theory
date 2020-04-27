@@ -2,7 +2,7 @@
 #include "Arete.h"
 
 /**constructeur
-initialisation de données non passé en paramètre à 0
+initialisation de donnï¿½es non passï¿½ en paramï¿½tre ï¿½ 0
 */
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
     :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
@@ -52,7 +52,7 @@ std::string Sommet:: getnom()const
     return m_nom;
 }
 
-/** Calcule icd indice de centralité de degré*/
+/** Calcule icd indice de centralitï¿½ de degrï¿½*/
 void Sommet::calc_icd(const size_t&ordre)
 {
     m_i_d_nn=m_suivants.size();
@@ -61,15 +61,15 @@ void Sommet::calc_icd(const size_t&ordre)
 /**Calcul somme des indice de vecteur propre des voisins*/
 void Sommet::calc_vp(std::map<Sommet*,double>&somme)
 {
-    somme[this]=0;//initialisation à 0
+    somme[this]=0;//initialisation ï¿½ 0
     for(Arete* a : m_suivants)
         somme.at(this)+=a->get_vp(this);//somme des vecteur propre des sommet voisins
 
 }
-/**mise à jour du de l'indice de vecteur propre*/
+/**mise ï¿½ jour du de l'indice de vecteur propre*/
 void Sommet::indice_vp(std::map<Sommet*,double>&somme,const double& lambda)
 {
-    m_i_vp=somme.at(this)/lambda;//somme des vecteur propre des sommet voisins divisé par lambda
+    m_i_vp=somme.at(this)/lambda;//somme des vecteur propre des sommet voisins divisï¿½ par lambda
 }
 
 void Sommet::sauvegarde(std::ofstream&fichier)const
@@ -78,3 +78,36 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
     fichier<<"indice de proximite : "<<m_i_p<<";";
 }
+
+void Sommet::calc_icp(double distance,double total)
+{
+    m_i_p=distance/total;
+}
+
+void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids)
+{
+    Sommet* tampon;
+    for (auto s: m_suivants)
+    {
+        tampon=s->getsuivant(this);
+        if (marque[tampon->getnom()].first==0)//si le sommet n'est pas marquer
+           {
+            Som.push_back(tampon);
+            marque[tampon->getnom()].second=this;
+            poids[tampon->getnom()]=poids[this->getnom()]+s->get_poid();
+           }
+    }
+}
+
+Arete* Sommet::trouverArete(Sommet* ext1)
+{
+    Arete* Art=nullptr;
+    for(auto s:m_suivants)
+    {
+        if (s->getext1()==this || s->getext1()==ext1)
+            if (s->getext2()==this || s->getext2()==ext1)
+                Art=s;
+    }
+    return Art;
+}
+

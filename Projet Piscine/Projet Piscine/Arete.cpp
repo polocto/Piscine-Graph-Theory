@@ -32,3 +32,11 @@ void Arete::affichage(Svgfile& svgout)
 {
     svgout.addLine(m_ext1->getx()*100,m_ext1->getY()*100,m_ext2->getx()*100,m_ext2->getY()*100,"BLACK");
 }
+
+/**recupere l'indice de vecteur propre du voisin*/
+double Arete::get_vp(Sommet*precedent)const
+{
+    if(precedent==m_ext1)
+        return m_ext2->get_vp();
+    return m_ext1->get_vp();
+}

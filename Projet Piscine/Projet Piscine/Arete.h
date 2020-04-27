@@ -13,6 +13,7 @@ public:
     void affichage(Svgfile& svgout);
     void ponderation(std::stringstream& ifs);
     void affichageconsole()const;
+    double get_vp(Sommet*precedent)const;
 private:
     Sommet* m_ext1,* m_ext2;//extemité des Arete
     double m_poids;

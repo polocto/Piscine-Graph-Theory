@@ -64,3 +64,14 @@ Sommet*Arete::getext2()
     return m_ext2;
 
 }
+
+void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const
+{
+    if(arete.count(this))
+        return;
+    arete[this]=true;
+    if(!sommet.count(m_ext1))
+        m_ext1->k_connexe(nombre_chemin,arete,sommet,arrive);
+    else if(!sommet.count(m_ext2))
+        m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
+}

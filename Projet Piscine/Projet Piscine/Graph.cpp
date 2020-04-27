@@ -175,6 +175,26 @@ void Graph::sauvegarde(std::ofstream&fichier)const
     }
 }
 
+int Graph::k_connexe()const
+{
+    int k=-1;
+
+    for(Sommet*d : m_sommets)
+    {
+        for(Sommet * a : m_sommets)
+        {
+            if(a!=d)
+            {
+                int temp=d->k_connexe(a);
+                if(temp<k || k< 0)
+                    k=temp;
+            }
+        }
+    }
+
+    return k;
+}
+
 
 ///calcule de l'indicateur de centralité de proximité pour chaque sommet
 /// On test ainsi tout les chemins possible entre 2 sommets pour sommer les distances

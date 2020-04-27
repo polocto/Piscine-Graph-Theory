@@ -69,6 +69,7 @@ bool Menu::choix()
         calculIndices();
         break;
     case 4://Test la vuln�rabilit� du graph
+        vulnerabilite();
         break;
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
@@ -155,4 +156,10 @@ void Menu::chargementPonderation()
     }
 
     m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pond�ration d'un graph
+}
+
+
+void Menu::vulnerabilite()
+{
+    std::cout<<m_etude->k_connexe()<<std::endl;
 }

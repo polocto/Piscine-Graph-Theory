@@ -34,6 +34,9 @@ public:
     void calc_vp(std::map<Sommet*,double>&somme);
     void indice_vp(std::map<Sommet*,double>&somme,const double& lambda);
 
+    int k_connexe(const Sommet* arrive)const;
+    void k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const;
+
     void calc_icp(double distance,double total);
    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
    Arete* trouverArete(Sommet* ext1);

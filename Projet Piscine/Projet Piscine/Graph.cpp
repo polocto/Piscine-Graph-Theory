@@ -134,8 +134,6 @@ void Graph::affichageconsole()const
         s->affichageconsole();//Appel de l'affichage de aretes qui affiche ces attribues
         std::cout<<std::endl;
     }
-
-
 }
 
 ///Calcule de l'indice de centralité de degrée

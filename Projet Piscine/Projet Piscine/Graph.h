@@ -15,6 +15,7 @@ public:
     void chargementPonderation(std::string nomfichier);
     void affichageconsole();
     void calc_icd();
+    void calc_vect_propre();
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

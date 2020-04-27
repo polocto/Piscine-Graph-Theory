@@ -141,3 +141,23 @@ void Graph::calc_icd()
     for (auto s:m_sommets)
         s->calc_icd();
 }
+
+///Calucle de l'indice de vecteur propre
+void Graph::calc_vect_propre()
+{
+    double lambda=-1,l=0;
+
+    while(abs(lambda-l)>=0.001)//tant que variance de lambda superieur à0,001
+    {
+        std::map<Sommet*,double>somme;
+        lambda = l;
+        l=0;
+        for(Sommet* s : m_sommets)
+            s->calc_vp(somme);//somme de vecteur propre de sommet voisins pour chaque sommets
+        for(Sommet* s : m_sommets)
+            l+=somme.at(s)*somme.at(s);//somme des carré des sommes ci-dessus
+        l=sqrt(l);//racine de la somme
+        for(Sommet* s : m_sommets)
+            s->indice_vp(somme,l);//actualisation des indices
+    }
+}

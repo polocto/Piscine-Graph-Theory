@@ -6,8 +6,8 @@ initialise le graph � nullptr*/
 Menu::Menu()
     :m_etude(nullptr)
 {
-
 }
+
 /**Destructeur de Menu*/
 Menu::~Menu()
 {
@@ -78,7 +78,6 @@ bool Menu::choix()
 /**
 calcul affichage et sauvegarde des indices du graph
 */
-
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");

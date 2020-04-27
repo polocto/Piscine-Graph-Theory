@@ -39,19 +39,22 @@ double Arete::get_vp(Sommet*precedent)const
     if(precedent==m_ext1)
         return m_ext2->get_vp();
     return m_ext1->get_vp();
+}
 
+///getteur qui retourn le poids
 double Arete::get_poid()const
 {
     return m_poids;
 }
 
+///getteur qui renvoie l'adresse d'un sommet avec 1 arete et l'autre sommet
 Sommet* Arete::getsuivant(Sommet* Som)const
 {
     if (Som==m_ext1)
         return m_ext2;
     return m_ext1;
 }
-
+///Getteur d'une extremiter de l'arete
 Sommet* Arete::getext1()
 {
     return m_ext1;

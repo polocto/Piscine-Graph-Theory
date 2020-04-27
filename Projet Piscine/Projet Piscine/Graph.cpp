@@ -2,7 +2,8 @@
 #include "Arete.h"
 #include "Sommet.h"
 #include "svgfile.h"
-#include "myComparator.h"
+
+
 ///Constructeur de graph:
 ///Prend en paramettre le nom du fichier utilisé
 /// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
@@ -176,6 +177,9 @@ void Graph::sauvegarde(std::ofstream&fichier)const
     }
 }
 
+
+///calcule de l'indicateur de centralité de proximité pour chaque sommet
+/// On test ainsi tout les chemins possible entre 2 sommets pour sommer les distances
 void Graph::calc_icp()
 {
 
@@ -186,36 +190,38 @@ void Graph::calc_icp()
         {
             if (s!=i)
                  distance+=Dijkstra(i,s);
-
         }
-        i->calc_icp(distance,m_sommets.size()-1);
+        i->calc_icp(distance,m_sommets.size()-1);///envoie les valeur pour modifier la valeur de l'indice icp des sommet
     }
 }
 
-
+/**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
+Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
 double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
 {
+    //Declaration de variable
 	std::vector<Sommet*> Som;
 	std::map<std::string,std::pair<bool,Sommet*>> marque;
 	std::map<std::string,double> poids;
 
 	double poidarete=0;
-
-	Sommet* sommetActif;//poid total du chemin
+	Sommet* sommetActif;
     Arete* areteactive;
 
+    //ajout du Sommet de depart a la liste
 	Som.push_back(depart);
 
+	//initialisation des maps utiliser
 	for (auto s: m_sommets)
     {
         marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
         poids[s->getnom()]=0;
     }
 
-	while (marque[arriver->getnom()].first==0 && !Som.empty())
+	while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
         {
+            //Determiner le sommet actif
             sommetActif=Som[0];
-
             for (auto s:Som)
             {
                 if (poids[s->getnom()]<poids[sommetActif->getnom()])
@@ -223,8 +229,9 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
             }
 
             sommetActif->ajoutvoisin(Som,marque,poids);
-            marque[sommetActif->getnom()].first=1;
+            marque[sommetActif->getnom()].first=1; //Marquage du sommetActif pour qu'il ne soit plus ajouter a la liste des suivant
 
+            //Determination du poidtotal du chemin le plus cours pour chaque arete du graphe tant que sommet n'est pas decouvert
             if (marque[sommetActif->getnom()].second!=nullptr)
             {
                 areteactive=sommetActif->trouverArete(marque[sommetActif->getnom()].second);
@@ -239,6 +246,7 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
                     poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
             }
 
+           //supression de la liste du Sommet actif
             for (size_t i=0;i<Som.size();i++)
             {
                 if (Som[i]==sommetActif)
@@ -246,5 +254,5 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
             }
         }
 
-    return poids[arriver->getnom()];
+    return poids[arriver->getnom()];//on retourne le poids du chemin
 }

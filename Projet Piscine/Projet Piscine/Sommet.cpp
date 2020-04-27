@@ -72,6 +72,12 @@ void Sommet::indice_vp(std::map<Sommet*,double>&somme,const double& lambda)
     m_i_vp=somme.at(this)/lambda;//somme des vecteur propre des sommet voisins divis� par lambda
 }
 
+///mise a jour de l'indice de centralité de proximité
+void Sommet::calc_icp(double distance,double total)
+{
+    m_i_p=total/distance;
+}
+///Sauvegarde
 void Sommet::sauvegarde(std::ofstream&fichier)const
 {
     fichier<<" indice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
@@ -79,11 +85,7 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
     fichier<<"indice de proximite : "<<m_i_p<<";";
 }
 
-void Sommet::calc_icp(double distance,double total)
-{
-    m_i_p=distance/total;
-}
-
+///Ajout les voisin d'un sommet a un veteur passer en parametre
 void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids)
 {
     Sommet* tampon;
@@ -99,6 +101,7 @@ void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pai
     }
 }
 
+///retourne une arete avec les deux sommet aux extremiter
 Arete* Sommet::trouverArete(Sommet* ext1)
 {
     Arete* Art=nullptr;

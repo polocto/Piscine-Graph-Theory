@@ -3,7 +3,7 @@
 
 #include "biblio.h"
 #include "svgfile.h"
-#include "myComparator.h"
+
 class Arete;
 
 class Sommet

@@ -51,10 +51,10 @@
 <text x="299" y="180" fill="BLUE" >D</text>
 <circle cx="200" cy="300" r="10" fill="BLACK" />
 <text x="199" y="280" fill="BLUE" >E</text>
-<line x1="2" y1="1" x2="2" y2="2" stroke="black" />
-<line x1="1" y1="2" x2="2" y2="2" stroke="black" />
-<line x1="2" y1="2" x2="3" y2="2" stroke="black" />
-<line x1="2" y1="2" x2="2" y2="3" stroke="black" />
+<line x1="200" y1="100" x2="200" y2="200" stroke="BLACK" />
+<line x1="100" y1="200" x2="200" y2="200" stroke="BLACK" />
+<line x1="200" y1="200" x2="300" y2="200" stroke="BLACK" />
+<line x1="200" y1="200" x2="200" y2="300" stroke="BLACK" />
   
 
 <defs>

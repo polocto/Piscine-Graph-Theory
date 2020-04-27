@@ -19,7 +19,7 @@ void Arete::ponderation(std::stringstream& iss)
         m_poids=tampon;
 }
 
-void Arete::affichageconsole()
+void Arete::affichageconsole()const
 {
     std::cout<<m_ext1<<" "<<m_ext2<<" "<<m_poids;
 }

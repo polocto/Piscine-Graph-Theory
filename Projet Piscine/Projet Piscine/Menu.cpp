@@ -25,6 +25,12 @@ void Menu::affichage()const
     std::cout<<"4/Vulnerabilite"<<std::endl;
 }
 
+//affichage dans la console du graphe apres la construction
+void Menu::affichageresultat()
+{
+    m_etude->affichageconsole();
+}
+
 
 bool Menu::choix()
 {

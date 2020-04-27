@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -41,6 +42,7 @@
 		<Unit filename="Projet Piscine.cpp" />
 		<Unit filename="Sommet.cpp" />
 		<Unit filename="Sommet.h" />
+		<Unit filename="biblio.cpp" />
 		<Unit filename="biblio.h" />
 		<Extensions>
 			<code_completion />

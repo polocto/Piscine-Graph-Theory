@@ -8,15 +8,6 @@ Menu::Menu()
 
 }
 
-bool is_int(const std::string&s)
-{
-    size_t i=0;
-    while(i<s.size() && std::isdigit(s[i]))i++;
-
-    return i && i==s.size();
-}
-
-
 void Menu::menu()
 {
     do
@@ -34,6 +25,12 @@ void Menu::affichage()const
     std::cout<<"4/Vulnerabilite"<<std::endl;
 }
 
+//affichage dans la console du graphe apres la construction
+void Menu::affichageresultat()
+{
+    m_etude->affichageconsole();
+}
+
 
 bool Menu::choix()
 {
@@ -41,6 +38,11 @@ bool Menu::choix()
     std::cin>>saisie;
     if(!is_int(saisie))
         saisie="99";
+    if(!m_etude && std::stoi(saisie)>1)
+    {
+        std::cout<<"Veuillez charger un Graph."<<std::endl;
+        return true;
+    }
     switch(std::stoi(saisie))
     {
     case 0:
@@ -49,12 +51,8 @@ bool Menu::choix()
     case 1:
         chargementGraph();
         break;
-    if(!m_etude)
-    {
-        std::cout<<"Veuillez charger un Graph."<<std::endl;
-        break;
-    }
     case 2:
+        chargementPonderation();
         break;
     case 3:
         calculIndices();
@@ -100,4 +98,24 @@ void Menu::chargementGraph()
             delete tampon;
         std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;
     }
+
+}
+
+void Menu::chargementPonderation()
+{
+    std::ifstream ifs;
+    std::string nom_fichier;
+
+    std::cout<<"entrer le nom du fichier de ponderation : ";
+    std::cin>>nom_fichier;
+
+    ifs.open(nom_fichier);
+    if(!ifs.is_open())
+    {
+        std::cout<<"Probleme d'ouverture du fichier : "<<nom_fichier<<std::endl;
+        return;
+    }
+
+    m_etude->chargementPonderation(nom_fichier);
+
 }

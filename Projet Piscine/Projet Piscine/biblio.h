@@ -13,4 +13,7 @@
 #include <queue>
 #include <map>
 
+
+bool is_int(const std::string&s);
+
 #endif // BIBLIO_H_INCLUDED

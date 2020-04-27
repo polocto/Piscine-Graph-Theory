@@ -13,6 +13,8 @@ public:
     void calculIndices();
     bool choix();
     void chargementGraph();
+    void chargementPonderation();
+    void affichageresultat();
 private:
     Graph* m_etude;
 };

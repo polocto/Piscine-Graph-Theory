@@ -12,9 +12,12 @@ public:
     Graph(std::ifstream&ifs);
     ~Graph();
     void affichage(Svgfile& svgout);
+    void chargementPonderation(std::string nomfichier);
+    void affichageconsole();
 private:
     std::vector<Sommet*> m_sommets;
     std::vector<Arete*> m_aretes;
+    bool m_oriente;
 };
 
 #endif

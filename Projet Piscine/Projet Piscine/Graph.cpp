@@ -119,7 +119,7 @@ void Graph::affichage(Svgfile& svgout)
 
 ///Affichage des parametre du graphe en console
 ///utiliser pour verification du chargement du graphe
-void Graph::affichageconsole()
+void Graph::affichageconsole()const
 {
     std::cout<<" Sommet composant le graf :"<<std::endl;
     for( auto s:m_sommets)
@@ -139,7 +139,7 @@ void Graph::affichageconsole()
 void Graph::calc_icd()
 {
     for (auto s:m_sommets)
-        s->calc_icd();
+        s->calc_icd(m_sommets.size());
 }
 
 ///Calucle de l'indice de vecteur propre
@@ -159,5 +159,17 @@ void Graph::calc_vect_propre()
         l=sqrt(l);//racine de la somme
         for(Sommet* s : m_sommets)
             s->indice_vp(somme,l);//actualisation des indices
+    }
+}
+
+/**Sauvegarde*/
+void Graph::sauvegarde(std::ofstream&fichier)const
+{
+    int i=0;
+    for(Sommet* s : m_sommets)
+    {
+        fichier<<"Sommet : "<<i++;
+        s->sauvegarde(fichier);
+        fichier<<std::endl;
     }
 }

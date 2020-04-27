@@ -50,19 +50,18 @@ Graph::Graph(std::ifstream&ifs)
 
 Graph::~Graph()
 {
-
+    for(Sommet* s: m_sommets)
+        delete s;
+    for(Arete* a : m_aretes)
+        delete a;
 }
 
 void Graph::affichage(Svgfile& svgout)
 {
     for (Sommet* S:m_sommets)
-    {
         S->affichage(svgout);
-    }
     for (Arete* A:m_aretes)
-    {
         A->affichage(svgout);
-    }
 }
 
 void Graph::chargementPonderation(std::string nomfichier)
@@ -76,22 +75,26 @@ void Graph::chargementPonderation(std::string nomfichier)
 	    if(!ifs.is_open())
             throw("probleme a l'ouverture du fichier:"+nomfichier);
 
-    std::getline(ifs, line);
-    std::stringstream iss(line);
-    iss>>taille;
+        if(std::getline(ifs, line))
+        {
+            std::stringstream iss(line);
+            iss>>taille;
+        }
+        else
+            throw("probleme dans la lecture de la ligne du "+nomfichier+" : fichier corompu");
 
-    for (i=0;i<taille;i++)
-    {
-        std::getline(ifs, line);
-        std::stringstream iss(line);
-        int indice;
-        iss >> indice;
+        for (i=0;i<taille;i++)
+        {
+            std::getline(ifs, line);
+            std::stringstream iss(line);
+            int indice;
+            iss >> indice;
 
-        if (iss.fail())
-				throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
+            if (iss.fail())
+                    throw("probleme dans la lecture de la ligne du "+nomfichier+" : fichier corompu");
 
-        m_aretes[indice]->ponderation(iss);
-    }
+            m_aretes[indice]->ponderation(iss);
+        }
 	}
 	catch (std::string probleme)
 	{

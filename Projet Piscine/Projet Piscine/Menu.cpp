@@ -8,6 +8,12 @@ Menu::Menu()
 
 }
 
+Menu::~Menu()
+{
+    if(m_etude)
+        delete m_etude;
+}
+
 void Menu::menu()
 {
     do
@@ -23,12 +29,6 @@ void Menu::affichage()const
     std::cout<<"2/Charger Ponderation"<<std::endl;
     std::cout<<"3/Calcule indices"<<std::endl;
     std::cout<<"4/Vulnerabilite"<<std::endl;
-}
-
-//affichage dans la console du graphe apres la construction
-void Menu::affichageresultat()
-{
-    m_etude->affichageconsole();
 }
 
 
@@ -68,7 +68,7 @@ bool Menu::choix()
 void Menu::calculIndices()
 {
     Svgfile svgout;
-    svgout.addGrid();
+    //svgout.addGrid();
     m_etude->affichage(svgout);
     m_etude->affichageconsole();
 }
@@ -123,5 +123,4 @@ void Menu::chargementPonderation()
     }
 
     m_etude->chargementPonderation(nom_fichier);
-
 }

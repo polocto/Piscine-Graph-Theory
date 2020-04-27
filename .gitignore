@@ -347,3 +347,4 @@ healthchecksdb
 *.layout
 *.depend
 Projet Piscine/Projet Piscine/Projet Piscine.depend
+*.svg

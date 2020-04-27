@@ -9,7 +9,7 @@ class Arete
 {
 public:
     Arete(Sommet* s1, Sommet* s2);
-    ~Arete() = default;
+    virtual  ~Arete() = default;
     void affichage(Svgfile& svgout);
     void ponderation(std::stringstream& ifs);
     void affichageconsole()const;

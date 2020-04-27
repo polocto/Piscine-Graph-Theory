@@ -12,8 +12,6 @@ int main()
 
     test.menu();
 
-    test.affichageresultat();
-
     return 0;
 }
 

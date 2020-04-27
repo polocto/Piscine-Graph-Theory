@@ -3,7 +3,7 @@
 #include "svgfile.h"
 
 Arete::Arete(Sommet* s1, Sommet* s2)
-    :m_ext1(s1),m_ext2(s2)
+    :m_ext1(s1),m_ext2(s2),m_poids(1)
 {
     m_ext1->ajout(this);
     m_ext2->ajout(this);
@@ -11,10 +11,10 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 
 void Arete::ponderation(std::stringstream& iss)
 {
-        iss>>m_poids;
+    iss>>m_poids;
 
-        if (iss.fail())
-            throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
+    if (iss.fail())
+        throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
 }
 
 void Arete::affichageconsole()const

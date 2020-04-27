@@ -9,11 +9,11 @@ class Sommet
 {
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
-    ~Sommet() = default;
+    virtual ~Sommet() = default;
     void affichage(Svgfile& svgout);
 
 
-    std::string getnom();
+    std::string getnom()const;
     double getx()const;
     double getY()const;
 

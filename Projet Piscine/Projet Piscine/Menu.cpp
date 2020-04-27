@@ -32,6 +32,11 @@ bool Menu::choix()
     std::cin>>saisie;
     if(!is_int(saisie))
         saisie="99";
+    if(!m_etude && std::stoi(saisie)>1)
+    {
+        std::cout<<"Veuillez charger un Graph."<<std::endl;
+        return true;
+    }
     switch(std::stoi(saisie))
     {
     case 0:
@@ -40,11 +45,6 @@ bool Menu::choix()
     case 1:
         chargementGraph();
         break;
-    if(!m_etude)
-    {
-        std::cout<<"Veuillez charger un Graph."<<std::endl;
-        break;
-    }
     case 2:
         chargementPonderation();
         break;

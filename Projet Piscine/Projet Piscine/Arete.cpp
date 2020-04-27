@@ -8,7 +8,7 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 
 }
 
-void Arete::affichage(Svgfile* svgout)
+void Arete::affichage(Svgfile& svgout)
 {
-    //svgout->addLine()
+    svgout.addLine(m_precedent->getx(),m_precedent->getY(),m_suivant->getx(),m_suivant->getY());
 }

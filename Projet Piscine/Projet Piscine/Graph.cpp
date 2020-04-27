@@ -14,7 +14,7 @@ Graph::~Graph()
 
 }
 
-void Graph::affichage(Svgfile* svgout)
+void Graph::affichage(Svgfile& svgout)
 {
     for (Sommet* S:m_sommets)
     {

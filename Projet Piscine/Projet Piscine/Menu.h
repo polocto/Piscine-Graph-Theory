@@ -10,6 +10,7 @@ public:
     ~Menu()=default;
     void menu();
     void affichage()const;
+    void calculIndices();
     bool choix();
     void chargementGraph();
 private:

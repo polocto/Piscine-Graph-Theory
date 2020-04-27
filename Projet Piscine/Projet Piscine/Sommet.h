@@ -10,7 +10,7 @@ class Sommet
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
     ~Sommet() = default;
-    void affichage(Svgfile* svgout);
+    void affichage(Svgfile& svgout);
     double getx();
     double getY();
 private:

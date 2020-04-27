@@ -7,10 +7,10 @@ Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
 
 }
 
-void Sommet::affichage(Svgfile* svgout)
+void Sommet::affichage(Svgfile& svgout)
 {
-    svgout->addDisk(m_x*100,m_y*100,10,"BLACK");
-    svgout->addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");
+    svgout.addDisk(m_x*100,m_y*100,10,"BLACK");
+    svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");
 }
 
 

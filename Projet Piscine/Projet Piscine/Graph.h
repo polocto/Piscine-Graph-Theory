@@ -11,7 +11,7 @@ class Graph
 public:
     Graph(std::ifstream&ifs);
     ~Graph();
-    void affichage(Svgfile* svgout);
+    void affichage(Svgfile& svgout);
 private:
     std::vector<Sommet*> m_sommets;
     std::vector<Arete*> m_aretes;

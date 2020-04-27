@@ -7,11 +7,6 @@
 
 int main()
 {
-    Svgfile svgout;
-    svgout.addGrid();
-
-
-
     Menu test;
 
     test.menu();

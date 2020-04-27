@@ -81,6 +81,7 @@ calcul affichage et sauvegarde des indices du graph
 
 void Menu::calculIndices()
 {
+    std::ofstream fichier("sauvegarde.txt");
     Svgfile svgout;//fichier svg pour l'affichage
     //svgout.addGrid();
     m_etude->calc_icd();
@@ -88,6 +89,10 @@ void Menu::calculIndices()
     m_etude->affichage(svgout);//affichage sur fichier svg
     m_etude->affichageconsole();//affichage console
 
+    if(fichier.is_open())
+        m_etude->sauvegarde(fichier);
+    else
+        std::cout<<"Sauvegarde impossible"<<std::endl;
 }
 
 /**

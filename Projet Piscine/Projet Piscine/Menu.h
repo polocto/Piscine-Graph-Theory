@@ -7,14 +7,13 @@ class Menu
 {
 public:
     Menu();
-    ~Menu()=default;
+    ~Menu();
     void menu();
     void affichage()const;
     void calculIndices();
     bool choix();
     void chargementGraph();
     void chargementPonderation();
-    void affichageresultat();
 private:
     Graph* m_etude;
 };

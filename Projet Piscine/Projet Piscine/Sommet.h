@@ -8,17 +8,20 @@ class Arete;
 class Sommet
 {
 public:
-    Sommet(const std::string&nom, const double& pos_x, const double& pos_y);
-    virtual ~Sommet() = default;
-    void affichage(Svgfile& svgout);
+    Sommet(const std::string&nom, const double& pos_x, const double& pos_y);//constructeur
+    virtual ~Sommet() = default;//destructeur par default ne fait rien
 
-
+    /**Getter*/
     std::string getnom()const;
     double getx()const;
     double getY()const;
 
+    /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);
+
+    /**Affichage*/
     void affichageconsole()const;
+    void affichage(Svgfile& svgout);
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;

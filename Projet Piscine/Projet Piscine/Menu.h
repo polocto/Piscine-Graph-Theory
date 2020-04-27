@@ -6,14 +6,14 @@ class Graph;
 class Menu
 {
 public:
-    Menu();
-    ~Menu();
-    void menu();
-    void affichage()const;
-    void calculIndices();
-    bool choix();
-    void chargementGraph();
-    void chargementPonderation();
+    Menu();//constucteur
+    ~Menu();//destructeur
+    void menu();//menu
+    void affichage()const;//affichage menu
+    void calculIndices();//calcul affichage et sauvegarde des indices
+    bool choix();//choix
+    void chargementGraph();//chargement du graph
+    void chargementPonderation();//chargement du poids des aretes du graphe
 private:
     Graph* m_etude;
 };

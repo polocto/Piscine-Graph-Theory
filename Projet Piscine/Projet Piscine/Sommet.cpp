@@ -16,7 +16,7 @@ void Sommet::ajout(Arete*suivant)
 
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<std::endl;
+    std::cout<<m_nom<<" "<<m_x<<" "<<m_y;
 }
 
 void Sommet::affichage(Svgfile& svgout)
@@ -35,7 +35,7 @@ double Sommet::getY()const
 {
     return m_y;
 }
-std::string Sommet:: getnom()
+std::string Sommet:: getnom()const
 {
     return m_nom;
 }

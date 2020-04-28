@@ -82,3 +82,24 @@ void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std:
     else if(!sommet.count(m_ext2))
         m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
 }
+
+void Arete::Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const
+{
+    Sommet* suivant=nullptr;
+    if(precednent==m_ext1)//definir qui est le sommet suivant
+        suivant=m_ext2;
+    else
+        suivant=m_ext1;
+
+    if(!distance.count(suivant) || distance.at(suivant)>d_a+m_poids)
+    {
+        q.push(std::pair<const Sommet*,std::pair<const Sommet*,double>>{suivant,std::pair<const Sommet*,double>{precednent,d_a+m_poids}});
+        sigma[suivant]=0;
+        predecesseur[suivant].clear();
+    }
+    else if(distance.at(suivant)==d_a+m_poids)
+    {
+        sigma.at(suivant)+=sigma.at(precednent);
+        predecesseur.at(suivant).push_back(precednent);
+    }
+}

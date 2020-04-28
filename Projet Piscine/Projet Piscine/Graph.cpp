@@ -1,12 +1,13 @@
 #include "Graph.h"
 #include "Arete.h"
 #include "Sommet.h"
+#include "myComparator.h"
 #include "svgfile.h"
 
 
 ///Constructeur de graph:
-///Prend en paramettre le nom du fichier utilisé
-/// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
+///Prend en paramettre le nom du fichier utilisÃ©
+/// CrÃ©e et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
 Graph::Graph(std::ifstream&ifs)
 {
     std::string line;
@@ -183,15 +184,15 @@ void Graph::affichageconsole()const
         s->affichageconsole();//Appel de l'affichage des paramettre des Sommets
         std::cout<<std::endl;
     }
-    std::cout <<" Arete composant le graph : "<<std::endl;
+    /*std::cout <<" Arete composant le graph : "<<std::endl;
     for (auto s:m_aretes)
     {
         s->affichageconsole();//Appel de l'affichage de aretes qui affiche ces attribues
         std::cout<<std::endl;
-    }
+    }*/
 }
 
-///Calcule de l'indice de centralité de degrée
+///Calcule de l'indice de centralitÃ© de degrÃ©e
 void Graph::calc_icd()
 {
     for (auto s:m_sommets)
@@ -203,7 +204,7 @@ void Graph::calc_vect_propre()
 {
     double lambda=-1,l=0;
 
-    while(abs(lambda-l)>=0.001)//tant que variance de lambda superieur à0,001
+    while(abs(lambda-l)>=0.001)//tant que variance de lambda superieur Ã 0,001
     {
         std::map<Sommet*,double>somme;
         lambda = l;
@@ -211,7 +212,7 @@ void Graph::calc_vect_propre()
         for(Sommet* s : m_sommets)
             s->calc_vp(somme);//somme de vecteur propre de sommet voisins pour chaque sommets
         for(Sommet* s : m_sommets)
-            l+=somme.at(s)*somme.at(s);//somme des carré des sommes ci-dessus
+            l+=somme.at(s)*somme.at(s);//somme des carrÃ© des sommes ci-dessus
         l=sqrt(l);//racine de la somme
         for(Sommet* s : m_sommets)
             s->indice_vp(somme,l);//actualisation des indices
@@ -251,7 +252,7 @@ int Graph::k_connexe()const
 }
 
 
-///calcule de l'indicateur de centralité de proximité pour chaque sommet
+///calcule de l'indicateur de centralitÃ© de proximitÃ© pour chaque sommet
 /// On test ainsi tout les chemins possible entre 2 sommets pour sommer les distances
 void Graph::calc_icp()
 {
@@ -428,9 +429,48 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
     return poids[arriver->getnom()];//on retourne le poids du chemin
 }
 
+void Graph::Brand()
+{
+    std::map<const Sommet*,double>Cb;
+    for(const Sommet* s : m_sommets)
+        Cb[s]=0;
+    for(Sommet* d : m_sommets)
+    {
+        std::stack<const Sommet*>p;
+        std::map<const Sommet*,double>delta;
+        std::map<const Sommet*,std::list<const Sommet*>>predecesseur;
+        std::map<const Sommet*,double>sigma;
+        std::map<const Sommet*,double>distance;
+        std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>q;
+        //utiliser Dijkstra
+        q.push(std::pair<const Sommet*,std::pair<const Sommet*,double>>{d,std::pair<const Sommet*,double>{nullptr,0}});
+        sigma[d]=1;
+        while(!q.empty())
+        {
+            p.push(q.top().first);
+            q.top().first->Brand(distance,q,sigma,predecesseur);
+            q.pop();
+        }
+        for(const Sommet* v : m_sommets)
+            delta[v]=0;
+        while(!p.empty())
+        {
+            if(p.top()!=d)
+            {
+                for(const Sommet* pre : predecesseur.at(p.top()))
+                    delta.at(pre)+=(sigma.at(pre)/sigma.at(p.top()))*(1+delta.at(p.top()));
+                //std::cout<<delta.at(p.top())<<std::endl;
+                Cb.at(p.top())+=delta.at(p.top());
+            }
+            p.pop();
+        }
+    }
+    for(Sommet* s : m_sommets)
+        s->Brand(Cb,(double)m_sommets.size());
+}
 
 
-///  Vulnerabilité
+///  VulnerabilitÃ©
 Graph* Graph::Supression_element()
 {
     Graph* etude_2;

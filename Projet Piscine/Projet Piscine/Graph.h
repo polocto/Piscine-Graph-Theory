@@ -23,7 +23,8 @@ public:
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     void sauvegarde(std::ofstream&fichier)const;
     int k_connexe()const;
-///vulnerabilité
+    void Brand();
+///vulnerabilitÃ©
     Graph* Supression_element();
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph

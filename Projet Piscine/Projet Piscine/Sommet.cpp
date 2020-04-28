@@ -5,7 +5,7 @@
 initialisation de donn�es non pass� en param�tre � 0
 */
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
@@ -18,7 +18,7 @@ void Sommet::ajout(Arete*suivant)
 /**Affichage console*/
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d<<" icp "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is;
+    std::cout<<m_nom<<" icd: ("<<m_i_d<<","<<m_i_d_nn<<")"<<" icp: "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is<<" inter: ("<<m_i_i<<", "<<m_i_i_nn<<")";
 }
 /**Affichage SVG*/
 void Sommet::affichage(Svgfile& svgout)const
@@ -88,7 +88,8 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
 {
     fichier<<" indice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
-    fichier<<"indice de proximite : "<<m_i_p<<";";
+    fichier<<"indice de proximite : "<<m_i_p<<"; ";
+    fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
 }
 
 ///Ajout les voisin d'un sommet a un veteur passer en parametre
@@ -145,3 +146,27 @@ Arete* Sommet::trouverArete(Sommet* ext1)
     return Art;
 }
 
+void Sommet::Brand(const std::map<const Sommet*,double>&Cb,const double&n)
+{
+    m_i_i_nn=0;
+    if(Cb.count(this))
+        m_i_i_nn=Cb.at(this);
+    m_i_i=m_i_i_nn/(n*n-3*n+2);
+}
+
+void Sommet::Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const
+{
+    if(!distance.count(this))
+    {
+        distance[this]=q.top().second.second;
+        for(const Arete* a : m_suivants)
+            a->Brand(this,distance,distance.at(this),q,sigma,predecesseur);
+    }
+    if(distance.at(this)==q.top().second.second && q.top().second.first != nullptr)
+    {
+        sigma.at(this)+=sigma.at(q.top().second.first);
+        predecesseur.at(this).push_back(q.top().second.first);
+    }
+    else if(distance.at(this)>q.top().second.second)
+        std::cout<<"Erreur"<<std::endl;
+}

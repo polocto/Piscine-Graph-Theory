@@ -16,10 +16,10 @@ public:
     void affichageconsole()const;
     void calc_icd();
     void calc_vect_propre();
-
+    void calc_ici_naif();
     void calc_icp();
     double Dijkstra(Sommet* depart,Sommet* arriver);
-
+    bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     void sauvegarde(std::ofstream&fichier)const;
     int k_connexe()const;
 

@@ -90,6 +90,7 @@ void Menu::calculIndices()
     m_etude->calc_icp();
     m_etude->calc_ici_naif();
     m_etude->affichage(svgout);//affichage sur fichier svg
+    std::cout<<"le graf est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
     m_etude->affichageconsole();//affichage console
 
     if(fichier.is_open())
@@ -163,8 +164,56 @@ void Menu::chargementPonderation()
     m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pond�ration d'un graph
 }
 
+/// /////////////////////////////Vulnerabilité
 
+void Menu::affichage_vulnerabilite()const
+{
+    std::cout<<"MENU VULNERABILITE"<<std::endl;
+    std::cout<<"0/Retour au menu 1"<<std::endl;
+    std::cout<<"1/Suprimer un element du graphe"<<std::endl;
+    std::cout<<"2/Affichage nouveau graphe "<<std::endl;
+    std::cout<<"3/Calcule indice nouveau graphe "<<std::endl;
+    std::cout<<"4/Annalyse modification du changement"<<std::endl;
+}
 void Menu::vulnerabilite()
 {
-    std::cout<<m_etude->k_connexe()<<std::endl;
+    Graph* etude2=nullptr;
+    Graph* tampon=m_etude;
+    std::string saisie;
+    affichage_vulnerabilite();
+    std::cin>>saisie;
+    Svgfile svgout;
+
+    bool stay=true;
+    while(stay)
+    {
+    switch(std::stoi(saisie))
+    {
+    case 0://Quitter
+        stay=false;
+        if(etude2)//si graph n'est pa null
+            delete etude2;
+        break;
+    case 1://Suppretion d'un element du graph
+        tampon->affichageconsole();
+
+        etude2=tampon->Supression_element();
+        tampon=etude2;
+        break;
+    case 2://Affichage du nouveau graph
+        if (etude2)
+            etude2->affichage(svgout);
+        break;
+    case 3://calcule des indicateur pour le nouveau graphe
+
+        break;
+    case 4://Annalyse des modification
+
+        break;
+    default://si la saisie ne correspond � aucune case
+        std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
+    }
+    }
 }
+
+

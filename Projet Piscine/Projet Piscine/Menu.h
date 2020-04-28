@@ -10,11 +10,14 @@ public:
     ~Menu();//destructeur
     void menu();//menu
     void affichage()const;//affichage menu
+
     void calculIndices();//calcul affichage et sauvegarde des indices
     bool choix();//choix
     void chargementGraph();//chargement du graph
     void chargementPonderation();//chargement du poids des aretes du graphe
+    ///vulnerabilité///
     void vulnerabilite();
+    void affichage_vulnerabilite()const;
 private:
     Graph* m_etude;
 };

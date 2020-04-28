@@ -97,7 +97,7 @@ void Menu::calculIndices(Graph* graph)
     graph->affichage(svgout);//affichage sur fichier svg
     graph->affichageconsole();//affichage console
 
-    std::cout<<"le graf est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
+    std::cout<<"le graph est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
         graph->sauvegarde(fichier);
     else

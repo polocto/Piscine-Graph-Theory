@@ -18,7 +18,7 @@ void Sommet::ajout(Arete*suivant)
 /**Affichage console*/
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d<<" icp "<<m_i_p<<" ivp: "<<m_i_vp;
+    std::cout<<m_nom<<" "<<m_x<<" "<<m_y<<" icd: "<<m_i_d<<" icp "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is;
 }
 /**Affichage SVG*/
 void Sommet::affichage(Svgfile& svgout)const

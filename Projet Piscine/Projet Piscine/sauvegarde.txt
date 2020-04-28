@@ -1,9 +1,5 @@
-Sommet : 0 indice de centrailite de degre : (2, 0.222222); indice de vecteur propre : 0.226455; indice de proximite : 0.380952;
-Sommet : 1 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
-Sommet : 2 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
-Sommet : 3 indice de centrailite de degre : (4, 0.444444); indice de vecteur propre : 0.452911; indice de proximite : 0.615385;
-Sommet : 4 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
-Sommet : 5 indice de centrailite de degre : (2, 0.222222); indice de vecteur propre : 0.226455; indice de proximite : 0.380952;
-Sommet : 6 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
-Sommet : 7 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
-Sommet : 8 indice de centrailite de degre : (3, 0.333333); indice de vecteur propre : 0.339683; indice de proximite : 0.533333;
+Sommet : 0 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0.311284;
+Sommet : 1 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0.230548;
+Sommet : 2 indice de centrailite de degre : (4, 0.8); indice de vecteur propre : 0.894427; indice de proximite : 0.583942;
+Sommet : 3 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0.406091;
+Sommet : 4 indice de centrailite de degre : (1, 0.2); indice de vecteur propre : 0.223607; indice de proximite : 0.506329;

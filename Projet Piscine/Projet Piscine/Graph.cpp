@@ -238,6 +238,7 @@ void Graph::calc_ici_naif()
             }
         }
         ///initialisation du ici
+        std::cout<<total;
         i->calc_ici_naif(total,a);
     }
 }

@@ -88,6 +88,7 @@ void Menu::calculIndices()
     m_etude->calc_vect_propre();
 
     m_etude->calc_icp();
+    m_etude->calc_ici_naif();
     m_etude->affichage(svgout);//affichage sur fichier svg
     m_etude->affichageconsole();//affichage console
 
@@ -108,8 +109,12 @@ void Menu::chargementGraph()
     Graph* tampon=nullptr;
     std::cout<<"Entrez le nom du fichier a charger : ";
     std::cin>>nom_fichier;//saisie console
-    if (nom_fichier=="oui")
+    if (nom_fichier=="1")
         nom_fichier="graphe_etoile1_topo.txt";
+    if (nom_fichier=="3")
+         nom_fichier="graphe_etoile3_topo.txt";
+    if (nom_fichier=="5")
+        nom_fichier="graphe_cycle5_topo.txt";
     ifs.open(nom_fichier);//ouverture du fichier
     if(!ifs.is_open())//si le fichier ne s'est pas ouvert
     {

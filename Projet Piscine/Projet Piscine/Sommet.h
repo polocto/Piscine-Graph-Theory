@@ -14,7 +14,7 @@ public:
 
     /**Getter*/
     std::string getnom()const;
-    double getx()const;
+    double getX()const;
     double getY()const;
     double get_vp()const;
 

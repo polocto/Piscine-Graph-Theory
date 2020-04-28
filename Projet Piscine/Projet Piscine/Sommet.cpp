@@ -30,7 +30,7 @@ void Sommet::affichage(Svgfile& svgout)const
 /**GETTER*/
 
 /**retourn la position x du sommet*/
-double Sommet::getx()const
+double Sommet::getX()const
 {
     return m_x;
 }

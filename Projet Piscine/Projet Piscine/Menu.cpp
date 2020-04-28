@@ -84,13 +84,17 @@ void Menu::calculIndices(Graph* graph)
     std::ofstream fichier("sauvegarde.txt");
     Svgfile svgout;//fichier svg pour l'affichage
     //svgout.addGrid();
-    graph->calc_icd();
-    graph->calc_vect_propre();
-
-    graph->calc_icp();
-    graph->calc_ici_naif();
-    graph->affichage(svgout);//affichage sur fichier svg
     std::cout<<"le graf est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
+    graph->calc_icd();
+    printf("1");
+    graph->calc_vect_propre();
+printf("1");
+    graph->calc_icp();
+    printf("1");
+    graph->calc_ici_naif();
+    printf("1");
+    graph->affichage(svgout);//affichage sur fichier svg
+
     graph->affichageconsole();//affichage console
 
     if(fichier.is_open())
@@ -181,7 +185,7 @@ void Menu::vulnerabilite()
     Graph* tampon=m_etude;
     std::string saisie;
 
-    Svgfile svgout;
+
 
     bool stay=true;
     while(stay)
@@ -203,6 +207,7 @@ void Menu::vulnerabilite()
     case 2://Affichage du nouveau graph
         if (etude2)
         {
+            Svgfile svgout;
             etude2->affichage(svgout);
             etude2->affichageconsole();
         }

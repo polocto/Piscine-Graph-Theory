@@ -287,7 +287,6 @@ void Graph::calc_ici_naif()
                         total+=Dijkstra(m_sommets[j],m_sommets[k],i);
                         a++;
                         }
-
                     }
                 }
             }
@@ -354,14 +353,15 @@ void Graph::calc_ici_naif()
             }
         }
 
+        int i=0;
         sommetActif=arriver;
-        while(sommetActif!=depart)
+        while(sommetActif!=depart && i<m_sommets.size())
         {
             if (marque[sommetActif->getnom()].second==passage)
                 return 1;
             sommetActif=marque[sommetActif->getnom()].second;
+            i++;
         }
-
     return 0;
  }
 

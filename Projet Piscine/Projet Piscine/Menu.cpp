@@ -84,19 +84,18 @@ void Menu::calculIndices(Graph* graph)
     std::ofstream fichier("sauvegarde.txt");
     Svgfile svgout;//fichier svg pour l'affichage
     //svgout.addGrid();
-    std::cout<<"le graf est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
-    graph->calc_icd();
-    printf("1");
-    graph->calc_vect_propre();
-printf("1");
-    graph->calc_icp();
-    printf("1");
-    graph->calc_ici_naif();
-    printf("1");
-    graph->affichage(svgout);//affichage sur fichier svg
 
+    graph->calc_icd();
+    graph->calc_vect_propre();
+    graph->calc_icp();
+    if (graph->k_connexe()!=0)
+    {
+        graph->calc_ici_naif();
+    }
+    graph->affichage(svgout);//affichage sur fichier svg
     graph->affichageconsole();//affichage console
 
+    std::cout<<"le graf est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
         graph->sauvegarde(fichier);
     else

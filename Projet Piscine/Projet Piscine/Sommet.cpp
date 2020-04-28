@@ -82,7 +82,8 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
 {
     fichier<<" indice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
-    fichier<<"indice de proximite : "<<m_i_p<<";";
+    fichier<<"indice de proximite : "<<m_i_p<<"; ";
+    fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
 }
 
 ///Ajout les voisin d'un sommet a un veteur passer en parametre

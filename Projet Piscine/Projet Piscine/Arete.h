@@ -11,7 +11,8 @@ class Arete
 public:
     /**Construction des arete*/
     Arete(Sommet* s1, Sommet* s2);//constructeur arete
-    Arete(Sommet* s1, Sommet* s2,double poids);//copie arete
+    //Arete(Sommet* s1, Sommet* s2,double poids);//copie arete
+    Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur);
     virtual  ~Arete() = default;
     void ponderation(std::stringstream& ifs);//chargement des poid de l'arete
 

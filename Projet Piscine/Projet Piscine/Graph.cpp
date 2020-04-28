@@ -69,6 +69,7 @@ Graph::Graph(std::ifstream&ifs)
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
 Graph::Graph(Graph* Gmodel,std::string changement)
+    :m_oriente(Gmodel->m_oriente)//MODIF
 {
     std::string ext1="",ext2="";
     ext1=changement[0];
@@ -76,47 +77,53 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         ext2=" ";
     if (changement.size()==2)
         ext2=changement[1];
-
-    Sommet* Som1;
-    Sommet* Som2;
+    std::map<const Sommet*,Sommet*>traducteur;//MODIF
+    //Sommet* Som1;//MODIF
+    //Sommet* Som2;//MODIF
     if (ext2==" ")//retrait d'un sommet
     {
         for (auto s: Gmodel->m_sommets)
             if (s->getnom()!=ext1)
-                m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+            {
+                m_sommets.push_back(new Sommet(s));//MODIF
+                traducteur[s]=m_sommets.back();//MODIF
+            }
 
         for (auto s: Gmodel->m_aretes)
         {
             if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
             {
-                for (auto i:m_sommets)
+                /*for (auto i:m_sommets)
                 {
                     if (i->getnom()==s->getext1()->getnom())
                         Som1=i;
                     if(i->getnom()==s->getext2()->getnom())
                         Som2=i;
-                }
-                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+                }*/
+                m_aretes.push_back(new Arete(s,traducteur));//MODIF
             }
         }
     }
     else//retrait d'une arete
     {
         for (auto s: Gmodel->m_sommets)//récuppération des valeur d'un sommet et copie dans un nouveau sommet
-            m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+        {
+            m_sommets.push_back(new Sommet(s));//MODIF
+            traducteur[s]=m_sommets.back();//MODIF
+        }
 
         for (auto s: Gmodel->m_aretes)
         {
             if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)//selection des aretes à copier
             {
-                for (auto i:m_sommets)
+                /*for (auto i:m_sommets)
                 {
                     if (i->getnom()==s->getext1()->getnom())
                         Som1=i;
                     if(i->getnom()==s->getext2()->getnom())
                         Som2=i;
-                }
-                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));//copie des aretes
+                }*/
+                m_aretes.push_back(new Arete(s,traducteur));//copie des aretes//MODIF
             }
         }
     }

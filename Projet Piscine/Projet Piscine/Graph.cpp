@@ -61,24 +61,47 @@ Graph::Graph(Graph* Gmodel,std::string changement)
     if (changement.size()==2)
         ext2=changement[1];
 
+    Sommet* Som1;
+    Sommet* Som2;
     if (ext2==" ")
     {
         for (auto s: Gmodel->m_sommets)
-            if (s->getnom()!=ext1 && s->getnom()!=ext2)
+            if (s->getnom()!=ext1)
                 m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
 
         for (auto s: Gmodel->m_aretes)
-            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext2)
-                m_aretes.push_back(new Arete(s->getext1(),s->getext2(),s->get_poid()));
-
+        {
+            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
+            {
+                for (auto i:m_sommets)
+                {
+                    if (i->getnom()==s->getext1()->getnom())
+                        Som1=i;
+                    if(i->getnom()==s->getext2()->getnom())
+                        Som2=i;
+                }
+                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+            }
+        }
     }
     else{
         for (auto s: Gmodel->m_sommets)
             m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
 
         for (auto s: Gmodel->m_aretes)
-            if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)
-                m_aretes.push_back(new Arete(s->getext1(),s->getext2(),s->get_poid()));
+        {
+                if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)
+                {
+                    for (auto i:m_sommets)
+                {
+                    if (i->getnom()==s->getext1()->getnom())
+                        Som1=i;
+                    if(i->getnom()==s->getext2()->getnom())
+                        Som2=i;
+                }
+                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+            }
+        }
     }
 
 }
@@ -410,12 +433,12 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
 ///  Vulnerabilité
 Graph* Graph::Supression_element()
 {
-    Graph* etude2;
+    Graph* etude_2;
     std::string choix;
     std::cout<<"quelle element voulez vous supprimer?";
     std::cin>>choix;
 
-    etude2=new Graph(this,choix);
+    etude_2=new Graph(this,choix);
 
-    return etude2;
+    return etude_2;
 }

@@ -66,7 +66,7 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
-        calculIndices();
+        calculIndices(m_etude);
         break;
     case 4://Test la vuln�rabilit� du graph
         vulnerabilite();
@@ -79,22 +79,22 @@ bool Menu::choix()
 /**
 calcul affichage et sauvegarde des indices du graph
 */
-void Menu::calculIndices()
+void Menu::calculIndices(Graph* graph)
 {
     std::ofstream fichier("sauvegarde.txt");
     Svgfile svgout;//fichier svg pour l'affichage
     //svgout.addGrid();
-    m_etude->calc_icd();
-    m_etude->calc_vect_propre();
+    graph->calc_icd();
+    graph->calc_vect_propre();
 
-    m_etude->calc_icp();
-    m_etude->calc_ici_naif();
-    m_etude->affichage(svgout);//affichage sur fichier svg
-    std::cout<<"le graf est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
-    m_etude->affichageconsole();//affichage console
+    graph->calc_icp();
+    graph->calc_ici_naif();
+    graph->affichage(svgout);//affichage sur fichier svg
+    std::cout<<"le graf est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
+    graph->affichageconsole();//affichage console
 
     if(fichier.is_open())
-        m_etude->sauvegarde(fichier);
+        graph->sauvegarde(fichier);
     else
         std::cout<<"Sauvegarde impossible"<<std::endl;
 }
@@ -180,13 +180,14 @@ void Menu::vulnerabilite()
     Graph* etude2=nullptr;
     Graph* tampon=m_etude;
     std::string saisie;
-    affichage_vulnerabilite();
-    std::cin>>saisie;
+
     Svgfile svgout;
 
     bool stay=true;
     while(stay)
     {
+    affichage_vulnerabilite();
+    std::cin>>saisie;
     switch(std::stoi(saisie))
     {
     case 0://Quitter
@@ -196,16 +197,19 @@ void Menu::vulnerabilite()
         break;
     case 1://Suppretion d'un element du graph
         tampon->affichageconsole();
-
         etude2=tampon->Supression_element();
         tampon=etude2;
         break;
     case 2://Affichage du nouveau graph
         if (etude2)
+        {
             etude2->affichage(svgout);
+            etude2->affichageconsole();
+        }
         break;
     case 3://calcule des indicateur pour le nouveau graphe
-
+        if (etude2)
+          calculIndices(etude2);
         break;
     case 4://Annalyse des modification
 

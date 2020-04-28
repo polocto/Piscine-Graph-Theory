@@ -11,7 +11,7 @@ public:
     void menu();//menu
     void affichage()const;//affichage menu
 
-    void calculIndices();//calcul affichage et sauvegarde des indices
+    void calculIndices(Graph* Graph);//calcul affichage et sauvegarde des indices
     bool choix();//choix
     void chargementGraph();//chargement du graph
     void chargementPonderation();//chargement du poids des aretes du graphe

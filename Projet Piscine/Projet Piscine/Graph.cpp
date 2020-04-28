@@ -55,37 +55,34 @@ Graph::Graph(std::ifstream&ifs)
 Graph::Graph(Graph* Gmodel,std::string changement)
 {
     std::string ext1="",ext2="";
-    Sommet* som1;
-    Sommet* som2;
     ext1=changement[0];
     if (changement.size()==1)
         ext2=" ";
     if (changement.size()==2)
         ext2=changement[1];
 
-    for (auto s: Gmodel->m_sommets)
+    if (ext2==" ")
     {
-        if (s->getnom()!=ext1 && s->getnom()!=ext2)
-        {
+        for (auto s: Gmodel->m_sommets)
+            if (s->getnom()!=ext1 && s->getnom()!=ext2)
+                m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+
+        for (auto s: Gmodel->m_aretes)
+            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext2)
+                m_aretes.push_back(new Arete(s->getext1(),s->getext2(),s->get_poid()));
+
+    }
+    else{
+        for (auto s: Gmodel->m_sommets)
             m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
-        }
+
+        for (auto s: Gmodel->m_aretes)
+            if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)
+                m_aretes.push_back(new Arete(s->getext1(),s->getext2(),s->get_poid()));
     }
 
-    for (auto s: Gmodel->m_aretes)
-    {
-        if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)
-        {
-                for (auto i: m_sommets)
-                {
-                    if (i->getnom()==s->getext1()->getnom())
-                        som1=i;
-                    if (i->getnom()==s->getext2()->getnom())
-                        som2=i;
-                }
-            m_aretes.push_back(new Arete(som1,som2,s->get_poid()));
-        }
-    }
 }
+
 ///Destructeur de Graph
 ///Supression de tout les sommets et de toutes les aretes qui le compose
 Graph::~Graph()
@@ -406,4 +403,19 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
         }
 
     return poids[arriver->getnom()];//on retourne le poids du chemin
+}
+
+
+
+///  Vulnerabilité
+Graph* Graph::Supression_element()
+{
+    Graph* etude2;
+    std::string choix;
+    std::cout<<"quelle element voulez vous supprimer?";
+    std::cin>>choix;
+
+    etude2=new Graph(this,choix);
+
+    return etude2;
 }

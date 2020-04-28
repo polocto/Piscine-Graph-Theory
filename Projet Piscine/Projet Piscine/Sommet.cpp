@@ -5,7 +5,7 @@
 initialisation de donn�es non pass� en param�tre � 0
 */
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_i_nn(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
@@ -18,7 +18,7 @@ void Sommet::ajout(Arete*suivant)
 /**Affichage console*/
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" icd: ("<<m_i_d<<","<<m_i_d_nn<<")"<<" icp: "<<m_i_p<<" ivp: "<<m_i_vp<<" inter: ("<<m_i_i<<", "<<m_i_i_nn<<")";
+    std::cout<<m_nom<<" icd: ("<<m_i_d<<","<<m_i_d_nn<<")"<<" icp: "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is<<" inter: ("<<m_i_i<<", "<<m_i_i_nn<<")";
 }
 /**Affichage SVG*/
 void Sommet::affichage(Svgfile& svgout)const
@@ -30,7 +30,7 @@ void Sommet::affichage(Svgfile& svgout)const
 /**GETTER*/
 
 /**retourn la position x du sommet*/
-double Sommet::getx()const
+double Sommet::getX()const
 {
     return m_x;
 }
@@ -76,6 +76,12 @@ void Sommet::indice_vp(std::map<Sommet*,double>&somme,const double& lambda)
 void Sommet::calc_icp(double distance,double total)
 {
     m_i_p=total/distance;
+}
+
+///mise a jour de l'indice de centralité d'intermediarité simplifier
+void Sommet::calc_ici_naif(double total,double a)
+{
+    m_i_is=total/a;
 }
 ///Sauvegarde
 void Sommet::sauvegarde(std::ofstream&fichier)const

@@ -6,8 +6,8 @@
 
 
 ///Constructeur de graph:
-///Prend en paramettre le nom du fichier utilisÈ
-/// CrÈe et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
+///Prend en paramettre le nom du fichier utilis√©
+/// Cr√©e et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
 Graph::Graph(std::ifstream&ifs)
 {
     std::string line;
@@ -50,6 +50,61 @@ Graph::Graph(std::ifstream&ifs)
         if(ifs.fail() || s2>m_sommets.size())throw(1);
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2]));// Creation d'une Arete a partir des informations du fichier
     }
+}
+
+
+Graph::Graph(Graph* Gmodel,std::string changement)
+{
+    std::string ext1="",ext2="";
+    ext1=changement[0];
+    if (changement.size()==1)
+        ext2=" ";
+    if (changement.size()==2)
+        ext2=changement[1];
+
+    Sommet* Som1;
+    Sommet* Som2;
+    if (ext2==" ")
+    {
+        for (auto s: Gmodel->m_sommets)
+            if (s->getnom()!=ext1)
+                m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+
+        for (auto s: Gmodel->m_aretes)
+        {
+            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
+            {
+                for (auto i:m_sommets)
+                {
+                    if (i->getnom()==s->getext1()->getnom())
+                        Som1=i;
+                    if(i->getnom()==s->getext2()->getnom())
+                        Som2=i;
+                }
+                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+            }
+        }
+    }
+    else{
+        for (auto s: Gmodel->m_sommets)
+            m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+
+        for (auto s: Gmodel->m_aretes)
+        {
+                if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)
+                {
+                    for (auto i:m_sommets)
+                {
+                    if (i->getnom()==s->getext1()->getnom())
+                        Som1=i;
+                    if(i->getnom()==s->getext2()->getnom())
+                        Som2=i;
+                }
+                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+            }
+        }
+    }
+
 }
 
 ///Destructeur de Graph
@@ -137,7 +192,7 @@ void Graph::affichageconsole()const
     }*/
 }
 
-///Calcule de l'indice de centralitÈ de degrÈe
+///Calcule de l'indice de centralit√© de degr√©e
 void Graph::calc_icd()
 {
     for (auto s:m_sommets)
@@ -149,7 +204,7 @@ void Graph::calc_vect_propre()
 {
     double lambda=-1,l=0;
 
-    while(abs(lambda-l)>=0.001)//tant que variance de lambda superieur ‡0,001
+    while(abs(lambda-l)>=0.001)//tant que variance de lambda superieur √†0,001
     {
         std::map<Sommet*,double>somme;
         lambda = l;
@@ -157,7 +212,7 @@ void Graph::calc_vect_propre()
         for(Sommet* s : m_sommets)
             s->calc_vp(somme);//somme de vecteur propre de sommet voisins pour chaque sommets
         for(Sommet* s : m_sommets)
-            l+=somme.at(s)*somme.at(s);//somme des carrÈ des sommes ci-dessus
+            l+=somme.at(s)*somme.at(s);//somme des carr√© des sommes ci-dessus
         l=sqrt(l);//racine de la somme
         for(Sommet* s : m_sommets)
             s->indice_vp(somme,l);//actualisation des indices
@@ -197,7 +252,7 @@ int Graph::k_connexe()const
 }
 
 
-///calcule de l'indicateur de centralitÈ de proximitÈ pour chaque sommet
+///calcule de l'indicateur de centralit√© de proximit√© pour chaque sommet
 /// On test ainsi tout les chemins possible entre 2 sommets pour sommer les distances
 void Graph::calc_icp()
 {
@@ -213,6 +268,104 @@ void Graph::calc_icp()
         i->calc_icp(distance,m_sommets.size()-1);///envoie les valeur pour modifier la valeur de l'indice icp des sommet
     }
 }
+void Graph::calc_ici_naif()
+{
+    for(auto i:m_sommets)
+    {
+        double total=0;
+        double a=0;
+        for (unsigned int j=0;j<m_sommets.size()-1;j++)
+        {
+            if (i!=m_sommets[j])
+            {
+                for (unsigned int k=j;k<m_sommets.size()-1;k++)
+                {
+                    if (i!=m_sommets[k])
+                    {
+                        if (m_sommets[j]!=m_sommets[k])
+                        {
+                        ///Dijtra renvoie un bool
+                        total+=Dijkstra(m_sommets[j],m_sommets[k],i);
+                        a++;
+                        }
+                    }
+                }
+            }
+        }
+        ///initialisation du ici
+        std::cout<<total;
+        i->calc_ici_naif(total,a);
+    }
+}
+
+ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
+ {
+    std::vector<Sommet*> Som;
+	std::map<std::string,std::pair<bool,Sommet*>> marque;
+	std::map<std::string,double> poids;
+
+	double poidarete=0;
+	Sommet* sommetActif;
+    Arete* areteactive;
+
+    //ajout du Sommet de depart a la liste
+	Som.push_back(depart);
+
+	//initialisation des maps utiliser
+	for (auto s: m_sommets)
+    {
+        marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
+        poids[s->getnom()]=0;
+    }
+
+	while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
+        {
+            //Determiner le sommet actif
+            sommetActif=Som[0];
+            for (auto s:Som)
+            {
+                if (poids[s->getnom()]<poids[sommetActif->getnom()])
+                    sommetActif=s;
+            }
+
+            sommetActif->ajoutvoisin(Som,marque,poids);
+            marque[sommetActif->getnom()].first=1; //Marquage du sommetActif pour qu'il ne soit plus ajouter a la liste des suivant
+
+            //Determination du poidtotal du chemin le plus cours pour chaque arete du graphe tant que sommet n'est pas decouvert
+            if (marque[sommetActif->getnom()].second!=nullptr)
+            {
+                areteactive=sommetActif->trouverArete(marque[sommetActif->getnom()].second);
+                poidarete=areteactive->get_poid();
+            }
+
+            if (marque[sommetActif->getnom()].second==nullptr)
+            {
+                poids[sommetActif->getnom()]=poidarete;
+            }
+            else{
+                    poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
+            }
+
+           //supression de la liste du Sommet actif
+            for (size_t i=0;i<Som.size();i++)
+            {
+                if (Som[i]==sommetActif)
+                        Som.erase(Som.begin()+i);
+            }
+        }
+
+        unsigned int i=0;
+        sommetActif=arriver;
+        while(sommetActif!=depart && i<m_sommets.size())
+        {
+            if (marque[sommetActif->getnom()].second==passage)
+                return 1;
+            sommetActif=marque[sommetActif->getnom()].second;
+            i++;
+        }
+    return 0;
+ }
+
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
@@ -314,4 +467,18 @@ void Graph::Brand()
     }
     for(Sommet* s : m_sommets)
         s->Brand(Cb,(double)m_sommets.size());
+}
+
+
+///  Vulnerabilit√©
+Graph* Graph::Supression_element()
+{
+    Graph* etude_2;
+    std::string choix;
+    std::cout<<"quelle element voulez vous supprimer?";
+    std::cin>>choix;
+
+    etude_2=new Graph(this,choix);
+
+    return etude_2;
 }

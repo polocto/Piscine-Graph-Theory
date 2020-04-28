@@ -10,6 +10,7 @@ class Arete
 {
 public:
     Arete(Sommet* s1, Sommet* s2);
+    Arete(Sommet* s1, Sommet* s2,double poids);
     virtual  ~Arete() = default;
     void affichage(Svgfile& svgout)const;
     void ponderation(std::stringstream& ifs);

@@ -127,7 +127,6 @@ Graph::Graph(Graph* Gmodel,std::string changement)
             }
         }
     }
-
 }
 
 ///Destructeur de Graph
@@ -189,9 +188,16 @@ void Graph::chargementPonderation(std::string nomfichier)
 /**FIN DES INFOS LIEE AU CHARGEMENT*/
 
 /**DEBUT DE L'AFFICHAGE D'UN GRAPH*/
+void Graph::affichage_poly()const
+{
+    Svgfile svgout;
+    affichage(svgout);
+    affichageconsole();
+}
+
 /// Affichage du graph au format svg
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
-void Graph::affichage(Svgfile& svgout)
+void Graph::affichage(Svgfile& svgout)const
 {
     for (Sommet* S:m_sommets)
         S->affichage(svgout);//affiche l'ensemble des sommets

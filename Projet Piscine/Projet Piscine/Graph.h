@@ -15,7 +15,8 @@ public:
     /**Chargement des poids des aretes*/
     void chargementPonderation(std::string nomfichier);
     /**affichages des infos liées au graph*/
-    void affichage(Svgfile& svgout);
+    void affichage_poly()const;
+    void affichage(Svgfile& svgout)const;
     void affichageconsole()const;
     /**Calcule des différents indice*/
     void calcule_indices();

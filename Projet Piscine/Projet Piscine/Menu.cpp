@@ -66,7 +66,7 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
-        calculIndices(m_etude);
+        calculIndices();
         break;
     case 4://Test la vuln�rabilit� du graph
         vulnerabilite();
@@ -79,20 +79,16 @@ bool Menu::choix()
 /**
 calcul affichage et sauvegarde des indices du graph
 */
-void Menu::calculIndices(Graph* graph)
+void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
-    Svgfile svgout;//fichier svg pour l'affichage
-    //svgout.addGrid();
 
+    m_etude->calcule_indices();
+    m_etude->affichage_poly();
 
-    graph->calcule_indices();
-    graph->affichage(svgout);//affichage sur fichier svg
-    graph->affichageconsole();//affichage console
-
-    std::cout<<"le graph est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
+    std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
-        graph->sauvegarde(fichier);
+        m_etude->sauvegarde(fichier);
     else
         std::cout<<"Sauvegarde impossible"<<std::endl;
 }
@@ -186,6 +182,8 @@ void Menu::vulnerabilite()
     {
         affichage_vulnerabilite();
         std::cin>>saisie;
+        if(!is_int(saisie))//si la saisie n'est pas un nombre entier naturel
+            saisie="99";//metre saisie � 99
         switch(std::stoi(saisie))
         {
         case 0://Quitter
@@ -201,14 +199,17 @@ void Menu::vulnerabilite()
         case 2://Affichage du nouveau graph
             if (etude2)
             {
-                Svgfile svgout;
-                etude2->affichage(svgout);
-                etude2->affichageconsole();
+                etude2->affichage_poly();
             }
             break;
         case 3://calcule des indicateur pour le nouveau graphe
             if (etude2)
-                calculIndices(etude2);
+            {
+                etude2->calcule_indices();
+                etude2->affichage_poly();
+                std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
+            }
+                //calculIndices(etude2);
             break;
         case 4://Annalyse des modification
 

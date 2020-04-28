@@ -12,6 +12,13 @@ Arete::Arete(Sommet* s1, Sommet* s2)
     m_ext2->ajout(this);
 }
 
+Arete::Arete(Sommet* s1, Sommet* s2,double poids)
+    :m_ext1(s1),m_ext2(s2),m_poids(poids)
+{
+    m_ext1->ajout(this);
+    m_ext2->ajout(this);
+}
+
 ///initialisation des ponderation apartir d'un flot de fichier
 void Arete::ponderation(std::stringstream& iss)
 {
@@ -30,7 +37,7 @@ void Arete::affichageconsole()const
 /// Affichage au format svg d'une Arete du graph
 void Arete::affichage(Svgfile& svgout)const
 {
-    svgout.addLine(m_ext1->getx()*100,m_ext1->getY()*100,m_ext2->getx()*100,m_ext2->getY()*100,"BLACK");
+    svgout.addLine(m_ext1->getX()*100,m_ext1->getY()*100,m_ext2->getX()*100,m_ext2->getY()*100,"BLACK");
 }
 
 /**recupere l'indice de vecteur propre du voisin*/

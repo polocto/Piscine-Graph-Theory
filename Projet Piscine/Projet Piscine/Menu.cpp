@@ -118,7 +118,7 @@ void Menu::chargementGraph()
     if (nom_fichier=="1")
         nom_fichier="graphe_etoile1_topo.txt";
     if (nom_fichier=="3")
-         nom_fichier="graphe_etoile3_topo.txt";
+        nom_fichier="graphe_etoile3_topo.txt";
     if (nom_fichier=="5")
         nom_fichier="graphe_cycle5_topo.txt";
     ifs.open(nom_fichier);//ouverture du fichier
@@ -191,38 +191,38 @@ void Menu::vulnerabilite()
     bool stay=true;
     while(stay)
     {
-    affichage_vulnerabilite();
-    std::cin>>saisie;
-    switch(std::stoi(saisie))
-    {
-    case 0://Quitter
-        stay=false;
-        if(etude2)//si graph n'est pa null
-            delete etude2;
-        break;
-    case 1://Suppretion d'un element du graph
-        tampon->affichageconsole();
-        etude2=tampon->Supression_element();
-        tampon=etude2;
-        break;
-    case 2://Affichage du nouveau graph
-        if (etude2)
+        affichage_vulnerabilite();
+        std::cin>>saisie;
+        switch(std::stoi(saisie))
         {
-            Svgfile svgout;
-            etude2->affichage(svgout);
-            etude2->affichageconsole();
-        }
-        break;
-    case 3://calcule des indicateur pour le nouveau graphe
-        if (etude2)
-          calculIndices(etude2);
-        break;
-    case 4://Annalyse des modification
+        case 0://Quitter
+            stay=false;
+            if(etude2)//si graph n'est pa null
+                delete etude2;
+            break;
+        case 1://Suppretion d'un element du graph
+            tampon->affichageconsole();
+            etude2=tampon->Supression_element();
+            tampon=etude2;
+            break;
+        case 2://Affichage du nouveau graph
+            if (etude2)
+            {
+                Svgfile svgout;
+                etude2->affichage(svgout);
+                etude2->affichageconsole();
+            }
+            break;
+        case 3://calcule des indicateur pour le nouveau graphe
+            if (etude2)
+                calculIndices(etude2);
+            break;
+        case 4://Annalyse des modification
 
-        break;
-    default://si la saisie ne correspond � aucune case
-        std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
-    }
+            break;
+        default://si la saisie ne correspond � aucune case
+            std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
+        }
     }
 }
 

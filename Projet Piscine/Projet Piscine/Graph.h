@@ -12,12 +12,12 @@ public:
     Graph(std::ifstream&ifs);
     Graph(Graph* Gmodel,std::string changement);
     ~Graph();
-/**Chargement des poids des aretes*/
+    /**Chargement des poids des aretes*/
     void chargementPonderation(std::string nomfichier);
-/**affichages des infos liées au graph*/
+    /**affichages des infos liées au graph*/
     void affichage(Svgfile& svgout);
     void affichageconsole()const;
-/**Calcule des différents indice*/
+    /**Calcule des différents indice*/
     void calc_icd();//indice de centralité de degré
     void calc_vect_propre();//vecteur propre
     void Brand();//intermediatirité
@@ -25,9 +25,9 @@ public:
     void calc_ici_naif();//intermediatirité naïve
     double Dijkstra(Sommet* depart,Sommet* arriver);
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
-/**Test la k-arete-connexité d'un graphe*/
+    /**Test la k-arete-connexité d'un graphe*/
     int k_connexe()const;
-/**Sauvegarde des différents indices du graphe*/
+    /**Sauvegarde des différents indices du graphe*/
     void sauvegarde(std::ofstream&fichier)const;
 ///vulnerabilité
     Graph* Supression_element();

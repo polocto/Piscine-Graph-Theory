@@ -216,8 +216,8 @@ void Graph::calc_ici_naif()
 {
     for(auto i:m_sommets)
     {
-        int total=0;
-        int a=0;
+        double total=0;
+        double a=0;
         for (unsigned int j=0;j<m_sommets.size()-1;j++)
         {
             if (i!=m_sommets[j])

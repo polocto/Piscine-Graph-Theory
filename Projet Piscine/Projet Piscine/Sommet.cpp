@@ -79,7 +79,7 @@ void Sommet::calc_icp(double distance,double total)
 }
 
 ///mise a jour de l'indice de centralité d'intermediarité simplifier
-void Sommet::calc_ici_naif(int total,int a)
+void Sommet::calc_ici_naif(double total,double a)
 {
     m_i_is=total/a;
 }

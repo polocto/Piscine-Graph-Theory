@@ -77,6 +77,12 @@ void Sommet::calc_icp(double distance,double total)
 {
     m_i_p=total/distance;
 }
+
+///mise a jour de l'indice de centralité d'intermediarité simplifier
+void Sommet::calc_ici_naif(int total,int a)
+{
+    m_i_is=total/a;
+}
 ///Sauvegarde
 void Sommet::sauvegarde(std::ofstream&fichier)const
 {

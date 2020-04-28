@@ -10,6 +10,7 @@ class Graph
 {
 public:
     Graph(std::ifstream&ifs);
+    Graph(Graph* Gmodel,std::string changement);
     ~Graph();
     void affichage(Svgfile& svgout);
     void chargementPonderation(std::string nomfichier);

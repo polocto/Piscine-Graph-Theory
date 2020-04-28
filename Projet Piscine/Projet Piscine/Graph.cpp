@@ -218,6 +218,17 @@ void Graph::affichageconsole()const
 }
 
 /**CALCULE DES INDICES DU GRAPH*/
+
+void Graph::calcule_indices()
+{
+    calc_icd();
+    calc_vect_propre();
+    calc_icp();
+    Brand();
+    if(k_connexe())
+        calc_ici_naif();
+}
+
 ///Calcule de l'indice de centralité de degrée
 void Graph::calc_icd()
 {

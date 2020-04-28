@@ -18,6 +18,7 @@ public:
     void affichage(Svgfile& svgout);
     void affichageconsole()const;
     /**Calcule des différents indice*/
+    void calcule_indices();
     void calc_icd();//indice de centralité de degré
     void calc_vect_propre();//vecteur propre
     void Brand();//intermediatirité

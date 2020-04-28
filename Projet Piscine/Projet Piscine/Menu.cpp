@@ -86,14 +86,7 @@ void Menu::calculIndices(Graph* graph)
     //svgout.addGrid();
 
 
-    graph->calc_icd();
-    graph->calc_vect_propre();
-    graph->calc_icp();
-    graph->Brand();
-    if (graph->k_connexe()!=0)
-    {
-        graph->calc_ici_naif();
-    }
+    graph->calcule_indices();
     graph->affichage(svgout);//affichage sur fichier svg
     graph->affichageconsole();//affichage console
 

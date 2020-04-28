@@ -353,7 +353,7 @@ void Graph::calc_ici_naif()
             }
         }
 
-        int i=0;
+        unsigned int i=0;
         sommetActif=arriver;
         while(sommetActif!=depart && i<m_sommets.size())
         {

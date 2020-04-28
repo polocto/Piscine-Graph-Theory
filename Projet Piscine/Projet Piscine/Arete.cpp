@@ -22,7 +22,10 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 ///Nouvelle proposition
 Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur)
     :m_ext1(traducteur.at(copie->m_ext1)),m_ext2(traducteur.at(copie->m_ext2)),m_poids(copie->m_poids)
-{}
+{
+    m_ext1->ajout(this);
+    m_ext2->ajout(this);
+}
 ///fin
 
 ///initialisation des ponderation apartir d'un flot de fichier

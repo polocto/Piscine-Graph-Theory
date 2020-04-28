@@ -86,10 +86,10 @@ void Menu::calculIndices()
     //svgout.addGrid();
     m_etude->calc_icd();
     m_etude->calc_vect_propre();
-
+    m_etude->Brand();
     m_etude->calc_icp();
-    m_etude->affichage(svgout);//affichage sur fichier svg
     m_etude->affichageconsole();//affichage console
+    m_etude->affichage(svgout);//affichage sur fichier svg
 
     if(fichier.is_open())
         m_etude->sauvegarde(fichier);

@@ -3,6 +3,7 @@
 
 #include "biblio.h"
 #include "svgfile.h"
+#include "myComparator.h"
 class Sommet;
 
 class Arete
@@ -19,6 +20,7 @@ public:
     Sommet* getext1();
     Sommet* getext2();
     void k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const;
+    void Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
 private:
     Sommet* m_ext1,* m_ext2;//extemit� des Arete
     double m_poids;

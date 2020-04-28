@@ -3,6 +3,7 @@
 
 #include "biblio.h"
 #include "svgfile.h"
+#include "myComparator.h"
 
 class Arete;
 
@@ -41,11 +42,13 @@ public:
    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
    Arete* trouverArete(Sommet* ext1);
 
+   void Brand(const std::map<const Sommet*,double>&Cb,const double&n);
+   void Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants;
-    double m_i_d,m_i_vp,m_i_p;
-    double m_i_d_nn;
+    double m_i_d,m_i_vp,m_i_p,m_i_i;
+    double m_i_i_nn,m_i_d_nn;
     double m_x,m_y;
 };
 

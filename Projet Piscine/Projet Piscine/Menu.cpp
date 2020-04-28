@@ -198,16 +198,14 @@ void Menu::vulnerabilite()
             break;
         case 2://Affichage du nouveau graph
             if (etude2)
-            {
                 etude2->affichage_poly();
-            }
             break;
         case 3://calcule des indicateur pour le nouveau graphe
             if (etude2)
             {
                 etude2->calcule_indices();
                 etude2->affichage_poly();
-                std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
+                std::cout<<"le graph est "<<etude2->k_connexe()<<" conexe(s)"<<std::endl;
             }
                 //calculIndices(etude2);
             break;

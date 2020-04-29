@@ -3,18 +3,36 @@
 
 #include "biblio.h"
 #include "svgfile.h"
+#include "myComparator.h"
 class Sommet;
 
 class Arete
 {
 public:
-    Arete(Sommet* s1, Sommet* s2);
+    /**Construction des arete*/
+    Arete(Sommet* s1, Sommet* s2);//constructeur arete
+    //Arete(Sommet* s1, Sommet* s2,double poids);//copie arete
+    Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur);
     virtual  ~Arete() = default;
-    void affichage(Svgfile& svgout);
-    void ponderation(std::stringstream& ifs);
-    void affichageconsole()const;
+    void ponderation(std::stringstream& ifs);//chargement des poid de l'arete
+
+    /**Affichage*/
+    void affichage(Svgfile& svgout)const;//affichage svg
+    void affichageconsole()const;//affichage console
+    /**Getter*/
+    double get_vp(Sommet*precedent)const;//reccupere l'indice de vecteur propre du sommet à l'autre extrémité "suivant"
+    double get_poid()const;//reccupere le poids de l'arete
+    Sommet* getsuivant(Sommet* Som)const;//reccup le sommet suivant
+    Sommet* getext1();//reccup sommet ext1
+    Sommet* getext2();//recup sommet ext2
+
+    bool verrif(const std::string&ext1,const std::string&ext2)const;
+    /**Indice intermediarite*/
+    void Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
+    /**k-arete connexité*/
+    void k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const;
 private:
-    Sommet* m_ext1,* m_ext2;
+    Sommet* m_ext1,* m_ext2;//extemit� des Arete
     double m_poids;
 };
 

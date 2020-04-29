@@ -1,7 +1,7 @@
 #include "Arete.h"
 #include "Sommet.h"
 #include "svgfile.h"
-
+/**CONSTUCTION DU ARETE DEBUT*/
 ///Constructeur de la class Arete
 ///Prend en parametre les adresses des deux extremit�e pour initialiser arrete et pour ajouter l'arrete a leur liste de suivant
 ///initialisation du poids a 1 cas d'un graph non ponder�
@@ -11,7 +11,7 @@ Arete::Arete(Sommet* s1, Sommet* s2)
     m_ext1->ajout(this);
     m_ext2->ajout(this);
 }
-
+///constructeur copie arete
 Arete::Arete(Sommet* s1, Sommet* s2,double poids)
     :m_ext1(s1),m_ext2(s2),m_poids(poids)
 {
@@ -27,7 +27,8 @@ void Arete::ponderation(std::stringstream& iss)
     if (iss.fail())
         throw("probleme dans la lecture de la ligne du fichier: fichier corompu");
 }
-
+/**CONSTUCTION DE ARETE FIN*/
+/**AFFICHAGE DE ARETE DEBUT*/
 ///Affichage des informations lier a Arete dans la console
 void Arete::affichageconsole()const
 {
@@ -39,8 +40,10 @@ void Arete::affichage(Svgfile& svgout)const
 {
     svgout.addLine(m_ext1->getX()*100,m_ext1->getY()*100,m_ext2->getX()*100,m_ext2->getY()*100,"BLACK");
 }
+/**AFFICHAGE DE ARETE FIN*/
 
-/**recupere l'indice de vecteur propre du voisin*/
+/**GETTER DEBUT*/
+///recupere l'indice de vecteur propre du voisin
 double Arete::get_vp(Sommet*precedent)const
 {
     if(precedent==m_ext1)
@@ -61,7 +64,7 @@ Sommet* Arete::getsuivant(Sommet* Som)const
         return m_ext2;
     return m_ext1;
 }
-///Getteur d'une extremiter de l'arete
+///Getteur des extremitées de l'arete
 Sommet* Arete::getext1()
 {
     return m_ext1;
@@ -71,18 +74,8 @@ Sommet*Arete::getext2()
     return m_ext2;
 
 }
-
-void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const
-{
-    if(arete.count(this))
-        return;
-    arete[this]=true;
-    if(!sommet.count(m_ext1))
-        m_ext1->k_connexe(nombre_chemin,arete,sommet,arrive);
-    else if(!sommet.count(m_ext2))
-        m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
-}
-
+/**GETTER FIN*/
+/**Indice intermediarite*/
 void Arete::Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const
 {
     Sommet* suivant=nullptr;
@@ -91,15 +84,26 @@ void Arete::Brand(const Sommet*precednent,std::map<const Sommet*,double>&distanc
     else
         suivant=m_ext1;
 
-    if(!distance.count(suivant) || distance.at(suivant)>d_a+m_poids)
+    if(!distance.count(suivant) || distance.at(suivant)>d_a+m_poids)//si mon sommet n'a pas de distance ou que sa distance min est sup à nouvelle distance(ce sui ne devrai pas arriver)
     {
-        q.push(std::pair<const Sommet*,std::pair<const Sommet*,double>>{suivant,std::pair<const Sommet*,double>{precednent,d_a+m_poids}});
-        sigma[suivant]=0;
-        predecesseur[suivant].clear();
+        q.push(std::pair<const Sommet*,std::pair<const Sommet*,double>> {suivant,std::pair<const Sommet*,double>{precednent,d_a+m_poids}}); //ajouter à la file
+        sigma[suivant]=0;//initialiser son nombre de chemin dont il fait parti à zero
+        predecesseur[suivant].clear();//vider sa liste de précédent
     }
-    else if(distance.at(suivant)==d_a+m_poids)
+    else if(distance.at(suivant)==d_a+m_poids)//si son nombre de sommet est égale
     {
-        sigma.at(suivant)+=sigma.at(precednent);
-        predecesseur.at(suivant).push_back(precednent);
+        sigma.at(suivant)+=sigma.at(precednent);//actualiser son nombre de chemin
+        predecesseur.at(suivant).push_back(precednent);//ajouter predecesseu à l'ensemble des predecesseur
     }
+}
+/**k-arete connexité*/
+void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const
+{
+    if(arete.count(this))//si l'arete est déjà emprunter (considéré comme saturé)
+        return;//fin sous-programme
+    arete[this]=true;//saturer l'arete
+    if(!sommet.count(m_ext1))//si mon sommet ext1 n'a pas était emprunter
+        m_ext1->k_connexe(nombre_chemin,arete,sommet,arrive);
+    else if(!sommet.count(m_ext2))//si mon sommet ext2 n'a pas était emprunter
+        m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
 }

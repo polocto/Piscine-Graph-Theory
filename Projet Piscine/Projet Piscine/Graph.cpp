@@ -555,14 +555,16 @@ void Graph::comparaison_graph(Graph* ancien)
     for (auto s:m_sommets)
     {
         unsigned int  i=0;
+        fin=1;
         while(fin && i<ancien->m_sommets.size())
         {
             if (ancien->m_sommets[i]->getnom()==s->getnom())
                 fin=0;
-            i++;
+            else
+                i++;
         }
-
-        s->affichage_comparaison(ancien->m_sommets[i]);
+        if(i<ancien->m_sommets.size())
+            s->affichage_comparaison(ancien->m_sommets[i]);
     }
 }
 

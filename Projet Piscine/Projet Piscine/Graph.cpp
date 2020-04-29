@@ -271,6 +271,7 @@ void Graph::Brand()
     {
         //Déclarations
         std::stack<const Sommet*>p;
+        std::map<const Sommet*,bool> verrif;
         std::map<const Sommet*,double>delta;
         std::map<const Sommet*,std::list<const Sommet*>>predecesseur;
         std::map<const Sommet*,double>sigma;
@@ -281,7 +282,11 @@ void Graph::Brand()
         sigma[d]=1;
         while(!q.empty())
         {
-            p.push(q.top().first);
+            if(!verrif.count(q.top().first))
+            {
+                p.push(q.top().first);
+                verrif[q.top().first]=true;
+            }
             q.top().first->Brand(distance,q,sigma,predecesseur);
             q.pop();
         }

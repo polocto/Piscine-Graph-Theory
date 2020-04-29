@@ -66,7 +66,7 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
-        calculIndices(m_etude);
+        calculIndices();
         break;
     case 4://Test la vuln�rabilit� du graph
         vulnerabilite();
@@ -79,27 +79,16 @@ bool Menu::choix()
 /**
 calcul affichage et sauvegarde des indices du graph
 */
-void Menu::calculIndices(Graph* graph)
+void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
-    Svgfile svgout;//fichier svg pour l'affichage
-    //svgout.addGrid();
 
+    m_etude->calcule_indices();
+    m_etude->affichage_poly();
 
-    graph->calc_icd();
-    graph->calc_vect_propre();
-    graph->calc_icp();
-    graph->Brand();
-    if (graph->k_connexe()!=0)
-    {
-        graph->calc_ici_naif();
-    }
-    graph->affichage(svgout);//affichage sur fichier svg
-    graph->affichageconsole();//affichage console
-
-    std::cout<<"le graph est "<<graph->k_connexe()<<" conexe(s)"<<std::endl;
+    std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
-        graph->sauvegarde(fichier);
+        m_etude->sauvegarde(fichier);
     else
         std::cout<<"Sauvegarde impossible"<<std::endl;
 }
@@ -140,7 +129,6 @@ void Menu::chargementGraph()
             delete tampon;//le supprimer
         std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
     }
-
 }
 
 /**
@@ -165,7 +153,6 @@ void Menu::chargementPonderation()
         std::cout<<"Probleme d'ouverture du fichier : "<<nom_fichier<<std::endl;//message console
         return;
     }
-
     m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pond�ration d'un graph
 }
 
@@ -186,13 +173,13 @@ void Menu::vulnerabilite()
     Graph* tampon=m_etude;
     std::string saisie;
 
-
-
     bool stay=true;
     while(stay)
     {
         affichage_vulnerabilite();
         std::cin>>saisie;
+        if(!is_int(saisie))//si la saisie n'est pas un nombre entier naturel
+            saisie="99";//metre saisie � 99
         switch(std::stoi(saisie))
         {
         case 0://Quitter
@@ -202,20 +189,28 @@ void Menu::vulnerabilite()
             break;
         case 1://Suppretion d'un element du graph
             tampon->affichageconsole();
-            etude2=tampon->Supression_element();
-            tampon=etude2;
+            try
+            {
+                etude2=tampon->Supression_element();
+                tampon=etude2;
+            }
+            catch(int a)
+            {
+                std::cout<<"Auncune modification n'a atait apportee"<<std::endl;
+            }
             break;
         case 2://Affichage du nouveau graph
             if (etude2)
-            {
-                Svgfile svgout;
-                etude2->affichage(svgout);
-                etude2->affichageconsole();
-            }
+                etude2->affichage_poly();
             break;
         case 3://calcule des indicateur pour le nouveau graphe
             if (etude2)
-                calculIndices(etude2);
+            {
+                etude2->calcule_indices();
+                etude2->affichage_poly();
+                std::cout<<"le graph est "<<etude2->k_connexe()<<" conexe(s)"<<std::endl;
+            }
+                //calculIndices(etude2);
             break;
         case 4://Annalyse des modification
 

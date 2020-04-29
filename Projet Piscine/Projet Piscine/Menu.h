@@ -12,7 +12,7 @@ public:
     void affichage()const;//affichage menu
     bool choix();//choix
 
-    void calculIndices(Graph* Graph);//calcul affichage et sauvegarde des indices
+    void calculIndices();//calcul affichage et sauvegarde des indices
     void chargementGraph();//chargement du graph
     void chargementPonderation();//chargement du poids des aretes du graphe
     ///vulnerabilité///

@@ -1,43 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="800">
 
-<circle cx="200" cy="100" r="10" fill="BLACK" />
-<text x="199" y="80" fill="BLUE" >A</text>
-<circle cx="600" cy="100" r="10" fill="BLACK" />
-<text x="599" y="80" fill="BLUE" >B</text>
-<circle cx="100" cy="200" r="10" fill="BLACK" />
-<text x="99" y="180" fill="BLUE" >C</text>
-<circle cx="400" cy="200" r="10" fill="BLACK" />
-<text x="399" y="180" fill="BLUE" >E</text>
-<circle cx="500" cy="200" r="10" fill="BLACK" />
-<text x="499" y="180" fill="BLUE" >F</text>
-<circle cx="700" cy="200" r="10" fill="BLACK" />
-<text x="699" y="180" fill="BLUE" >G</text>
+<circle cx="100" cy="100" r="10" fill="BLACK" />
+<text x="99" y="80" fill="BLUE" >A</text>
+<circle cx="100" cy="500" r="10" fill="BLACK" />
+<text x="99" y="480" fill="BLUE" >B</text>
 <circle cx="200" cy="300" r="10" fill="BLACK" />
-<text x="199" y="280" fill="BLUE" >H</text>
-<circle cx="600" cy="300" r="10" fill="BLACK" />
-<text x="599" y="280" fill="BLUE" >I</text>
-<line x1="600" y1="100" x2="500" y2="200" stroke="BLACK" />
-<line x1="400" y1="200" x2="500" y2="200" stroke="BLACK" />
-<line x1="500" y1="200" x2="700" y2="200" stroke="BLACK" />
-<line x1="600" y1="300" x2="500" y2="200" stroke="BLACK" />
-<circle cx="200" cy="100" r="10" fill="BLACK" />
-<text x="199" y="80" fill="BLUE" >A</text>
-<circle cx="600" cy="100" r="10" fill="BLACK" />
-<text x="599" y="80" fill="BLUE" >B</text>
-<circle cx="100" cy="200" r="10" fill="BLACK" />
-<text x="99" y="180" fill="BLUE" >C</text>
-<circle cx="400" cy="200" r="10" fill="BLACK" />
-<text x="399" y="180" fill="BLUE" >E</text>
-<circle cx="500" cy="200" r="10" fill="BLACK" />
-<text x="499" y="180" fill="BLUE" >F</text>
-<circle cx="700" cy="200" r="10" fill="BLACK" />
-<text x="699" y="180" fill="BLUE" >G</text>
-<circle cx="200" cy="300" r="10" fill="BLACK" />
-<text x="199" y="280" fill="BLUE" >H</text>
-<circle cx="600" cy="300" r="10" fill="BLACK" />
-<text x="599" y="280" fill="BLUE" >I</text>
-<line x1="600" y1="100" x2="500" y2="200" stroke="BLACK" />
-<line x1="400" y1="200" x2="500" y2="200" stroke="BLACK" />
-<line x1="500" y1="200" x2="700" y2="200" stroke="BLACK" />
-<line x1="600" y1="300" x2="500" y2="200" 
+<text x="199" y="280" fill="BLUE" >C</text>
+<circle cx="400" cy="300" r="10" fill="BLACK" />
+<text x="399" y="280" fill="BLUE" >D</text>
+<circle cx="500" cy="100" r="10" fill="BLACK" />
+<text x="499" y="80" fill="BLUE" >E</text>
+<circle cx="600" cy="200" r="10" fill="BLACK" />
+<text x="599" y="180" fill="BLUE" >F</text>
+<circle cx="800" cy="100" r="10" fill="BLACK" />
+<text x="799" y="80" fill="BLUE" >G</text>
+<circle cx="500" cy="400" r="10" fill="BLACK" />
+<text x="499" y="380" fill="BLUE" >H</text>
+<circle cx="700" cy="500" r="10" fill="BLACK" />
+<text x="699" y="480" fill="BLUE" >I</text>
+<circle cx="400" cy="600" r="10" fill="BLACK" />
+<text x="399" y="580" fill="BLUE" >J</text>
+<circle cx="900" cy="600" r="10" fill="BLACK" />
+<text x="899" y="580" fill="BLUE" >K</text>
+<line x1="100" y1="100" x2="100" y2="500" stroke="BLACK" />
+<line x1="100" y1="100" x2="200" y2="300" stroke="BLACK" />
+<line x1="100" y1="100" x2="400" y2="300" stroke="BLACK" />
+<line x1="100" y1="100" x2="500" y2="100" stroke="BLACK" />
+<line x1="100" y1="500" x2="200" y2="300" stroke="BLACK" />
+<line x1="100" y1="500" x2="400" y2="600" stroke="BLACK" />
+<line x1="200" y1="300" x2="400" y2="300" stroke="BLACK" />
+<line x1="200" y1="300" x2="400" y2="600" stroke="BLACK" />
+<line x1="400" y1="300" x2="500" y2="100" stroke="BLACK" />
+<line x1="400" y1="300" x2="500" y2="400" stroke="BLACK" />
+<line x1="400" y1="300" x2="400" y2="600" stroke="BLACK" />
+<line x1="500" y1="100" x2="600" y2="200" stroke="BLACK" />
+<line x1="500" y1="100" x2="800" y2="100" stroke="BLACK" />
+<line x1="500" y1="100" x2="500" y2="400" stroke="BLACK" />
+<line x1="600" y1="200" x2="800" y2="100" stroke="BLACK" />
+<line x1="600" y1="200" x2="500" y2="400" stroke="BLACK" />
+<line x1="800" y1="100" x2="700" y2="500" stroke="BLACK" />
+<line x1="800" y1="100" x2="900" y2="600" stroke="BLACK" />
+<line x1="500" y1="400" x2="700" y2="500" stroke="BLACK" />
+<line x1="500" y1="400" x2="400" y2="600" stroke="BLACK" />
+<line x1="700" y1="500" x2="400" y2="600" stroke="BLACK" />
+<line x1="700" y1="500" x2="900" y2="600" stroke="BLACK" />
+<line x1="400" y1="600" x2="900" y2="600" stroke="BLACK" />
+  
+
+<defs>
+    <radialGradient id="redball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(255,250,250)" />
+      <stop offset="3%" style="stop-color:rgb(255,250,250)" />
+      <stop offset="7%" style="stop-color:rgb(255,160,160)" />
+      <stop offset="70%" style="stop-color:rgb(255,0,0)" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0)" />
+    </radialGradient>
+    <radialGradient id="greenball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,255,250)" />
+      <stop offset="3%" style="stop-color:rgb(250,255,250)" />
+      <stop offset="7%" style="stop-color:rgb(160,255,160)" />
+      <stop offset="70%" style="stop-color:rgb(0,255,0)" />
+      <stop offset="100%" style="stop-color:rgb(0,255,0)" />
+    </radialGradient>
+    <radialGradient id="blueball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,250,255)" />
+      <stop offset="3%" style="stop-color:rgb(250,250,255)" />
+      <stop offset="7%" style="stop-color:rgb(160,160,255)" />
+      <stop offset="70%" style="stop-color:rgb(0,0,255)" />
+      <stop offset="100%" style="stop-color:rgb(0,255,0)" />
+    </radialGradient>
+    <radialGradient id="yellowball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(255,255,250)" />
+      <stop offset="3%" style="stop-color:rgb(255,255,250)" />
+      <stop offset="7%" style="stop-color:rgb(255,255,160)" />
+      <stop offset="70%" style="stop-color:rgb(255,255,0)" />
+      <stop offset="100%" style="stop-color:rgb(255,255,0)" />
+    </radialGradient>
+    <radialGradient id="greyball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,250,250)" />
+      <stop offset="3%" style="stop-color:rgb(250,250,250)" />
+      <stop offset="7%" style="stop-color:rgb(160,160,160)" />
+      <stop offset="70%" style="stop-color:rgb(100,100,100)" />
+      <stop offset="100%" style="stop-color:rgb(100,100,100)" />
+    </radialGradient>
+  </defs>
+
+
+</svg>

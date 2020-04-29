@@ -69,6 +69,7 @@ Graph::Graph(std::ifstream&ifs)
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
 Graph::Graph(Graph* Gmodel,std::string changement)
+    :m_oriente(Gmodel->m_oriente)//MODIF
 {
     std::string ext1="",ext2="";
     ext1=changement[0];
@@ -76,51 +77,44 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         ext2=" ";
     if (changement.size()==2)
         ext2=changement[1];
-
-    Sommet* Som1;
-    Sommet* Som2;
+    std::map<const Sommet*,Sommet*>traducteur;//MODIF
     if (ext2==" ")//retrait d'un sommet
     {
         for (auto s: Gmodel->m_sommets)
             if (s->getnom()!=ext1)
-                m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+            {
+                m_sommets.push_back(new Sommet(s));//MODIF
+                traducteur[s]=m_sommets.back();//MODIF
+            }
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
+            try
             {
-                for (auto i:m_sommets)
-                {
-                    if (i->getnom()==s->getext1()->getnom())
-                        Som1=i;
-                    if(i->getnom()==s->getext2()->getnom())
-                        Som2=i;
-                }
-                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));
+                Arete* temp=new Arete(s,traducteur);//MODIF
+                m_aretes.push_back(temp);//MODIF
+            }
+            catch(int a)
+            {
             }
         }
     }
     else//retrait d'une arete
     {
         for (auto s: Gmodel->m_sommets)//récuppération des valeur d'un sommet et copie dans un nouveau sommet
-            m_sommets.push_back(new Sommet(s->getnom(),s->getX(),s->getY()));
+        {
+            m_sommets.push_back(new Sommet(s));//MODIF
+            traducteur[s]=m_sommets.back();//MODIF
+        }
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)//selection des aretes à copier
+            if (s->verrif(ext1,ext2))//selection des aretes à copier
             {
-                for (auto i:m_sommets)
-                {
-                    if (i->getnom()==s->getext1()->getnom())
-                        Som1=i;
-                    if(i->getnom()==s->getext2()->getnom())
-                        Som2=i;
-                }
-                m_aretes.push_back(new Arete(Som1,Som2,s->get_poid()));//copie des aretes
+                m_aretes.push_back(new Arete(s,traducteur));//copie des aretes//MODIF
             }
         }
     }
-
 }
 
 ///Destructeur de Graph
@@ -182,9 +176,16 @@ void Graph::chargementPonderation(std::string nomfichier)
 /**FIN DES INFOS LIEE AU CHARGEMENT*/
 
 /**DEBUT DE L'AFFICHAGE D'UN GRAPH*/
+void Graph::affichage_poly()const
+{
+    Svgfile svgout;
+    affichage(svgout);
+    affichageconsole();
+}
+
 /// Affichage du graph au format svg
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
-void Graph::affichage(Svgfile& svgout)
+void Graph::affichage(Svgfile& svgout)const
 {
     for (Sommet* S:m_sommets)
         S->affichage(svgout);//affiche l'ensemble des sommets
@@ -211,6 +212,17 @@ void Graph::affichageconsole()const
 }
 
 /**CALCULE DES INDICES DU GRAPH*/
+
+void Graph::calcule_indices()
+{
+    calc_icd();
+    calc_vect_propre();
+    calc_icp();
+    Brand();
+    if(k_connexe())
+        calc_ici_naif();
+}
+
 ///Calcule de l'indice de centralité de degrée
 void Graph::calc_icd()
 {
@@ -247,6 +259,7 @@ void Graph::Brand()
     {
         //Déclarations
         std::stack<const Sommet*>p;
+        std::map<const Sommet*,bool> verrif;
         std::map<const Sommet*,double>delta;
         std::map<const Sommet*,std::list<const Sommet*>>predecesseur;
         std::map<const Sommet*,double>sigma;
@@ -257,7 +270,11 @@ void Graph::Brand()
         sigma[d]=1;
         while(!q.empty())
         {
-            p.push(q.top().first);
+            if(!verrif.count(q.top().first))
+            {
+                p.push(q.top().first);
+                verrif[q.top().first]=true;
+            }
             q.top().first->Brand(distance,q,sigma,predecesseur);
             q.pop();
         }
@@ -323,7 +340,6 @@ void Graph::calc_ici_naif()
             }
         }
         ///initialisation du ici
-        std::cout<<total;
         i->calc_ici_naif(total,a);
     }
 }
@@ -510,6 +526,13 @@ Graph* Graph::Supression_element()
     std::cin>>choix;//saisie
 
     etude_2=new Graph(this,choix);
+
+    if(etude_2->m_aretes.size() == m_aretes.size() && etude_2->m_sommets.size() == m_sommets.size() )
+    {
+        delete etude_2;
+        throw (0);
+    }
+
 
     return etude_2;
 }

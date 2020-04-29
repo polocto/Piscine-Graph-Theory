@@ -11,6 +11,7 @@ class Sommet
 {
 public:
     Sommet(const std::string&nom, const double& pos_x, const double& pos_y);//constructeur
+    Sommet(const Sommet* copie);
     virtual ~Sommet() = default;//destructeur par default ne fait rien
     /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);//ajout d'une arete au sommet

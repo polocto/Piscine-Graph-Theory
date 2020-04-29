@@ -1,5 +1,6 @@
 #include "Sommet.h"
 #include "Arete.h"
+#include <iomanip>
 
 /**DEBUT CONSTRUCTION SOMMET*/
 ///constructeur
@@ -30,7 +31,8 @@ void Sommet::ajout(Arete*suivant)
 ///Affichage console
 void Sommet::affichageconsole()const
 {
-    std::cout<<m_nom<<" icd: ("<<m_i_d<<","<<m_i_d_nn<<")"<<" icp: "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is<<" inter: ("<<m_i_i<<", "<<m_i_i_nn<<")";
+    std::cout<<m_nom<<" icd: ("<<std::setprecision(10)<<m_i_d<<","<<m_i_d_nn<<")"
+            <<" icp: "<<m_i_p<<" ivp: "<<m_i_vp<< " icis: "<<m_i_is<<" inter: ("<<m_i_i<<", "<<m_i_i_nn<<")";
 }
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout)const

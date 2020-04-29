@@ -36,10 +36,10 @@ public:
     ///indice de proximité
     void calc_icp(double distance,double total);
     ///intermediarite
-    //naïf
+    ///naïf
     void calc_ici_naif(double total,double a);
     void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
-    //Brand
+    ///Brand
     void Brand(const std::map<const Sommet*,double>&Cb,const double&n);
     void Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
     /**Conexité*/

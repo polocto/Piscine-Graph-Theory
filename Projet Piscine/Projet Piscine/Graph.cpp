@@ -199,6 +199,7 @@ void Graph::affichage_suppression()
     for (auto s:m_sommets)
         std::cout<< s->getnom()<<"  -  ";
 
+    std::cout<<std::endl;
     for (auto s:m_aretes)
         std::cout<<s->getext1()->getnom()<<" "<<s->getext2()->getnom()<<std::endl;
 

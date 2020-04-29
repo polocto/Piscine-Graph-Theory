@@ -18,6 +18,7 @@ public:
     void affichage_poly()const;
     void affichage(Svgfile& svgout)const;
     void affichageconsole()const;
+    void affichage_suppression();
     /**Calcule des différents indice*/
     void calcule_indices();
     void calc_icd();//indice de centralité de degré
@@ -33,6 +34,7 @@ public:
     void sauvegarde(std::ofstream&fichier)const;
 ///vulnerabilité
     Graph* Supression_element();
+    void comparaison_graph(Graph* ancien);
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

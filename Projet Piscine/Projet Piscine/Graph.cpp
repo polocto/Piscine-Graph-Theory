@@ -193,6 +193,17 @@ void Graph::affichage(Svgfile& svgout)const
         A->affichage(svgout);//affiche l'ensemble des aretes
 }
 
+void Graph::affichage_suppression()
+{
+    std::cout<<"Voici la liste des sommet du graph :\n";
+    for (auto s:m_sommets)
+        std::cout<< s->getnom()<<"  -  ";
+
+    for (auto s:m_aretes)
+        std::cout<<s->getext1()->getnom()<<" "<<s->getext2()->getnom()<<std::endl;
+
+}
+
 ///Affichage des parametre du graphe en console
 ///utiliser pour verification du chargement du graphe
 void Graph::affichageconsole()const
@@ -536,4 +547,23 @@ Graph* Graph::Supression_element()
 
     return etude_2;
 }
+
+void Graph::comparaison_graph(Graph* ancien)
+{
+    bool fin=1;
+    std::cout<< "Evolution des indicateur apres la suppression \n";
+    for (auto s:m_sommets)
+    {
+        unsigned int  i=0;
+        while(fin && i<ancien->m_sommets.size())
+        {
+            if (ancien->m_sommets[i]->getnom()==s->getnom())
+                fin=0;
+            i++;
+        }
+
+        s->affichage_comparaison(ancien->m_sommets[i]);
+    }
+}
+
 /**FIN TEST LA VULNERABILTE D'UN GRAPH*/

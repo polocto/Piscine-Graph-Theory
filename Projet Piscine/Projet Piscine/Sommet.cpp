@@ -31,18 +31,31 @@ void Sommet::ajout(Arete*suivant)
 ///Affichage console
 void Sommet::affichageconsole()const
 {
-    std::cout<<std::setprecision(3);
-    std::cout<<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<")";
-    std::cout<<" icp: "<<std::fixed<<m_i_p;
-    std::cout<<" ivp: "<<std::fixed<<m_i_vp;
-    std::cout<< " icis: "<<std::fixed<<m_i_is;
-    std::cout<<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
+    std::cout<<std::setprecision(3)
+            <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<")"
+            <<" icp: "<<std::fixed<<m_i_p
+            <<" ivp: "<<std::fixed<<m_i_vp
+            << " icis: "<<std::fixed<<m_i_is
+            <<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
+
 }
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout)const
 {
     svgout.addDisk(m_x*100,m_y*100,10,"BLACK");//Affichage sommet
     svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");//Affichage nom sommet
+}
+
+void Sommet::affichage_comparaison(Sommet* ancien)const
+{
+        std::cout<<std::setprecision(3)
+            <<m_nom<<" icd: ("<<std::fixed<<m_i_d-ancien->m_i_d<<","<<m_i_d_nn-ancien->m_i_d_nn<<")"
+            <<" icp: "<<std::fixed<<m_i_p-ancien->m_i_p
+            <<" ivp: "<<std::fixed<<m_i_vp-ancien->m_i_vp
+            << " icis: "<<std::fixed<<m_i_is-ancien->m_i_is
+            <<" inter: ("<<std::fixed<<m_i_i-ancien->m_i_i<<", "<<std::fixed<<m_i_i_nn-ancien->m_i_i_nn<<")"
+            <<std::endl;
+
 }
 /**FIN AFFICHAGE*/
 

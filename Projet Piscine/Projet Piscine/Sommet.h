@@ -19,7 +19,7 @@ public:
     /**AFFICHAGE*/
     void affichageconsole()const;//affichage en console
     void affichage(Svgfile& svgout)const;//affichage svg
-
+    void affichage_comparaison(Sommet* ancien)const;
     /**Getter*/
     std::string getnom()const;//reccupere le nom du sommet
     double getX()const;//reccupere la position x du sommet

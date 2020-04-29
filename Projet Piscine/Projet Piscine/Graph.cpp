@@ -551,16 +551,17 @@ Graph* Graph::Supression_element()
 
 void Graph::comparaison_graph(Graph* ancien)
 {
-    bool fin=1;
     std::cout<< "Evolution des indicateur apres la suppression \n";
     for (auto s:m_sommets)
     {
+         bool fin=1;
         unsigned int  i=0;
         while(fin && i<ancien->m_sommets.size())
         {
             if (ancien->m_sommets[i]->getnom()==s->getnom())
                 fin=0;
-            i++;
+
+            else i++;
         }
 
         s->affichage_comparaison(ancien->m_sommets[i]);

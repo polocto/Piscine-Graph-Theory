@@ -199,6 +199,7 @@ void Graph::affichage_suppression()
     for (auto s:m_sommets)
         std::cout<< s->getnom()<<"  -  ";
 
+    std::cout<<std::endl;
     for (auto s:m_aretes)
         std::cout<<s->getext1()->getnom()<<" "<<s->getext2()->getnom()<<std::endl;
 
@@ -550,10 +551,10 @@ Graph* Graph::Supression_element()
 
 void Graph::comparaison_graph(Graph* ancien)
 {
-    bool fin=1;
     std::cout<< "Evolution des indicateur apres la suppression \n";
     for (auto s:m_sommets)
     {
+         bool fin=1;
         unsigned int  i=0;
         fin=1;
         while(fin && i<ancien->m_sommets.size())

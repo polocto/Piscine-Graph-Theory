@@ -88,12 +88,13 @@ double Sommet::get_vp()const
 Arete* Sommet::trouverArete(Sommet* ext1)
 {
     Arete* Art=nullptr;
+
     for(auto s:m_suivants)
     {
         if (s->getext1()==this || s->getext1()==ext1)
             if (s->getext2()==this || s->getext2()==ext1)
                 Art=s;
-    }
+        }
     return Art;
 }
 /**FIN GETTER*/

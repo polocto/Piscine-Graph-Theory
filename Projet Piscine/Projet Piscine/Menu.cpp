@@ -129,7 +129,6 @@ void Menu::chargementGraph()
             delete tampon;//le supprimer
         std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
     }
-
 }
 
 /**
@@ -154,7 +153,6 @@ void Menu::chargementPonderation()
         std::cout<<"Probleme d'ouverture du fichier : "<<nom_fichier<<std::endl;//message console
         return;
     }
-
     m_etude->chargementPonderation(nom_fichier);//chargement du fichier de pond�ration d'un graph
 }
 
@@ -175,8 +173,6 @@ void Menu::vulnerabilite()
     Graph* tampon=m_etude;
     std::string saisie;
 
-
-
     bool stay=true;
     while(stay)
     {
@@ -193,8 +189,15 @@ void Menu::vulnerabilite()
             break;
         case 1://Suppretion d'un element du graph
             tampon->affichageconsole();
-            etude2=tampon->Supression_element();
-            tampon=etude2;
+            try
+            {
+                etude2=tampon->Supression_element();
+                tampon=etude2;
+            }
+            catch(int a)
+            {
+                std::cout<<"Auncune modification n'a atait apportee"<<std::endl;
+            }
             break;
         case 2://Affichage du nouveau graph
             if (etude2)

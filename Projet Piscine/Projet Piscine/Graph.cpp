@@ -545,6 +545,13 @@ Graph* Graph::Supression_element()
 
     etude_2=new Graph(this,choix);
 
+    if(etude_2->m_aretes.size() == m_aretes.size() && etude_2->m_sommets.size() == m_sommets.size() )
+    {
+        delete etude_2;
+        throw (0);
+    }
+
+
     return etude_2;
 }
 /**FIN TEST LA VULNERABILTE D'UN GRAPH*/

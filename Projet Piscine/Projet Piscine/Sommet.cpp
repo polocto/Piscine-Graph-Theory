@@ -50,7 +50,7 @@ void Sommet::affichage_comparaison(Sommet* ancien)const
 {
 
         std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<","<<ancien->m_i_d_nn<<m_i_d_nn<<")"
+            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<","<<ancien->m_i_d_nn-m_i_d_nn<<")"
             <<" icp: "<<std::fixed<<ancien->m_i_p-m_i_p
             <<" ivp: "<<std::fixed<<ancien->m_i_vp-m_i_vp
             << " icis: "<<std::fixed<<ancien->m_i_is-m_i_is

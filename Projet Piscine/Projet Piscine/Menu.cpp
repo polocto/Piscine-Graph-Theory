@@ -32,11 +32,11 @@ sa vuln�rabilit�
 ainsi que l'option pour quitter*/
 void Menu::affichage()const
 {
-    std::cout<<"0/Quitter"<<std::endl;
-    std::cout<<"1/Charger Graph"<<std::endl;
-    std::cout<<"2/Charger Ponderation"<<std::endl;
-    std::cout<<"3/Calcule indices"<<std::endl;
-    std::cout<<"4/Vulnerabilite"<<std::endl;
+    std::cout<<"0/Quitter"<<std::endl
+            <<"1/Charger Graph"<<std::endl
+            <<"2/Charger Ponderation"<<std::endl
+            <<"3/Calcule indices"<<std::endl
+            <<"4/Vulnerabilite"<<std::endl;
 }
 
 /**Saisie du choix et appel en fonction du choix
@@ -188,7 +188,7 @@ void Menu::vulnerabilite()
                 delete etude2;
             break;
         case 1://Suppretion d'un element du graph
-            tampon->affichageconsole();
+            tampon->affichage_suppression();
             try
             {
                 etude2=tampon->Supression_element();
@@ -213,6 +213,8 @@ void Menu::vulnerabilite()
                 //calculIndices(etude2);
             break;
         case 4://Annalyse des modification
+            if (etude2)
+                etude2->comparaison_graph(m_etude);
 
             break;
         default://si la saisie ne correspond � aucune case
@@ -220,5 +222,6 @@ void Menu::vulnerabilite()
         }
     }
 }
+
 
 

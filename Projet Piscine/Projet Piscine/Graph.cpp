@@ -181,6 +181,7 @@ void Graph::chargementPonderation(std::string nomfichier)
 void Graph::affichage_poly()const
 {
     Svgfile svgout;
+    svgout.addGrid();
     affichage(svgout);
     affichageconsole();
 }
@@ -190,7 +191,7 @@ void Graph::affichage_poly()const
 void Graph::affichage(Svgfile& svgout)const
 {
     for (Arete* A:m_aretes)
-        A->affichage(svgout);//affiche l'ensemble des aretes
+        A->affichage(svgout,m_oriente);//affiche l'ensemble des aretes
     for (Sommet* S:m_sommets)
         S->affichage(svgout);//affiche l'ensemble des sommets
 }

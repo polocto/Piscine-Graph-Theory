@@ -17,7 +17,7 @@ public:
     void ponderation(std::stringstream& ifs);//chargement des poid de l'arete
 
     /**Affichage*/
-    void affichage(Svgfile& svgout)const;//affichage svg
+    void affichage(Svgfile& svgout,const bool&oriente)const;//affichage svg
     void affichageconsole()const;//affichage console
     /**Getter*/
     double get_vp(Sommet*precedent)const;//reccupere l'indice de vecteur propre du sommet à l'autre extrémité "suivant"

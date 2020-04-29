@@ -21,8 +21,13 @@ Arete::Arete(Sommet* s1, Sommet* s2)
 
 ///Nouvelle proposition
 Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur)
-    :m_ext1(traducteur.at(copie->m_ext1)),m_ext2(traducteur.at(copie->m_ext2)),m_poids(copie->m_poids)
+    :m_poids(copie->m_poids)
 {
+    if(!traducteur.count(copie->m_ext1) || !traducteur.count(copie->m_ext2))
+        throw (0);
+
+    m_ext1=traducteur.at(copie->m_ext1);
+    m_ext2=traducteur.at(copie->m_ext2);
     m_ext1->ajout(this);
     m_ext2->ajout(this);
 }
@@ -84,6 +89,13 @@ Sommet*Arete::getext2()
 
 }
 /**GETTER FIN*/
+
+
+bool Arete::verrif(const std::string&ext1,const std::string&ext2)const
+{
+    return ext1!=m_ext1->getnom() || m_ext2->getnom()!=ext2;
+}
+
 /**Indice intermediarite*/
 void Arete::Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const
 {

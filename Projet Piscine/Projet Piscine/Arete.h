@@ -26,6 +26,7 @@ public:
     Sommet* getext1();//reccup sommet ext1
     Sommet* getext2();//recup sommet ext2
 
+    bool verrif(const std::string&ext1,const std::string&ext2)const;
     /**Indice intermediarite*/
     void Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
     /**k-arete connexité*/

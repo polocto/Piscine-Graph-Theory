@@ -91,7 +91,8 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
+            //if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
+            try
             {
                 /*for (auto i:m_sommets)
                 {
@@ -100,7 +101,11 @@ Graph::Graph(Graph* Gmodel,std::string changement)
                     if(i->getnom()==s->getext2()->getnom())
                         Som2=i;
                 }*/
-                m_aretes.push_back(new Arete(s,traducteur));//MODIF
+                Arete* temp=new Arete(s,traducteur);//MODIF
+                m_aretes.push_back(temp);//MODIF
+            }
+            catch(int a)
+            {
             }
         }
     }
@@ -114,7 +119,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->getext1()->getnom()!=ext1 || s->getext2()->getnom()!=ext2)//selection des aretes à copier
+            if (s->verrif(ext1,ext2))//selection des aretes à copier
             {
                 /*for (auto i:m_sommets)
                 {

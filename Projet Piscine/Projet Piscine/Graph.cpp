@@ -65,6 +65,7 @@ Graph::Graph(std::ifstream&ifs)
             throw(1);
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
+    calcule_indices();
 }
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
@@ -115,6 +116,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
             }
         }
     }
+    calcule_indices();
 }
 
 ///Destructeur de Graph
@@ -187,10 +189,10 @@ void Graph::affichage_poly()const
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
 void Graph::affichage(Svgfile& svgout)const
 {
-    for (Sommet* S:m_sommets)
-        S->affichage(svgout);//affiche l'ensemble des sommets
     for (Arete* A:m_aretes)
         A->affichage(svgout);//affiche l'ensemble des aretes
+    for (Sommet* S:m_sommets)
+        S->affichage(svgout);//affiche l'ensemble des sommets
 }
 
 void Graph::affichage_suppression()
@@ -266,6 +268,7 @@ void Graph::calc_vect_propre()
 void Graph::Brand()
 {
     std::map<const Sommet*,double>Cb;
+    double Cb_max=0;
     for(const Sommet* s : m_sommets)
         Cb[s]=0;
     for(Sommet* d : m_sommets)
@@ -301,13 +304,15 @@ void Graph::Brand()
                 for(const Sommet* pre : predecesseur.at(p.top()))
                     delta.at(pre)+=(sigma.at(pre)/sigma.at(p.top()))*(1+delta.at(p.top()));
                 Cb.at(p.top())+=delta.at(p.top());
+                if(Cb.at(p.top())>Cb_max)
+                    Cb_max=Cb.at(p.top());
             }
             p.pop();
         }
     }
     //affiliation des valeurs calculé au différentssommets du graphe
     for(Sommet* s : m_sommets)
-        s->Brand(Cb,(double)m_sommets.size());
+        s->Brand(Cb,(double)m_sommets.size(),Cb_max);
 }
 
 ///calcule de l'indicateur de centralité de proximité pour chaque sommet

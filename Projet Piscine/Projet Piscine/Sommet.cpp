@@ -6,7 +6,7 @@
 ///constructeur
 ///initialisation de donn�es non pass� en param�tre � 0
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
@@ -42,7 +42,7 @@ void Sommet::affichageconsole()const
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout)const
 {
-    svgout.addDisk(m_x*100,m_y*100,10,"BLACK");//Affichage sommet
+    svgout.addDisk(m_x*100,m_y*100,10,makeRGB(255*(m_i_i_nn/m_i_i_max),200,200));//Affichage sommet
     svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");//Affichage nom sommet
 }
 
@@ -152,12 +152,13 @@ void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pai
 
 ///Calcule des indice de centralité d'intermédiarité suivant l'alorithme de Brand
 ///normalisé et non
-void Sommet::Brand(const std::map<const Sommet*,double>&Cb,const double&n)
+void Sommet::Brand(const std::map<const Sommet*,double>&Cb,const double&n,const double &Cb_max)
 {
     m_i_i_nn=0;
     if(Cb.count(this))
         m_i_i_nn=Cb.at(this);
     m_i_i=m_i_i_nn/(n*n-3*n+2);
+    m_i_i_max=Cb_max;
 }
 ///Algortihme de Brand
 void Sommet::Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const

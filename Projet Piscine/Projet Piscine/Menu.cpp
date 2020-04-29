@@ -82,8 +82,6 @@ calcul affichage et sauvegarde des indices du graph
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
-
-    m_etude->calcule_indices();
     m_etude->affichage_poly();
 
     std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;

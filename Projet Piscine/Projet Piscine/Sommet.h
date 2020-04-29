@@ -40,7 +40,7 @@ public:
     void calc_ici_naif(double total,double a);
     void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
     ///Brand
-    void Brand(const std::map<const Sommet*,double>&Cb,const double&n);
+    void Brand(const std::map<const Sommet*,double>&Cb,const double&n,const double &Cb_max);
     void Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
     /**Conexité*/
     int k_connexe(const Sommet* arrive)const;
@@ -54,6 +54,7 @@ private:
     std::vector<Arete*> m_suivants;//arete suivante du graphe
     double m_i_d,m_i_vp,m_i_p,m_i_i,m_i_is;//indice normalisé
     double m_i_i_nn,m_i_d_nn;//indice non normalisé
+    double m_i_i_max;
     double m_x,m_y;//position du sommet
 };
 

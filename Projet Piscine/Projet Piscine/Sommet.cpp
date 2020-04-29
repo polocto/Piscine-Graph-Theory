@@ -48,12 +48,13 @@ void Sommet::affichage(Svgfile& svgout)const
 
 void Sommet::affichage_comparaison(Sommet* ancien)const
 {
+
         std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<m_i_d-ancien->m_i_d<<","<<m_i_d_nn-ancien->m_i_d_nn<<")"
-            <<" icp: "<<std::fixed<<m_i_p-ancien->m_i_p
-            <<" ivp: "<<std::fixed<<m_i_vp-ancien->m_i_vp
-            << " icis: "<<std::fixed<<m_i_is-ancien->m_i_is
-            <<" inter: ("<<std::fixed<<m_i_i-ancien->m_i_i<<", "<<std::fixed<<m_i_i_nn-ancien->m_i_i_nn<<")"
+            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<","<<ancien->m_i_d_nn<<m_i_d_nn<<")"
+            <<" icp: "<<std::fixed<<ancien->m_i_p-m_i_p
+            <<" ivp: "<<std::fixed<<ancien->m_i_vp-m_i_vp
+            << " icis: "<<std::fixed<<ancien->m_i_is-m_i_is
+            <<" inter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
             <<std::endl;
 
 }

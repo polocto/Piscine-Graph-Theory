@@ -209,7 +209,7 @@ void Graph::affichage_suppression()
 ///utiliser pour verification du chargement du graphe
 void Graph::affichageconsole()const
 {
-    std::cout<<" Sommet composant le graf :"<<std::endl;
+    std::cout<<" Sommet composant le graphe :"<<std::endl;
     for( auto s:m_sommets)
     {
         s->affichageconsole();//Appel de l'affichage des paramettre des Sommets

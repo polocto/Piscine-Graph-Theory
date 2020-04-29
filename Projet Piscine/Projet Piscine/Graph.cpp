@@ -63,7 +63,7 @@ Graph::Graph(std::ifstream&ifs)
         iss>>s2;
         if(ifs.fail() || s2>m_sommets.size())
             throw(1);
-        m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2]));// Creation d'une Arete a partir des informations du fichier
+        m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
 }
 ///Construction d'un graph partiel
@@ -227,6 +227,7 @@ void Graph::affichageconsole()const
 
 void Graph::calcule_indices()
 {
+
     calc_icd();
     calc_vect_propre();
     calc_icp();
@@ -453,10 +454,8 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
         //Determiner le sommet actif
         sommetActif=Som[0];
         for (auto s:Som)
-        {
             if (poids[s->getnom()]<poids[sommetActif->getnom()])
                 sommetActif=s;
-        }
 
         sommetActif->ajoutvoisin(Som,marque,poids);
         marque[sommetActif->getnom()].first=1; //Marquage du sommetActif pour qu'il ne soit plus ajouter a la liste des suivant
@@ -464,25 +463,19 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
         //Determination du poidtotal du chemin le plus cours pour chaque arete du graphe tant que sommet n'est pas decouvert
         if (marque[sommetActif->getnom()].second!=nullptr)
         {
-            areteactive=sommetActif->trouverArete(marque[sommetActif->getnom()].second);
+            areteactive=marque[sommetActif->getnom()].second->trouverArete(sommetActif);
             poidarete=areteactive->get_poid();
         }
 
         if (marque[sommetActif->getnom()].second==nullptr)
-        {
             poids[sommetActif->getnom()]=poidarete;
-        }
         else
-        {
             poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
-        }
 
         //supression de la liste du Sommet actif
         for (size_t i=0; i<Som.size(); i++)
-        {
             if (Som[i]==sommetActif)
                 Som.erase(Som.begin()+i);
-        }
     }
 
     return poids[arriver->getnom()];//on retourne le poids du chemin

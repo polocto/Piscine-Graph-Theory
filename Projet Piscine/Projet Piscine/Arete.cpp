@@ -5,11 +5,12 @@
 ///Constructeur de la class Arete
 ///Prend en parametre les adresses des deux extremit�e pour initialiser arrete et pour ajouter l'arrete a leur liste de suivant
 ///initialisation du poids a 1 cas d'un graph non ponder�
-Arete::Arete(Sommet* s1, Sommet* s2)
+Arete::Arete(Sommet* s1, Sommet* s2,bool oriente)
     :m_ext1(s1),m_ext2(s2),m_poids(1)
 {
     m_ext1->ajout(this);
-    m_ext2->ajout(this);
+    if (!oriente)
+        m_ext2->ajout(this);
 }
 ///constructeur copie arete
 ///Nouvelle proposition

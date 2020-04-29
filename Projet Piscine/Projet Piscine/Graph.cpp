@@ -393,7 +393,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
         //Determination du poidtotal du chemin le plus cours pour chaque arete du graphe tant que sommet n'est pas decouvert
         if (marque[sommetActif->getnom()].second!=nullptr)
         {
-            areteactive=sommetActif->trouverArete(marque[sommetActif->getnom()].second);
+            areteactive=marque[sommetActif->getnom()].second->trouverArete(sommetActif);
             poidarete=areteactive->get_poid();
         }
 

@@ -78,8 +78,6 @@ Graph::Graph(Graph* Gmodel,std::string changement)
     if (changement.size()==2)
         ext2=changement[1];
     std::map<const Sommet*,Sommet*>traducteur;//MODIF
-    //Sommet* Som1;//MODIF
-    //Sommet* Som2;//MODIF
     if (ext2==" ")//retrait d'un sommet
     {
         for (auto s: Gmodel->m_sommets)
@@ -91,16 +89,8 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 
         for (auto s: Gmodel->m_aretes)
         {
-            //if (s->getext1()->getnom()!=ext1 && s->getext2()->getnom()!=ext1)
             try
             {
-                /*for (auto i:m_sommets)
-                {
-                    if (i->getnom()==s->getext1()->getnom())
-                        Som1=i;
-                    if(i->getnom()==s->getext2()->getnom())
-                        Som2=i;
-                }*/
                 Arete* temp=new Arete(s,traducteur);//MODIF
                 m_aretes.push_back(temp);//MODIF
             }
@@ -121,13 +111,6 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         {
             if (s->verrif(ext1,ext2))//selection des aretes à copier
             {
-                /*for (auto i:m_sommets)
-                {
-                    if (i->getnom()==s->getext1()->getnom())
-                        Som1=i;
-                    if(i->getnom()==s->getext2()->getnom())
-                        Som2=i;
-                }*/
                 m_aretes.push_back(new Arete(s,traducteur));//copie des aretes//MODIF
             }
         }
@@ -357,7 +340,6 @@ void Graph::calc_ici_naif()
             }
         }
         ///initialisation du ici
-        //std::cout<<total;
         i->calc_ici_naif(total,a);
     }
 }

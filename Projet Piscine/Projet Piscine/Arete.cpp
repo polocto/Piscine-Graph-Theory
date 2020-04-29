@@ -12,13 +12,6 @@ Arete::Arete(Sommet* s1, Sommet* s2)
     m_ext2->ajout(this);
 }
 ///constructeur copie arete
-/*Arete::Arete(Sommet* s1, Sommet* s2,double poids)
-    :m_ext1(s1),m_ext2(s2),m_poids(poids)
-{
-    m_ext1->ajout(this);
-    m_ext2->ajout(this);
-}*/
-
 ///Nouvelle proposition
 Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur)
     :m_poids(copie->m_poids)

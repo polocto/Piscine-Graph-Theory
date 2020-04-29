@@ -89,7 +89,7 @@ Arete* Sommet::trouverArete(Sommet* ext1)
 void Sommet::calc_icd(const size_t&ordre)
 {
     m_i_d_nn=m_suivants.size();
-    m_i_d=m_i_d_nn/(double)ordre;
+    m_i_d=m_i_d_nn/(double)(ordre-1);
 }
 ///Calcul somme des indice de vecteur propre des voisins
 void Sommet::calc_vp(std::map<Sommet*,double>&somme)

@@ -196,7 +196,6 @@ void Graph::affichage(Svgfile& svgout)const
         if (som_max<s->getY())
             som_max=s->getY();
 
-    std::cout<<som_max;
     for (int i=0;i<255;i++)
         svgout.addRect(100+3*i,(som_max*100)+50,3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
 
@@ -256,7 +255,7 @@ void Graph::calcule_indices()
     calc_vect_propre();
     calc_icp();
     Brand();
-    if(k_connexe())
+    if(!m_oriente && k_connexe())
         calc_ici_naif();
     calc_indice_total();
 }
@@ -272,12 +271,8 @@ void Graph::calc_indice_total()
 
     for (auto s:m_sommets)
     {
-        std::cout<<s->get_cp()<<"\n";
         total+=max1-s->get_cp();
     }
-
-
-    std::cout <<"tot"<<total<<std::endl;
     m_indice=total/((m_sommets.size()*m_sommets.size())+3*m_sommets.size()+2)/(2*m_sommets.size()-3);
 }
 

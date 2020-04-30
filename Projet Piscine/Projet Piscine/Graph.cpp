@@ -190,6 +190,15 @@ void Graph::affichage_poly()const
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
 void Graph::affichage(Svgfile& svgout)const
 {
+    int som_max=m_sommets[0]->getY();
+    for (auto s: m_sommets)
+        if (som_max<s->getY())
+            som_max=s->getY();
+
+    std::cout<<som_max;
+    for (int i=0;i<255;i++)
+        svgout.addRect(100+3*i,(som_max*100)+50,3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
+
     for (Arete* A:m_aretes)
         A->affichage(svgout,m_oriente);//affiche l'ensemble des aretes
     for (Sommet* S:m_sommets)
@@ -212,6 +221,14 @@ void Graph::affichage_suppression()
 ///utiliser pour verification du chargement du graphe
 void Graph::affichageconsole()const
 {
+    if (m_oriente)
+    {
+        if (fortement_connexe())
+            std::cout<< "le graph oriente est fortement connexe\n";
+        else std::cout<<"le graph oriente n'est pas fortement connexe\n";
+    }
+        else
+    std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
     std::cout<<" Sommet composant le graphe :"<<std::endl;
     for( auto s:m_sommets)
     {
@@ -434,7 +451,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
-double Graph::Dijkstra(Sommet* depart,Sommet* arriver)
+double Graph::Dijkstra(Sommet* depart,Sommet* arriver)const
 {
     //Declaration de variable
     std::vector<Sommet*> Som;
@@ -510,6 +527,26 @@ int Graph::k_connexe()const
         }
     }
     return k;//retourne le nombre de chemin différent en empruntant qu'une seul fois les arete sois la k-arete-connexité
+}
+
+bool Graph::fortement_connexe()const
+{
+    double dist=0;
+
+    for (auto s:m_sommets)
+    {
+        for (auto i:m_sommets)
+        {
+            if (s!=i)
+            {
+            dist=Dijkstra(s,i);
+            if (dist==0)
+                return 0;
+            }
+
+        }
+    }
+    return 1;
 }
 /**FIN DU TEST DE CONNEXITE D'UN GRAPH*/
 

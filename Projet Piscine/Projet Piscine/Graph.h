@@ -26,10 +26,11 @@ public:
     void Brand();//intermediatirité
     void calc_icp();//indice de proximité
     void calc_ici_naif();//intermediatirité naïve
-    double Dijkstra(Sommet* depart,Sommet* arriver);
+    double Dijkstra(Sommet* depart,Sommet* arriver)const;
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     /**Test la k-arete-connexité d'un graphe*/
     int k_connexe()const;
+    bool fortement_connexe()const;
     /**Sauvegarde des différents indices du graphe*/
     void sauvegarde(std::ofstream&fichier)const;
 ///vulnerabilité

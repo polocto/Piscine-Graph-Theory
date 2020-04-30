@@ -84,7 +84,6 @@ void Menu::calculIndices()
     std::ofstream fichier("sauvegarde.txt");
     m_etude->affichage_poly();
 
-    std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
         m_etude->sauvegarde(fichier);
     else

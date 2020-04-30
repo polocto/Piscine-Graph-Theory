@@ -27,7 +27,7 @@ public:
     void Brand();//intermediatirité
     void calc_icp();//indice de proximité
     void calc_ici_naif();//intermediatirité naïve
-    double Dijkstra(Sommet* depart,Sommet* arriver)const;
+    std::map<std::string,double> Dijkstra(Sommet* depart)const;
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     /**Test la k-arete-connexité d'un graphe*/
     int k_connexe()const;

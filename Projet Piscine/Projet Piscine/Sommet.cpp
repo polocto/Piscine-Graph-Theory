@@ -42,7 +42,7 @@ void Sommet::affichageconsole()const
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout)const
 {
-    svgout.addDisk(m_x*100,m_y*100,10,makeRGB(255*(m_i_i_nn/m_i_i_max),200,200));//Affichage sommet
+    svgout.addDisk(m_x*100,m_y*100,10,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
     svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");//Affichage nom sommet
 }
 
@@ -84,6 +84,10 @@ double Sommet::get_vp()const
     return m_i_vp;
 }
 
+double Sommet::get_cp()const
+{
+    return m_i_p;
+}
 ///retourne une arete avec les deux sommet aux extremiter
 Arete* Sommet::trouverArete(Sommet* ext1)
 {
@@ -208,6 +212,9 @@ void Sommet::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std
     for(Arete* a : m_suivants)//parcourir l'ensemble des arets pour aller aux sommets suivants
         a->k_connexe(nombre_chemin,arete,sommet,arrive);
 }
+
+
+
 /**FIN ETUDE DE CONNEXITE*/
 
 ///Sauvegarde

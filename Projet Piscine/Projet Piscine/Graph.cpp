@@ -9,6 +9,7 @@
 ///Prend en paramettre le nom du fichier utilisé
 /// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
 Graph::Graph(std::ifstream&ifs)
+    :m_indice{0}
 {
     std::string line;
     size_t ot=0;
@@ -229,7 +230,9 @@ void Graph::affichageconsole()const
     }
         else
     std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
+    std::cout<<"l'indice de centralite global du graph est : "<<m_indice<<std::endl;
     std::cout<<" Sommet composant le graphe :"<<std::endl;
+
     for( auto s:m_sommets)
     {
         s->affichageconsole();//Appel de l'affichage des paramettre des Sommets
@@ -245,6 +248,7 @@ void Graph::affichageconsole()const
 
 /**CALCULE DES INDICES DU GRAPH*/
 
+
 void Graph::calcule_indices()
 {
 
@@ -254,7 +258,29 @@ void Graph::calcule_indices()
     Brand();
     if(k_connexe())
         calc_ici_naif();
+    calc_indice_total();
 }
+
+///Calcule de la centralité de proximiter du graph entier
+void Graph::calc_indice_total()
+{
+    double max1=m_sommets[0]->get_cp();
+    double total=0;
+    for (auto s:m_sommets)
+        if(max1<s->get_cp())
+            max1=s->get_cp();
+
+    for (auto s:m_sommets)
+    {
+        std::cout<<s->get_cp()<<"\n";
+        total+=max1-s->get_cp();
+    }
+
+
+    std::cout <<"tot"<<total<<std::endl;
+    m_indice=total/((m_sommets.size()*m_sommets.size())+3*m_sommets.size()+2)/(2*m_sommets.size()-3);
+}
+
 
 ///Calcule de l'indice de centralité de degrée
 void Graph::calc_icd()

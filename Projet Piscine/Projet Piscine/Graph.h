@@ -20,6 +20,7 @@ public:
     void affichageconsole()const;
     void affichage_suppression();
     /**Calcule des différents indice*/
+    void calc_indice_total();
     void calcule_indices();
     void calc_icd();//indice de centralité de degré
     void calc_vect_propre();//vecteur propre
@@ -40,6 +41,7 @@ private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph
     bool m_oriente;
+    double m_indice;
 };
 
 #endif

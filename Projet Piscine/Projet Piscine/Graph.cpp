@@ -361,10 +361,11 @@ void Graph::calc_icp()
     for (auto i:m_sommets)
     {
         double distance=0;
+        std::map<std::string,double> tampon=Dijkstra(i);
         for(auto s:m_sommets)
         {
             if (s!=i)
-                distance+=Dijkstra(i,s);
+                distance+=tampon.at(s->getnom());
         }
         i->calc_icp(distance,m_sommets.size()-1);//envoie les valeur pour modifier la valeur de l'indice icp des sommet
     }
@@ -472,7 +473,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
-double Graph::Dijkstra(Sommet* depart,Sommet* arriver)const
+std::map<std::string,double> Graph::Dijkstra(Sommet* depart)const
 {
     //Declaration de variable
     std::vector<Sommet*> Som;
@@ -493,7 +494,7 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)const
         poids[s->getnom()]=0;
     }
 
-    while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
+    while ( !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
     {
         //Determiner le sommet actif
         sommetActif=Som[0];
@@ -522,7 +523,7 @@ double Graph::Dijkstra(Sommet* depart,Sommet* arriver)const
                 Som.erase(Som.begin()+i);
     }
 
-    return poids[arriver->getnom()];//on retourne le poids du chemin
+    return poids;//on retourne le poids du chemin
 }
 /**Fin Dijkstra*/
 /**FIN CALCULE DES INDICES DU GRAPH*/
@@ -556,11 +557,12 @@ bool Graph::fortement_connexe()const
 
     for (auto s:m_sommets)
     {
+        std::map<std::string,double>tampon=Dijkstra(s);
         for (auto i:m_sommets)
         {
             if (s!=i)
             {
-            dist=Dijkstra(s,i);
+                dist=tampon.at(s->getnom());
             if (dist==0)
                 return 0;
             }

@@ -25,6 +25,7 @@ public:
     double getX()const;//reccupere la position x du sommet
     double getY()const;//reccupere la position y du sommet
     double get_vp()const;//Reccupere l'indice de vecteur propre
+    double get_cp()const;
     Arete* trouverArete(Sommet* ext1);//retourne une arete
 
     /**CALCULE INDICES*/

@@ -84,6 +84,10 @@ double Sommet::get_vp()const
     return m_i_vp;
 }
 
+double Sommet::get_cp()const
+{
+    return m_i_p;
+}
 ///retourne une arete avec les deux sommet aux extremiter
 Arete* Sommet::trouverArete(Sommet* ext1)
 {

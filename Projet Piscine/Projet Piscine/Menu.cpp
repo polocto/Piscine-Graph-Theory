@@ -36,7 +36,8 @@ void Menu::affichage()const
             <<"1/Charger Graph"<<std::endl
             <<"2/Charger Ponderation"<<std::endl
             <<"3/Calcule indices"<<std::endl
-            <<"4/Vulnerabilite"<<std::endl;
+            <<"4/Vulnerabilite"<<std::endl
+            <<"5/flot entre 2 stations"<<std::endl;
 }
 
 /**Saisie du choix et appel en fonction du choix
@@ -71,6 +72,8 @@ bool Menu::choix()
     case 4://Test la vuln�rabilit� du graph
         vulnerabilite();
         break;
+    case 5:
+        flot();
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
     }
@@ -128,6 +131,16 @@ void Menu::chargementGraph()
     }
 }
 
+void Menu::flot()
+{
+    std::string depart,arriver;
+    std::cout<<" Entrer la station de depart: ";
+    std::cin>>depart;
+    std::cout<<" Entrer la station d'arriver: ";
+    std::cin>>arriver;
+    m_etude->flot_entre_deux_point(depart,arriver);
+
+}
 /**
 Chargement pond�ration du graph
 change le poids des aretes

@@ -25,6 +25,11 @@ void Sommet::ajout(Arete*suivant)
 {
     m_suivants.push_back(suivant);
 }
+
+void Sommet::ajoutP(Arete*precedent)
+{
+    m_precedents.push_back(precedent);
+}
 /**FIN CONSTRUCTION SOMMET*/
 
 /**DEBUT AFFICHAGE*/
@@ -40,11 +45,10 @@ void Sommet::affichageconsole()const
 
 }
 ///Affichage SVG
-void Sommet::affichage(Svgfile& svgout)const
+void Sommet::affichage(Svgfile& svgout,const double&coeff)const
 {
-    int coef=15;
-    svgout.addDisk(m_x*coef+2,m_y*coef+2,3,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
-    //svgout.addText(m_x*coef+2-(m_nom.size()/2),m_y*coef-3,m_nom,"BLACK");//Affichage nom sommet
+    svgout.addDisk(m_x*coeff,m_y*coeff,3,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
+    //svgout.addText(m_x*coeff-1,m_y*coeff-20,m_nom,"BLUE");//Affichage nom sommet
 }
 
 void Sommet::affichage_comparaison(Sommet* ancien)const
@@ -226,4 +230,38 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
     fichier<<"indice de proximite : "<<m_i_p<<"; ";
     fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
+}
+
+
+void Sommet::flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const
+{
+    for(Arete* s : m_suivants)
+        s->flot(carte,file,flot,connexe);
+    for(Arete* p : m_precedents)
+        p->flot(carte,file,flot,connexe);
+}
+
+
+void Sommet::flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
+{
+    double n_max = carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+void Sommet::flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
+{
+    if(carte.at(this).first.first == nullptr)
+        return;
+    if(n_max>carte.at(this).second.second)
+        n_max=carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+double Sommet::flot_sortant(const std::map<const Arete*,double> &flot)const
+{
+    double somme=0;
+    for(const Arete* a : m_suivants)
+        if(flot.count(a))
+            somme+=flot.at(a);
+    return somme;
 }

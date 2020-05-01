@@ -11,10 +11,12 @@ Arete::Arete(Sommet* s1, Sommet* s2,bool oriente)
     m_ext1->ajout(this);
     if (!oriente)
         m_ext2->ajout(this);
+    else
+        m_ext2->ajoutP(this);
 }
 ///constructeur copie arete
 ///Nouvelle proposition
-Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur)
+Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur,bool oriente)
     :m_poids(copie->m_poids)
 {
     if(!traducteur.count(copie->m_ext1) || !traducteur.count(copie->m_ext2))
@@ -23,7 +25,10 @@ Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur
     m_ext1=traducteur.at(copie->m_ext1);
     m_ext2=traducteur.at(copie->m_ext2);
     m_ext1->ajout(this);
-    m_ext2->ajout(this);
+    if (!oriente)
+        m_ext2->ajout(this);
+    else
+        m_ext2->ajoutP(this);
 }
 ///fin
 
@@ -44,25 +49,24 @@ void Arete::affichageconsole()const
 }
 
 /// Affichage au format svg d'une Arete du graph
-void Arete::affichage(Svgfile& svgout,const bool&oriente)const
+void Arete::affichage(Svgfile& svgout,const bool&oriente,const double& coeff_t)const
 {
-    int coef=15;
-    int coef2=3;
-    svgout.addLine(m_ext1->getX()*coef+2,m_ext1->getY()*coef+2,m_ext2->getX()*coef+2,m_ext2->getY()*coef+2,"BLACK");
-    /*if(oriente)
+
+    svgout.addLine(m_ext1->getX()*coeff_t,m_ext1->getY()*coeff_t,m_ext2->getX()*coeff_t,m_ext2->getY()*coeff_t,"BLACK");
+    if(oriente)
     {
-        double d_x=m_ext2->getX()*coef+2,d_y=m_ext2->getY()*coef+2;
+        double d_x=m_ext2->getX()*coeff_t,d_y=m_ext2->getY()*coeff_t;
         double x=m_ext2->getX()-m_ext1->getX(),y=m_ext2->getY()-m_ext1->getY();
         double module=sqrt(x*x+y*y);
         double a=(-y)/module,b=x/module;
-        double coeff=3.5;
+        double coeff=2;
         x/=module;
         y/=module;
         double pointe_x = d_x-3*x, pointe_y=d_y-3*y;
-        double ext1_x=d_x-(coef2+coeff)*x-a*coeff,ext1_y=d_y-(coef2+coeff)*y-coeff*b;
-        double ext2_x=d_x-(coef2+coeff)*x+a*coeff,ext2_y=d_y-(coef2+coeff)*y+coeff*b;
+        double ext1_x=d_x-(3+coeff)*x-a*coeff,ext1_y=d_y-(3+coeff)*y-coeff*b;
+        double ext2_x=d_x-(3+coeff)*x+a*coeff,ext2_y=d_y-(3+coeff)*y+coeff*b;
         svgout.addTriangle(pointe_x,pointe_y,ext1_x,ext1_y,ext2_x,ext2_y,"black");
-    }*/
+    }
 }
 /**AFFICHAGE DE ARETE FIN*/
 
@@ -137,4 +141,42 @@ void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std:
         m_ext1->k_connexe(nombre_chemin,arete,sommet,arrive);
     else if(!sommet.count(m_ext2))//si mon sommet ext2 n'a pas était emprunter
         m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
+}
+
+
+void Arete::flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const
+{
+    double poids=1;
+    if(!connexe)
+        poids=m_poids;
+    if(!flot.count(this))
+            flot[this]=0;
+    if(!carte.count(m_ext2) && ( flot.at(this)<poids ))
+    {
+        file.push_back(m_ext2);
+        carte[m_ext2]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{m_ext1,this},{true,poids-flot.at(this)}};
+    }
+    else if(!carte.count(m_ext1) && ( flot.at(this) ))
+    {
+        file.push_back(m_ext1);
+        carte[m_ext1]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{m_ext2,this},{false,flot.at(this)}};
+    }
+}
+
+
+void Arete::flot_reccursif(const Sommet*suivant,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot,double&n_max)const
+{
+    Sommet* temp = nullptr;
+	if ( (suivant == m_ext1  )|| suivant == m_ext2)
+		suivant->flot_reccursif(n_max,carte,flot);
+	else
+		return;
+	if (m_ext1 == suivant)
+		temp = m_ext2;
+	else
+		temp = m_ext1;
+	if (carte.at(temp).second.first)
+		flot.at(this) += n_max;
+	else
+		flot.at(this) -= n_max;
 }

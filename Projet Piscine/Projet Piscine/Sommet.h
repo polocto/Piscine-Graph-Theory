@@ -51,10 +51,10 @@ public:
     /**Sauvegarde*/
     void sauvegarde(std::ofstream&fichier)const;//sauvegarde des indices
 
-    void flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot);
-    void flot_reccursif(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot);
-    void flot_reccursif(double &n_max ,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot);
-    double flot_sortant(const std::map<Arete*,double> &flot);
+    void flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const;
+    void flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    void flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    double flot_sortant(const std::map<const Arete*,double> &flot)const;
 private:
     std::string m_nom;
     std::vector<Arete*> m_suivants,m_precedents;//arete suivante du graphe

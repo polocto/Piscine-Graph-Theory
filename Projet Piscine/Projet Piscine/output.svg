@@ -320,6 +320,8 @@
 <polygon points=" 200,110 196.5,118.5 203.5,118.5" style="fill:black" />
 <line x1="200" y1="400" x2="100" y2="300" stroke="BLACK" />
 <polygon points=" 107.071,307.071 110.607,315.556 115.556,310.607" style="fill:black" />
+<line x1="200" y1="400" x2="400" y2="300" stroke="BLACK" />
+<polygon points=" 391.056,304.472 381.888,305.143 385.018,311.404" style="fill:black" />
 <line x1="400" y1="100" x2="200" y2="200" stroke="BLACK" />
 <polygon points=" 208.944,195.528 218.112,194.857 214.982,188.596" style="fill:black" />
 <line x1="400" y1="100" x2="500" y2="200" stroke="BLACK" />
@@ -330,21 +332,21 @@
 <polygon points=" 492.929,207.071 484.444,210.607 489.393,215.556" style="fill:black" />
 <line x1="500" y1="200" x2="400" y2="100" stroke="BLACK" />
 <polygon points=" 407.071,107.071 410.607,115.556 415.556,110.607" style="fill:black" />
-<circle cx="100" cy="200" r="10" fill="rgb(68,0,187)" />
+<circle cx="100" cy="200" r="10" fill="rgb(105,0,150)" />
 <text x="99" y="180" fill="BLUE" >A</text>
-<circle cx="100" cy="300" r="10" fill="rgb(102,0,153)" />
+<circle cx="100" cy="300" r="10" fill="rgb(67,0,187)" />
 <text x="99" y="280" fill="BLUE" >B</text>
-<circle cx="200" cy="100" r="10" fill="rgb(212,0,42)" />
+<circle cx="200" cy="100" r="10" fill="rgb(150,0,105)" />
 <text x="199" y="80" fill="BLUE" >C</text>
 <circle cx="200" cy="200" r="10" fill="rgb(255,0,0)" />
 <text x="199" y="180" fill="BLUE" >D</text>
-<circle cx="200" cy="400" r="10" fill="rgb(8,0,246)" />
+<circle cx="200" cy="400" r="10" fill="rgb(112,0,142)" />
 <text x="199" y="380" fill="BLUE" >E</text>
-<circle cx="400" cy="100" r="10" fill="rgb(170,0,85)" />
+<circle cx="400" cy="100" r="10" fill="rgb(135,0,120)" />
 <text x="399" y="80" fill="BLUE" >F</text>
-<circle cx="400" cy="300" r="10" fill="rgb(0,0,255)" />
+<circle cx="400" cy="300" r="10" fill="rgb(52,0,202)" />
 <text x="399" y="280" fill="BLUE" >G</text>
-<circle cx="500" cy="200" r="10" fill="rgb(17,0,238)" />
+<circle cx="500" cy="200" r="10" fill="rgb(22,0,232)" />
 <text x="499" y="180" fill="BLUE" >H</text>
   
 

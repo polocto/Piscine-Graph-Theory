@@ -233,22 +233,22 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
 }
 
 
-void Sommet::flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot)
+void Sommet::flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const
 {
     for(Arete* s : m_suivants)
-        s->flot(carte,file,flot);
+        s->flot(carte,file,flot,connexe);
     for(Arete* p : m_precedents)
-        p->flot(carte,file,flot);
+        p->flot(carte,file,flot,connexe);
 }
 
 
-void Sommet::flot_reccursif(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot)
+void Sommet::flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
 {
     double n_max = carte.at(this).second.second;
     carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
 }
 
-void Sommet::flot_reccursif(double &n_max ,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot)
+void Sommet::flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
 {
     if(carte.at(this).first.first == nullptr)
         return;
@@ -257,10 +257,10 @@ void Sommet::flot_reccursif(double &n_max ,std::map<Sommet*,std::pair<std::pair<
     carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
 }
 
-double Sommet::flot_sortant(const std::map<Arete*,double> &flot)
+double Sommet::flot_sortant(const std::map<const Arete*,double> &flot)const
 {
     double somme=0;
-    for(Arete* a : m_suivants)
+    for(const Arete* a : m_suivants)
         if(flot.count(a))
             somme+=flot.at(a);
     return somme;

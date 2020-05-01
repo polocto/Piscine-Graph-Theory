@@ -143,25 +143,27 @@ void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std:
 }
 
 
-void Arete::flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot)
+void Arete::flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const
 {
     double poids=1;
+    if(!connexe)
+        poids=m_poids;
     if(!flot.count(this))
             flot[this]=0;
     if(!carte.count(m_ext2) && ( flot.at(this)<poids ))
     {
         file.push_back(m_ext2);
-        carte[m_ext2]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{m_ext1,this},{true,poids-flot.at(this)}};
+        carte[m_ext2]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{m_ext1,this},{true,poids-flot.at(this)}};
     }
     else if(!carte.count(m_ext1) && ( flot.at(this) ))
     {
         file.push_back(m_ext1);
-        carte[m_ext1]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{m_ext2,this},{false,flot.at(this)}};
+        carte[m_ext1]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{m_ext2,this},{false,flot.at(this)}};
     }
 }
 
 
-void Arete::flot_reccursif(Sommet*suivant,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot,double&n_max)
+void Arete::flot_reccursif(const Sommet*suivant,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot,double&n_max)const
 {
     Sommet* temp = nullptr;
 	if ( (suivant == m_ext1  )|| suivant == m_ext2)

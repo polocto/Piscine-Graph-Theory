@@ -631,41 +631,46 @@ void Graph::comparaison_graph(Graph* ancien)
 
 /**FIN TEST LA VULNERABILTE D'UN GRAPH*/
 
+
+double Graph::recherche_de_flot(const Sommet* s,const Sommet* p , const bool& connexe)const
+{
+    std::list<const Sommet*>file;
+    bool continuer = true;
+    std::map<const Arete*,double> flot;
+    while(continuer)
+    {
+        continuer = false;
+        std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>carte;
+        file.clear();
+        file.push_front(s);
+        carte[s]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{nullptr,nullptr},{true,1}};
+        do
+        {
+            file.front()->flot(carte,file,flot,connexe);
+            file.pop_front();
+        }while(!file.empty() && !carte.count(p));
+        if(carte.count(p))
+        {
+            continuer = true;
+            p->flot_reccursif(carte,flot);
+        }
+    }
+
+    return s->flot_sortant(flot);
+}
+
 double Graph::k_ko()const
 {
     double k=-1;
-    int i = 0;
-    for(Sommet* s : m_sommets)
+    for(const Sommet* s : m_sommets)
     {
-        for(Sommet* p : m_sommets)
+        for(const Sommet* p : m_sommets)
         {
             if(p!=s)
             {
-                std::list<Sommet*>file;
-                bool continuer = true;
-                std::map<Arete*,double> flot;
-                while(continuer)
-                {
-                    continuer = false;
-                    std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>carte;
-                    file.clear();
-                    file.push_front(s);
-                    carte[s]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{nullptr,nullptr},{true,1}};
-                    do
-                    {
-                        file.front()->flot(carte,file,flot);
-                        file.pop_front();
-                    }while(!file.empty() && !carte.count(p));
-                    if(carte.count(p))
-                    {
-                        continuer = true;
-                        p->flot_reccursif(carte,flot);
-                    }
-                }
-                double tampon = s->flot_sortant(flot);
-                if(k>tampon || k<0)
+                double tampon=recherche_de_flot(s,p,true);
+                if(tampon<k || k<0)
                     k=tampon;
-                std::cout<<"OK "<<k<<std::endl;
             }
         }
         if(k==0)
@@ -673,4 +678,10 @@ double Graph::k_ko()const
 
     }
     return k;
+}
+
+void Graph::flot_entre_deux_point()const
+{
+    //saisir les deux point
+
 }

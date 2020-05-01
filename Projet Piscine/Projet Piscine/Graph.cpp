@@ -12,6 +12,7 @@ Graph::Graph(std::ifstream&ifs)
     :m_indice{0},m_coeff_aff(0)
 {
     std::string line;
+    double x_aff=0,y_aff=0;
     size_t ot=0;
     if(!std::getline(ifs,line) || !is_int(line))
         throw(1);
@@ -39,13 +40,13 @@ Graph::Graph(std::ifstream&ifs)
         iss>>x;
         if(iss.fail())
             throw(7);
-        if(x>m_coeff_aff)
-            m_coeff_aff=x;
+        if(x>x_aff)
+            x_aff=x;
         iss>>y;
         if(iss.fail())
             throw(8);
-        if(y>m_coeff_aff)
-            m_coeff_aff=y;
+        if(y>y_aff)
+            y_aff=y;
         m_sommets.push_back(new Sommet(nom,x,y));// Creation d'une sommet avec les parametre du fichier nom, x, y
     }
     if(!std::getline(ifs,line) || !is_int(line))
@@ -70,7 +71,11 @@ Graph::Graph(std::ifstream&ifs)
             throw(13);
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
-    m_coeff_aff=850/m_coeff_aff;
+    x_aff=950/x_aff;
+    y_aff=750/y_aff;
+    m_coeff_aff=x_aff;
+    if(y_aff<m_coeff_aff)
+        m_coeff_aff=y_aff;
     calcule_indices();
 
 }

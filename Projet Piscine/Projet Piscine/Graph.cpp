@@ -257,15 +257,10 @@ void Graph::affichageconsole()const
 
 void Graph::calcule_indices()
 {
-    printf("1");
     calc_icd();
-    printf("2");
     calc_vect_propre();
-    printf("3");
-    //calc_icp();
-    printf("4");
+    calc_icp();
     Brand();
-    printf("5");
     if(!m_oriente && k_connexe())
         calc_ici_naif();
     calc_indice_total();

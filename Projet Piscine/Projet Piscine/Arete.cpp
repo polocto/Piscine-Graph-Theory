@@ -8,7 +8,6 @@
 Arete::Arete(Sommet* s1, Sommet* s2,bool oriente)
     :m_ext1(s1),m_ext2(s2),m_poids(1)
 {
-    std::cout<<m_ext1->getnom()<<" "<<m_ext2->getnom()<<std::endl;
     m_ext1->ajout(this);
     if (!oriente)
         m_ext2->ajout(this);

@@ -68,7 +68,6 @@ Graph::Graph(std::ifstream&ifs)
         iss>>s2;
         if(ifs.fail() || s2>m_sommets.size())
             throw(1);
-            std::cout<<i<<"\t: ";
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
     m_coeff_aff=850/m_coeff_aff;

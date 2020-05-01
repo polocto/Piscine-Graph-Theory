@@ -80,12 +80,12 @@ Graph::Graph(Graph* Gmodel,std::string changement)
     :m_oriente(Gmodel->m_oriente),m_coeff_aff(Gmodel->m_coeff_aff)//MODIF
 {
     std::string ext1="",ext2="";
-    int i=0;
+    unsigned int i=0;
     while (i<changement.size() && changement[i]!='-')
         ext1+=changement[i++];
 
     if (i<changement.size())
-        for (int j=i+1;i<changement.size();i++)
+        for (unsigned int j=i+1;i<changement.size();i++)
             ext2=changement[j];
    else       ext2=" ";
 

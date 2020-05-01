@@ -25,6 +25,11 @@ void Sommet::ajout(Arete*suivant)
 {
     m_suivants.push_back(suivant);
 }
+
+void Sommet::ajoutP(Arete*precedent)
+{
+    m_precedents.push_back(precedent);
+}
 /**FIN CONSTRUCTION SOMMET*/
 
 /**DEBUT AFFICHAGE*/
@@ -225,4 +230,38 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
     fichier<<"indice de proximite : "<<m_i_p<<"; ";
     fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
+}
+
+
+void Sommet::flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot)
+{
+    for(Arete* s : m_suivants)
+        s->flot(carte,file,flot);
+    for(Arete* p : m_precedents)
+        p->flot(carte,file,flot);
+}
+
+
+void Sommet::flot_reccursif(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot)
+{
+    double n_max = carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+void Sommet::flot_reccursif(double &n_max ,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot)
+{
+    if(carte.at(this).first.first == nullptr)
+        return;
+    if(n_max>carte.at(this).second.second)
+        n_max=carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+double Sommet::flot_sortant(const std::map<Arete*,double> &flot)
+{
+    double somme=0;
+    for(Arete* a : m_suivants)
+        if(flot.count(a))
+            somme+=flot.at(a);
+    return somme;
 }

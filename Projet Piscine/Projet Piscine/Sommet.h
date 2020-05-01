@@ -15,6 +15,7 @@ public:
     virtual ~Sommet() = default;//destructeur par default ne fait rien
     /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);//ajout d'une arete au sommet
+    void ajoutP(Arete*precedent);
 
     /**AFFICHAGE*/
     void affichageconsole()const;//affichage en console
@@ -50,9 +51,13 @@ public:
     /**Sauvegarde*/
     void sauvegarde(std::ofstream&fichier)const;//sauvegarde des indices
 
+    void flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot);
+    void flot_reccursif(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot);
+    void flot_reccursif(double &n_max ,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot);
+    double flot_sortant(const std::map<Arete*,double> &flot);
 private:
     std::string m_nom;
-    std::vector<Arete*> m_suivants;//arete suivante du graphe
+    std::vector<Arete*> m_suivants,m_precedents;//arete suivante du graphe
     double m_i_d,m_i_vp,m_i_p,m_i_i,m_i_is;//indice normalisé
     double m_i_i_nn,m_i_d_nn;//indice non normalisé
     double m_i_i_max;

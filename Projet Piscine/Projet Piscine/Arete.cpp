@@ -11,10 +11,12 @@ Arete::Arete(Sommet* s1, Sommet* s2,bool oriente)
     m_ext1->ajout(this);
     if (!oriente)
         m_ext2->ajout(this);
+    else
+        m_ext2->ajoutP(this);
 }
 ///constructeur copie arete
 ///Nouvelle proposition
-Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur)
+Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur,bool oriente)
     :m_poids(copie->m_poids)
 {
     if(!traducteur.count(copie->m_ext1) || !traducteur.count(copie->m_ext2))
@@ -23,7 +25,10 @@ Arete::Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur
     m_ext1=traducteur.at(copie->m_ext1);
     m_ext2=traducteur.at(copie->m_ext2);
     m_ext1->ajout(this);
-    m_ext2->ajout(this);
+    if (!oriente)
+        m_ext2->ajout(this);
+    else
+        m_ext2->ajoutP(this);
 }
 ///fin
 
@@ -135,4 +140,40 @@ void Arete::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std:
         m_ext1->k_connexe(nombre_chemin,arete,sommet,arrive);
     else if(!sommet.count(m_ext2))//si mon sommet ext2 n'a pas était emprunter
         m_ext2->k_connexe(nombre_chemin,arete,sommet,arrive);
+}
+
+
+void Arete::flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot)
+{
+    double poids=1;
+    if(!flot.count(this))
+            flot[this]=0;
+    if(!carte.count(m_ext2) && ( flot.at(this)<poids ))
+    {
+        file.push_back(m_ext2);
+        carte[m_ext2]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{m_ext1,this},{true,poids-flot.at(this)}};
+    }
+    else if(!carte.count(m_ext1) && ( flot.at(this) ))
+    {
+        file.push_back(m_ext1);
+        carte[m_ext1]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{m_ext2,this},{false,flot.at(this)}};
+    }
+}
+
+
+void Arete::flot_reccursif(Sommet*suivant,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot,double&n_max)
+{
+    Sommet* temp = nullptr;
+	if ( (suivant == m_ext1  )|| suivant == m_ext2)
+		suivant->flot_reccursif(n_max,carte,flot);
+	else
+		return;
+	if (m_ext1 == suivant)
+		temp = m_ext2;
+	else
+		temp = m_ext1;
+	if (carte.at(temp).second.first)
+		flot.at(this) += n_max;
+	else
+		flot.at(this) -= n_max;
 }

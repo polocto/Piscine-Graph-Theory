@@ -37,6 +37,8 @@ public:
 ///vulnerabilité
     Graph* Supression_element();
     void comparaison_graph(Graph* ancien);
+    //k_co
+    double k_ko()const;
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

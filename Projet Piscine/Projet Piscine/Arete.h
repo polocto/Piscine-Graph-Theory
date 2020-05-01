@@ -12,7 +12,7 @@ public:
     /**Construction des arete*/
     Arete(Sommet* s1, Sommet* s2,bool oriente);//constructeur arete
     //Arete(Sommet* s1, Sommet* s2,double poids);//copie arete
-    Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur);
+    Arete(const Arete* copie,const std::map<const Sommet*,Sommet*>&traducteur,bool oriente);
     virtual  ~Arete() = default;
     void ponderation(std::stringstream& ifs);//chargement des poid de l'arete
 
@@ -31,6 +31,9 @@ public:
     void Brand(const Sommet*precednent,std::map<const Sommet*,double>&distance,const double&d_a,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
     /**k-arete connexité*/
     void k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std::map<const Sommet*,bool>&sommet,const Sommet*arrive)const;
+
+    void flot(std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::list<Sommet*>&file,std::map<Arete*,double> &flot);
+    void flot_reccursif(Sommet*suivant,std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>&carte, std::map<Arete*,double> &flot,double&n_max);
 private:
     Sommet* m_ext1,* m_ext2;//extemit� des Arete
     double m_poids;

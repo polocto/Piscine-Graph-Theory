@@ -93,7 +93,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         {
             try
             {
-                Arete* temp=new Arete(s,traducteur);//MODIF
+                Arete* temp=new Arete(s,traducteur,m_oriente);//MODIF
                 m_aretes.push_back(temp);//MODIF
             }
             catch(int a)
@@ -113,7 +113,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         {
             if (s->verrif(ext1,ext2))//selection des aretes à copier
             {
-                m_aretes.push_back(new Arete(s,traducteur));//copie des aretes//MODIF
+                m_aretes.push_back(new Arete(s,traducteur,m_oriente));//copie des aretes//MODIF
             }
         }
     }
@@ -223,9 +223,10 @@ void Graph::affichageconsole()const
 {
     if (m_oriente)
     {
-        if (fortement_connexe())
+        /*if (fortement_connexe())
             std::cout<< "le graph oriente est fortement connexe\n";
-        else std::cout<<"le graph oriente n'est pas fortement connexe\n";
+        else std::cout<<"le graph oriente n'est pas fortement connexe\n";*/
+        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe\n";
     }
         else
     std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
@@ -629,3 +630,47 @@ void Graph::comparaison_graph(Graph* ancien)
 }
 
 /**FIN TEST LA VULNERABILTE D'UN GRAPH*/
+
+double Graph::k_ko()const
+{
+    double k=-1;
+    int i = 0;
+    for(Sommet* s : m_sommets)
+    {
+        for(Sommet* p : m_sommets)
+        {
+            if(p!=s)
+            {
+                std::list<Sommet*>file;
+                bool continuer = true;
+                std::map<Arete*,double> flot;
+                while(continuer)
+                {
+                    continuer = false;
+                    std::map<Sommet*,std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>>carte;
+                    file.clear();
+                    file.push_front(s);
+                    carte[s]=std::pair<std::pair<Sommet*, Arete*>, std::pair<bool, double>>{{nullptr,nullptr},{true,1}};
+                    do
+                    {
+                        file.front()->flot(carte,file,flot);
+                        file.pop_front();
+                    }while(!file.empty() && !carte.count(p));
+                    if(carte.count(p))
+                    {
+                        continuer = true;
+                        p->flot_reccursif(carte,flot);
+                    }
+                }
+                double tampon = s->flot_sortant(flot);
+                if(k>tampon || k<0)
+                    k=tampon;
+                std::cout<<"OK "<<k<<std::endl;
+            }
+        }
+        if(k==0)
+            break;
+
+    }
+    return k;
+}

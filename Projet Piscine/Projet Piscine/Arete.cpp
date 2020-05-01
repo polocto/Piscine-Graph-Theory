@@ -46,21 +46,23 @@ void Arete::affichageconsole()const
 /// Affichage au format svg d'une Arete du graph
 void Arete::affichage(Svgfile& svgout,const bool&oriente)const
 {
-    svgout.addLine(m_ext1->getX()*100,m_ext1->getY()*100,m_ext2->getX()*100,m_ext2->getY()*100,"BLACK");
-    if(oriente)
+    int coef=15;
+    int coef2=3;
+    svgout.addLine(m_ext1->getX()*coef+2,m_ext1->getY()*coef+2,m_ext2->getX()*coef+2,m_ext2->getY()*coef+2,"BLACK");
+    /*if(oriente)
     {
-        double d_x=m_ext2->getX()*100,d_y=m_ext2->getY()*100;
+        double d_x=m_ext2->getX()*coef+2,d_y=m_ext2->getY()*coef+2;
         double x=m_ext2->getX()-m_ext1->getX(),y=m_ext2->getY()-m_ext1->getY();
         double module=sqrt(x*x+y*y);
         double a=(-y)/module,b=x/module;
         double coeff=3.5;
         x/=module;
         y/=module;
-        double pointe_x = d_x-10*x, pointe_y=d_y-10*y;
-        double ext1_x=d_x-(15+coeff)*x-a*coeff,ext1_y=d_y-(15+coeff)*y-coeff*b;
-        double ext2_x=d_x-(15+coeff)*x+a*coeff,ext2_y=d_y-(15+coeff)*y+coeff*b;
+        double pointe_x = d_x-3*x, pointe_y=d_y-3*y;
+        double ext1_x=d_x-(coef2+coeff)*x-a*coeff,ext1_y=d_y-(coef2+coeff)*y-coeff*b;
+        double ext2_x=d_x-(coef2+coeff)*x+a*coeff,ext2_y=d_y-(coef2+coeff)*y+coeff*b;
         svgout.addTriangle(pointe_x,pointe_y,ext1_x,ext1_y,ext2_x,ext2_y,"black");
-    }
+    }*/
 }
 /**AFFICHAGE DE ARETE FIN*/
 

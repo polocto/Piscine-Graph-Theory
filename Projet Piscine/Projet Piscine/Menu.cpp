@@ -107,6 +107,8 @@ void Menu::chargementGraph()
         nom_fichier="graphe_etoile3_topo.txt";
     if (nom_fichier=="5")
         nom_fichier="graphe_cycle5_topo.txt";
+    if(nom_fichier=="metro")
+        nom_fichier="metro.txt";
     ifs.open(nom_fichier);//ouverture du fichier
     if(!ifs.is_open())//si le fichier ne s'est pas ouvert
     {
@@ -124,8 +126,9 @@ void Menu::chargementGraph()
     {
         if(tampon)//si graphe tout de meme construit
             delete tampon;//le supprimer
-        std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
+        std::cout<<a<<"  Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
     }
+    std::cout<<"fin du chargement\n";
 }
 
 /**

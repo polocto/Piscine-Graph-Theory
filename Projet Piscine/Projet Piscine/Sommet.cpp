@@ -47,8 +47,8 @@ void Sommet::affichageconsole()const
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout)const
 {
-    svgout.addDisk(m_x*100,m_y*100,10,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
-    svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");//Affichage nom sommet
+    svgout.addDisk(m_x*10,m_y*10,1,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
+    //svgout.addText(m_x*10-1,m_y*10-20,m_nom,"BLUE");//Affichage nom sommet
 }
 
 void Sommet::affichage_comparaison(Sommet* ancien)const

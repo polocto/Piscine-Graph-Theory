@@ -51,14 +51,14 @@ void Arete::affichageconsole()const
 /// Affichage au format svg d'une Arete du graph
 void Arete::affichage(Svgfile& svgout,const bool&oriente)const
 {
-    svgout.addLine(m_ext1->getX()*100,m_ext1->getY()*100,m_ext2->getX()*100,m_ext2->getY()*100,"BLACK");
+    svgout.addLine(m_ext1->getX()*10,m_ext1->getY()*10,m_ext2->getX()*10,m_ext2->getY()*10,"BLACK");
     if(oriente)
     {
-        double d_x=m_ext2->getX()*100,d_y=m_ext2->getY()*100;
+        double d_x=m_ext2->getX()*10,d_y=m_ext2->getY()*10;
         double x=m_ext2->getX()-m_ext1->getX(),y=m_ext2->getY()-m_ext1->getY();
         double module=sqrt(x*x+y*y);
         double a=(-y)/module,b=x/module;
-        double coeff=3.5;
+        double coeff=0.1;
         x/=module;
         y/=module;
         double pointe_x = d_x-10*x, pointe_y=d_y-10*y;

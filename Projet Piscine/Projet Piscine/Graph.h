@@ -37,11 +37,16 @@ public:
 ///vulnerabilité
     Graph* Supression_element();
     void comparaison_graph(Graph* ancien);
+    //k_co
+    double k_ko()const;
+    double recherche_de_flot(const Sommet* s,const Sommet* p , const bool& connexe)const;
+    void flot_entre_deux_point()const;
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph
     bool m_oriente;
     double m_indice;
+    double m_coeff_aff;
 };
 
 #endif

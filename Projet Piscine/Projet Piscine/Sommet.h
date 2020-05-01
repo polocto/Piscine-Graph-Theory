@@ -15,10 +15,11 @@ public:
     virtual ~Sommet() = default;//destructeur par default ne fait rien
     /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);//ajout d'une arete au sommet
+    void ajoutP(Arete*precedent);
 
     /**AFFICHAGE*/
     void affichageconsole()const;//affichage en console
-    void affichage(Svgfile& svgout)const;//affichage svg
+    void affichage(Svgfile& svgout,const double&coeff)const;//affichage svg
     void affichage_comparaison(Sommet* ancien)const;
     /**Getter*/
     std::string getnom()const;//reccupere le nom du sommet
@@ -50,9 +51,13 @@ public:
     /**Sauvegarde*/
     void sauvegarde(std::ofstream&fichier)const;//sauvegarde des indices
 
+    void flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const;
+    void flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    void flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    double flot_sortant(const std::map<const Arete*,double> &flot)const;
 private:
     std::string m_nom;
-    std::vector<Arete*> m_suivants;//arete suivante du graphe
+    std::vector<Arete*> m_suivants,m_precedents;//arete suivante du graphe
     double m_i_d,m_i_vp,m_i_p,m_i_i,m_i_is;//indice normalisé
     double m_i_i_nn,m_i_d_nn;//indice non normalisé
     double m_i_i_max;

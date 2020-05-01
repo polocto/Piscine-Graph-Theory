@@ -9,7 +9,7 @@
 ///Prend en paramettre le nom du fichier utilisé
 /// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
 Graph::Graph(std::ifstream&ifs)
-    :m_indice{0}
+    :m_indice{0},m_coeff_aff(0)
 {
     std::string line;
     size_t ot=0;
@@ -39,9 +39,13 @@ Graph::Graph(std::ifstream&ifs)
         iss>>x;
         if(iss.fail())
             throw(7);
+        if(x>m_coeff_aff)
+            m_coeff_aff=x;
         iss>>y;
         if(iss.fail())
             throw(8);
+        if(y>m_coeff_aff)
+            m_coeff_aff=y;
         m_sommets.push_back(new Sommet(nom,x,y));// Creation d'une sommet avec les parametre du fichier nom, x, y
     }
     if(!std::getline(ifs,line) || !is_int(line))
@@ -66,14 +70,14 @@ Graph::Graph(std::ifstream&ifs)
             throw(13);
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
-
+    m_coeff_aff=850/m_coeff_aff;
     calcule_indices();
 
 }
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
 Graph::Graph(Graph* Gmodel,std::string changement)
-    :m_oriente(Gmodel->m_oriente)//MODIF
+    :m_oriente(Gmodel->m_oriente),m_coeff_aff(Gmodel->m_coeff_aff)//MODIF
 {
     std::string ext1="",ext2="";
     ext1=changement[0];
@@ -95,7 +99,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         {
             try
             {
-                Arete* temp=new Arete(s,traducteur);//MODIF
+                Arete* temp=new Arete(s,traducteur,m_oriente);//MODIF
                 m_aretes.push_back(temp);//MODIF
             }
             catch(int a)
@@ -115,7 +119,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
         {
             if (s->verrif(ext1,ext2))//selection des aretes à copier
             {
-                m_aretes.push_back(new Arete(s,traducteur));//copie des aretes//MODIF
+                m_aretes.push_back(new Arete(s,traducteur,m_oriente));//copie des aretes//MODIF
             }
         }
     }
@@ -197,14 +201,14 @@ void Graph::affichage(Svgfile& svgout)const
     for (auto s: m_sommets)
         if (som_max<s->getY())
             som_max=s->getY();
-
+    som_max*=m_coeff_aff;
     for (int i=0;i<255;i++)
-        svgout.addRect(100+3*i,(som_max*100)+50,3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
+        svgout.addRect(100+3*i,(som_max+20),3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
 
     for (Arete* A:m_aretes)
-        A->affichage(svgout,m_oriente);//affiche l'ensemble des aretes
+        A->affichage(svgout,m_oriente,m_coeff_aff);//affiche l'ensemble des aretes
     for (Sommet* S:m_sommets)
-        S->affichage(svgout);//affiche l'ensemble des sommets
+        S->affichage(svgout,m_coeff_aff);//affiche l'ensemble des sommets
 }
 
 void Graph::affichage_suppression()
@@ -225,9 +229,10 @@ void Graph::affichageconsole()const
 {
     if (m_oriente)
     {
-        if (fortement_connexe())
+        /*if (fortement_connexe())
             std::cout<< "le graph oriente est fortement connexe\n";
-        else std::cout<<"le graph oriente n'est pas fortement connexe\n";
+        else std::cout<<"le graph oriente n'est pas fortement connexe\n";*/
+        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe\n";
     }
         else
     std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
@@ -635,3 +640,63 @@ void Graph::comparaison_graph(Graph* ancien)
 }
 
 /**FIN TEST LA VULNERABILTE D'UN GRAPH*/
+
+
+double Graph::recherche_de_flot(const Sommet* s,const Sommet* p , const bool& connexe)const
+{
+    std::list<const Sommet*>file;
+    bool continuer = true;
+    std::map<const Arete*,double> flot;
+    while(continuer)
+    {
+        continuer = false;
+        std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>carte;
+        file.clear();
+        file.push_front(s);
+        carte[s]=std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>{{nullptr,nullptr},{true,1}};
+        do
+        {
+            file.front()->flot(carte,file,flot,connexe);
+            file.pop_front();
+        }while(!file.empty() && !carte.count(p));
+        if(carte.count(p))
+        {
+            continuer = true;
+            p->flot_reccursif(carte,flot);
+        }
+    }
+
+    return s->flot_sortant(flot);
+}
+
+double Graph::k_ko()const
+{
+    double k=-1;
+    for(const Sommet* s : m_sommets)
+    {
+        for(const Sommet* p : m_sommets)
+        {
+            if(p!=s)
+            {
+                double tampon=recherche_de_flot(s,p,true);
+                /*if(!tampon)
+                {
+                    std::cout<<s->getnom()<<"-->"<<p->getnom();
+                    std::cout<<" = "<<tampon<<std::endl;
+                }*/
+                if(tampon<k || k<0)
+                    k=tampon;
+            }
+        }
+        if(k==0)
+            break;
+
+    }
+    return k;
+}
+
+void Graph::flot_entre_deux_point()const
+{
+    //saisir les deux point
+
+}

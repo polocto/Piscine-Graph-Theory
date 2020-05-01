@@ -668,7 +668,7 @@ double Graph::k_ko()const
         {
             if(p!=s)
             {
-                double tampon=recherche_de_flot(s,p,true);
+                double tampon=recherche_de_flot(s,p,false);
                 if(tampon<k || k<0)
                     k=tampon;
             }
@@ -680,8 +680,20 @@ double Graph::k_ko()const
     return k;
 }
 
-void Graph::flot_entre_deux_point()const
+void Graph::flot_entre_deux_point(std::string depart,std::string arriver)
 {
     //saisir les deux point
+    Sommet* Sdepart;
+    Sommet* Sarriver;
+    for (auto s: m_sommets)
+    {
+        if (s->getnom()==depart)
+            Sdepart=s;
+        if (s->getnom()==arriver)
+            Sarriver=s;
+    }
+    double tampon=recherche_de_flot(Sdepart,Sarriver,false);
+
+    std::cout<<"Le flot entre la station "<< depart<< " et la station "<< arriver<< " est "<<tampon<<std::endl;
 
 }

@@ -51,6 +51,7 @@ void Arete::affichageconsole()const
 /// Affichage au format svg d'une Arete du graph
 void Arete::affichage(Svgfile& svgout,const bool&oriente,const double& coeff_t)const
 {
+
     svgout.addLine(m_ext1->getX()*coeff_t,m_ext1->getY()*coeff_t,m_ext2->getX()*coeff_t,m_ext2->getY()*coeff_t,"BLACK");
     if(oriente)
     {
@@ -65,7 +66,7 @@ void Arete::affichage(Svgfile& svgout,const bool&oriente,const double& coeff_t)c
         double ext1_x=d_x-(3+coeff)*x-a*coeff,ext1_y=d_y-(3+coeff)*y-coeff*b;
         double ext2_x=d_x-(3+coeff)*x+a*coeff,ext2_y=d_y-(3+coeff)*y+coeff*b;
         svgout.addTriangle(pointe_x,pointe_y,ext1_x,ext1_y,ext2_x,ext2_y,"black");
-    }
+    }*/
 }
 /**AFFICHAGE DE ARETE FIN*/
 

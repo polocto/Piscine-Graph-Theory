@@ -17,10 +17,10 @@ Graph::Graph(std::ifstream&ifs)
         throw(1);
     m_oriente=(bool)std::stoi(line);//orientation du graphe
     if(!std::getline(ifs,line) || !is_int(line))
-        throw(1);
+        throw(2);
     ot=(size_t)std::stoi(line);//ordre du graph
     if(ifs.fail())
-        throw(1);
+        throw(3);
     ///lecture Sommets
     for(size_t i=0; i<ot; i++)
     {
@@ -28,28 +28,28 @@ Graph::Graph(std::ifstream&ifs)
         int verrif=0;
         double x=0,y=0;
         if(!std::getline(ifs,line))
-            throw(1);//recupération ligne du fichier
+            throw(4);//recupération ligne du fichier
         std::stringstream iss(line);
         iss>>verrif;
         if(iss.fail()|| verrif!=(int)i)
-            throw(1);
+            throw(5);
         iss>>nom;
         if(iss.fail())
-            throw(1);
+            throw(6);
         iss>>x;
         if(iss.fail())
-            throw(1);
+            throw(7);
         if(x>m_coeff_aff)
             m_coeff_aff=x;
         iss>>y;
         if(iss.fail())
-            throw(1);
+            throw(8);
         if(y>m_coeff_aff)
             m_coeff_aff=y;
         m_sommets.push_back(new Sommet(nom,x,y));// Creation d'une sommet avec les parametre du fichier nom, x, y
     }
     if(!std::getline(ifs,line) || !is_int(line))
-        throw(1);
+        throw(9);
     ot=(size_t)std::stoi(line);//taille du graph
     ///lecture Arete
     for(size_t i=0; i<ot; i++)
@@ -57,21 +57,22 @@ Graph::Graph(std::ifstream&ifs)
         std::string line;
         size_t verrif=0, s1=0,s2=0;
         if(!std::getline(ifs,line))
-            throw(1);
+            throw(10);
         std::stringstream iss(line);
         iss>>verrif;
         if(iss.fail()||verrif!=i)
-            throw(1);
+            throw(11);
         iss>>s1;
         if(ifs.fail() || s1>m_sommets.size())
-            throw(1);
+            throw(12);
         iss>>s2;
         if(ifs.fail() || s2>m_sommets.size())
-            throw(1);
+            throw(13);
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
     m_coeff_aff=850/m_coeff_aff;
     calcule_indices();
+
 }
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
@@ -256,11 +257,15 @@ void Graph::affichageconsole()const
 
 void Graph::calcule_indices()
 {
-
+    printf("1");
     calc_icd();
+    printf("2");
     calc_vect_propre();
-    calc_icp();
+    printf("3");
+    //calc_icp();
+    printf("4");
     Brand();
+    printf("5");
     if(!m_oriente && k_connexe())
         calc_ici_naif();
     calc_indice_total();

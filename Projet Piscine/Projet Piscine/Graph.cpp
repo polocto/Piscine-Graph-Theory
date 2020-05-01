@@ -9,7 +9,7 @@
 ///Prend en paramettre le nom du fichier utilisé
 /// Crée et initialise les valeur des arretes et sommet en utilisant leur constructeur avec les information du fichier
 Graph::Graph(std::ifstream&ifs)
-    :m_indice{0}
+    :m_indice{0},m_coeff_aff(0)
 {
     std::string line;
     size_t ot=0;
@@ -39,9 +39,13 @@ Graph::Graph(std::ifstream&ifs)
         iss>>x;
         if(iss.fail())
             throw(1);
+        if(x>m_coeff_aff)
+            m_coeff_aff=x;
         iss>>y;
         if(iss.fail())
             throw(1);
+        if(y>m_coeff_aff)
+            m_coeff_aff=y;
         m_sommets.push_back(new Sommet(nom,x,y));// Creation d'une sommet avec les parametre du fichier nom, x, y
     }
     if(!std::getline(ifs,line) || !is_int(line))
@@ -64,14 +68,16 @@ Graph::Graph(std::ifstream&ifs)
         iss>>s2;
         if(ifs.fail() || s2>m_sommets.size())
             throw(1);
+            std::cout<<i<<"\t: ";
         m_aretes.push_back(new Arete(m_sommets[s1],m_sommets[s2],m_oriente));// Creation d'une Arete a partir des informations du fichier
     }
+    m_coeff_aff=850/m_coeff_aff;
     calcule_indices();
 }
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
 Graph::Graph(Graph* Gmodel,std::string changement)
-    :m_oriente(Gmodel->m_oriente)//MODIF
+    :m_oriente(Gmodel->m_oriente),m_coeff_aff(Gmodel->m_coeff_aff)//MODIF
 {
     std::string ext1="",ext2="";
     ext1=changement[0];
@@ -195,14 +201,14 @@ void Graph::affichage(Svgfile& svgout)const
     for (auto s: m_sommets)
         if (som_max<s->getY())
             som_max=s->getY();
-
+    som_max*=m_coeff_aff;
     for (int i=0;i<255;i++)
-        svgout.addRect(100+3*i,(som_max*100)+50,3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
+        svgout.addRect(100+3*i,(som_max+20),3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
 
     for (Arete* A:m_aretes)
-        A->affichage(svgout,m_oriente);//affiche l'ensemble des aretes
+        A->affichage(svgout,m_oriente,m_coeff_aff);//affiche l'ensemble des aretes
     for (Sommet* S:m_sommets)
-        S->affichage(svgout);//affiche l'ensemble des sommets
+        S->affichage(svgout,m_coeff_aff);//affiche l'ensemble des sommets
 }
 
 void Graph::affichage_suppression()
@@ -669,6 +675,11 @@ double Graph::k_ko()const
             if(p!=s)
             {
                 double tampon=recherche_de_flot(s,p,true);
+                /*if(!tampon)
+                {
+                    std::cout<<s->getnom()<<"-->"<<p->getnom();
+                    std::cout<<" = "<<tampon<<std::endl;
+                }*/
                 if(tampon<k || k<0)
                     k=tampon;
             }

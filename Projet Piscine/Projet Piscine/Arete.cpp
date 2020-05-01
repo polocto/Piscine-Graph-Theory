@@ -8,6 +8,7 @@
 Arete::Arete(Sommet* s1, Sommet* s2,bool oriente)
     :m_ext1(s1),m_ext2(s2),m_poids(1)
 {
+    std::cout<<m_ext1->getnom()<<" "<<m_ext2->getnom()<<std::endl;
     m_ext1->ajout(this);
     if (!oriente)
         m_ext2->ajout(this);
@@ -49,21 +50,21 @@ void Arete::affichageconsole()const
 }
 
 /// Affichage au format svg d'une Arete du graph
-void Arete::affichage(Svgfile& svgout,const bool&oriente)const
+void Arete::affichage(Svgfile& svgout,const bool&oriente,const double& coeff_t)const
 {
-    svgout.addLine(m_ext1->getX()*10,m_ext1->getY()*10,m_ext2->getX()*10,m_ext2->getY()*10,"BLACK");
+    svgout.addLine(m_ext1->getX()*coeff_t,m_ext1->getY()*coeff_t,m_ext2->getX()*coeff_t,m_ext2->getY()*coeff_t,"BLACK");
     if(oriente)
     {
-        double d_x=m_ext2->getX()*10,d_y=m_ext2->getY()*10;
+        double d_x=m_ext2->getX()*coeff_t,d_y=m_ext2->getY()*coeff_t;
         double x=m_ext2->getX()-m_ext1->getX(),y=m_ext2->getY()-m_ext1->getY();
         double module=sqrt(x*x+y*y);
         double a=(-y)/module,b=x/module;
-        double coeff=0.1;
+        double coeff=2;
         x/=module;
         y/=module;
-        double pointe_x = d_x-10*x, pointe_y=d_y-10*y;
-        double ext1_x=d_x-(15+coeff)*x-a*coeff,ext1_y=d_y-(15+coeff)*y-coeff*b;
-        double ext2_x=d_x-(15+coeff)*x+a*coeff,ext2_y=d_y-(15+coeff)*y+coeff*b;
+        double pointe_x = d_x-3*x, pointe_y=d_y-3*y;
+        double ext1_x=d_x-(3+coeff)*x-a*coeff,ext1_y=d_y-(3+coeff)*y-coeff*b;
+        double ext2_x=d_x-(3+coeff)*x+a*coeff,ext2_y=d_y-(3+coeff)*y+coeff*b;
         svgout.addTriangle(pointe_x,pointe_y,ext1_x,ext1_y,ext2_x,ext2_y,"black");
     }
 }

@@ -46,6 +46,7 @@ private:
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph
     bool m_oriente;
     double m_indice;
+    double m_coeff_aff;
 };
 
 #endif

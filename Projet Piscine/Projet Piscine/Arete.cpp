@@ -66,7 +66,7 @@ void Arete::affichage(Svgfile& svgout,const bool&oriente,const double& coeff_t)c
         double ext1_x=d_x-(3+coeff)*x-a*coeff,ext1_y=d_y-(3+coeff)*y-coeff*b;
         double ext2_x=d_x-(3+coeff)*x+a*coeff,ext2_y=d_y-(3+coeff)*y+coeff*b;
         svgout.addTriangle(pointe_x,pointe_y,ext1_x,ext1_y,ext2_x,ext2_y,"black");
-    }*/
+    }
 }
 /**AFFICHAGE DE ARETE FIN*/
 

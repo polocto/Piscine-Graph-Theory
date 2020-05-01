@@ -80,11 +80,15 @@ Graph::Graph(Graph* Gmodel,std::string changement)
     :m_oriente(Gmodel->m_oriente),m_coeff_aff(Gmodel->m_coeff_aff)//MODIF
 {
     std::string ext1="",ext2="";
-    ext1=changement[0];
-    if (changement.size()==1)
-        ext2=" ";
-    if (changement.size()==2)
-        ext2=changement[1];
+    int i=0;
+    while (i<changement.size() && changement[i]!='-')
+        ext1+=changement[i++];
+
+    if (i<changement.size())
+        for (int j=i+1;i<changement.size();i++)
+            ext2=changement[j];
+   else       ext2=" ";
+
     std::map<const Sommet*,Sommet*>traducteur;//MODIF
     if (ext2==" ")//retrait d'un sommet
     {

@@ -32,7 +32,7 @@
 29	Boucicaut	13	37
 30	Boulogne-JeanJaurès	2	35
 31	Boulogne-PontdeSaint-Cloud	1	36
-32	Bourse	7	19
+32	Bourse	27	19
 33	Bréguet-Sabin	39	23
 34	Brochant	20	4
 35	Buzenval	49	26
@@ -240,7 +240,7 @@
 237	Réaumur-Sébastopol	32	19
 238	Rennes	23	30
 239	République	38	17
-240	Reuilly-Diderot	41	29
+240	Reuilly-Diderot	43	29
 241	Richard-Lenoir	40	22
 242	Richelieu-Drouot	27	16
 243	Riquet	40	7
@@ -815,8 +815,8 @@
 516	43	168	
 517	168	117	
 518	207	30	
-519	165	207	
-520	82	165	
+519	165	82	
+520	82	117	
 521	117	46	
 522	117	82	
 523	46	11	
@@ -1003,4 +1003,4 @@
 704	68	20	
 705	21	180	
 706	21	68	
-707	180	21
+707	180	21	

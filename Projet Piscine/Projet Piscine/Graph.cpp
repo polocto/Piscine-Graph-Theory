@@ -196,9 +196,11 @@ void Graph::chargementPonderation(std::string nomfichier)
 /**DEBUT DE L'AFFICHAGE D'UN GRAPH*/
 void Graph::affichage_poly()const
 {
-    Svgfile svgout;
-    svgout.addGrid();
-    affichage(svgout);
+    {
+        Svgfile svgout;
+        svgout.addGrid();
+        affichage(svgout);
+    }
     affichageconsole();
 }
 

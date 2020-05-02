@@ -112,13 +112,14 @@ void Svgfile::addTriangle(double x1, double y1, double x2, double y2,
             << "\" />\n";
 }
 
-void Svgfile::addText(double x, double y, std::string text, std::string color)
+void Svgfile::addText(double x, double y, std::string text, std::string color , double font_size)
 {
     /// <text x="180" y="60">Un texte</text>
     m_ostrm << "<text "
             << attrib("x", x)
             << attrib("y", y)
             << attrib("fill", color)
+            <<attrib("font-size",0.3*font_size)
             << ">" << text << "</text>\n";
 }
 

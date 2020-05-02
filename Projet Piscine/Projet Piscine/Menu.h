@@ -18,6 +18,9 @@ public:
     ///vulnerabilité///
     void vulnerabilite();
     void affichage_vulnerabilite()const;
+
+
+    void flot()const;
 private:
     Graph* m_etude;
 };

@@ -430,7 +430,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
     {
         marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
         poids[s->getnom()].second=0;
-        poids[s->getnom()].first=0;
+        poids[s->getnom()].first=nullptr;
     }
 
     while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
@@ -472,6 +472,8 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 
     unsigned int i=0;
     sommetActif=arriver;
+    if(marque.at(sommetActif->getnom()).second==nullptr)
+        return false;
     while(sommetActif!=depart && i<m_sommets.size())
     {
         if (marque[sommetActif->getnom()].second==passage)

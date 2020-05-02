@@ -183,7 +183,7 @@ void Menu::affichage_vulnerabilite()const
     std::cout<<"3/Calcule indice nouveau graphe "<<std::endl;
     std::cout<<"4/Connexite"<<std::endl;
     std::cout<<"5/Annalyse modification du changement"<<std::endl;
-    std::cout<<"6/Recherche de flot"<<std::endl;
+    std::cout<<"6/Parcours"<<std::endl;
 }
 void Menu::vulnerabilite()
 {
@@ -238,7 +238,8 @@ void Menu::vulnerabilite()
             break;
         case 6:
             if (etude2)
-                etude2->flot_entre_deux_point();
+                etude2->parcours();
+            break;
         default://si la saisie ne correspond � aucune case
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
         }

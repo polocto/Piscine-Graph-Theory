@@ -181,7 +181,9 @@ void Menu::affichage_vulnerabilite()const
     std::cout<<"1/Suprimer un element du graphe"<<std::endl;
     std::cout<<"2/Affichage nouveau graphe "<<std::endl;
     std::cout<<"3/Calcule indice nouveau graphe "<<std::endl;
-    std::cout<<"4/Annalyse modification du changement"<<std::endl;
+    std::cout<<"4/Connexite"<<std::endl;
+    std::cout<<"5/Annalyse modification du changement"<<std::endl;
+    std::cout<<"6/Recherche de flot"<<std::endl;
 }
 void Menu::vulnerabilite()
 {
@@ -224,14 +226,19 @@ void Menu::vulnerabilite()
             {
                 etude2->calcule_indices();
                 etude2->affichage_poly();
-
             }
                 //calculIndices(etude2);
             break;
-        case 4://Annalyse des modification
+        case 4:
+            if (etude2)
+                etude2=connexite();
+        case 5://Annalyse des modification
             if (etude2)
                 etude2->comparaison_graph(m_etude);
             break;
+        case 6:
+            if (etude2)
+                etude2->flot_entre_deux_point();
         default://si la saisie ne correspond � aucune case
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
         }

@@ -232,6 +232,7 @@ void Menu::vulnerabilite()
         case 4:
             if (etude2)
                 etude2->connexite();
+                break;
         case 5://Annalyse des modification
             if (etude2)
                 etude2->comparaison_graph(m_etude);
@@ -242,6 +243,7 @@ void Menu::vulnerabilite()
             break;
         default://si la saisie ne correspond � aucune case
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
+            break;
         }
     }
 }

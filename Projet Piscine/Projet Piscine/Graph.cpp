@@ -390,6 +390,8 @@ void Graph::calc_ici_naif()
         double total=0;
         double a=0;
         for (unsigned int j=0; j<m_sommets.size()-1; j++)
+        std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
+
         {
             if (i!=m_sommets[j])
             {

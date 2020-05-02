@@ -74,6 +74,7 @@ bool Menu::choix()
         break;
     case 5:
         flot();
+        break;
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
     }
@@ -85,6 +86,7 @@ calcul affichage et sauvegarde des indices du graph
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
+    //m_etude->chemin_le_plus_court();
     m_etude->affichage_poly();
 
     if(fichier.is_open())

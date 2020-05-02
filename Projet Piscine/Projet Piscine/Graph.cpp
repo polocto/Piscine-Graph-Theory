@@ -387,9 +387,8 @@ void Graph::calc_ici_naif()
 {
     for(auto i:m_sommets)
     {
-        double total=0;
-        double a=0;
-        for (unsigned int j=0; j<m_sommets.size()-1; j++)
+        //double total=0;
+        //double a=0;
         std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
 
         for(auto arrive : m_sommets)
@@ -404,7 +403,7 @@ void Graph::calc_ici_naif()
 
         /*for (unsigned int j=0; j<m_sommets.size(); j++)
         {
-            if (i!=m_sommets[j])
+            if (i!=m_sommets[j] && tampon.at(m_sommets[j]->getnom()).second)
             {
                 for (unsigned int k=j; k<m_sommets.size()-1; k++)
                 {
@@ -419,9 +418,10 @@ void Graph::calc_ici_naif()
                     }
                 }
             }
-        }
+        }*/
+        //while()
         ///initialisation du ici
-        i->calc_ici_naif(total,a);
+        //i->calc_ici_naif(total,a);
     }
 }
 /**Début Dijkstra*/

@@ -428,6 +428,8 @@ void Graph::calc_ici_naif()
         ///initialisation du ici
         //i->calc_ici_naif(total,a);
     }
+    for(auto i:m_sommets)
+        i->calc_ici_naif(total.at(i),a);
 }
 /**Début Dijkstra*/
 bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)

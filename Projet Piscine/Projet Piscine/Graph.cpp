@@ -47,7 +47,7 @@ Graph::Graph(std::ifstream&ifs)
             throw(8);
         if(y>y_aff)
             y_aff=y;
-        if (y<2)
+        if (y<1)
             y++;
         m_sommets.push_back(new Sommet(nom,x,y));// Creation d'une sommet avec les parametre du fichier nom, x, y
     }

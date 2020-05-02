@@ -47,7 +47,17 @@ void Sommet::affichageconsole()const
 ///Affichage SVG
 void Sommet::affichage(Svgfile& svgout,const double&coeff)const
 {
-    svgout.addDisk(m_x*coeff,m_y*coeff,3,makeRGB(255*(m_i_i_nn/m_i_i_max),0,255-255*(m_i_i_nn/m_i_i_max)));//Affichage sommet
+    std::string couleur;
+    double coef=1-((m_i_i_max-m_i_i_nn)/m_i_i_max);
+    if (coef>=0.5)
+        couleur=makeRGB(100+150*coef,0,0);
+    else if (coef>=0.25)
+        couleur=makeRGB(0,100+155*coef*3,0);
+    else
+        couleur=makeRGB(0,100,155+100*(coef*7));
+
+
+    svgout.addDisk(m_x*coeff,m_y*coeff,3,couleur);//Affichage sommet
     svgout.addText(m_x*coeff-((double)m_nom.size()/2.0)*1/coeff,(m_y)*coeff-(30)*1/coeff-3,m_nom,"BLUE",coeff);//Affichage nom sommet
 }
 

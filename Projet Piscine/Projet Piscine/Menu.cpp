@@ -35,8 +35,11 @@ void Menu::affichage()const
     std::cout<<"0/Quitter"<<std::endl
             <<"1/Charger Graph"<<std::endl
             <<"2/Charger Ponderation"<<std::endl
-            <<"3/Calcule indices"<<std::endl
-            <<"4/Vulnerabilite"<<std::endl;
+            <<"3/Afficher .svg"<<std::endl
+            <<"4/Calcule indices"<<std::endl
+            <<"5/Tester la connexite du graphe"<<std::endl
+            <<"6/Parcours"<<std::endl
+            <<"7/Vulnerabilite"<<std::endl;
 }
 
 /**Saisie du choix et appel en fonction du choix
@@ -66,9 +69,21 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
-        calculIndices();
+        {
+            Svgfile svgout;
+            m_etude->affichage(svgout);
+        }
         break;
     case 4://Test la vuln�rabilit� du graph
+        calculIndices();
+        break;
+    case 5:
+        m_etude->connexite();
+        break;
+    case 6 :
+        m_etude->parcours();
+        break;
+    case 7:
         vulnerabilite();
         break;
     default://si la saisie ne correspond � aucune case
@@ -82,11 +97,9 @@ calcul affichage et sauvegarde des indices du graph
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
-
     m_etude->calcule_indices();
     m_etude->affichage_poly();
 
-    std::cout<<"le graph est "<<m_etude->k_connexe()<<" conexe(s)"<<std::endl;
     if(fichier.is_open())
         m_etude->sauvegarde(fichier);
     else
@@ -110,6 +123,8 @@ void Menu::chargementGraph()
         nom_fichier="graphe_etoile3_topo.txt";
     if (nom_fichier=="5")
         nom_fichier="graphe_cycle5_topo.txt";
+    if(nom_fichier=="metro")
+        nom_fichier="metro.txt";
     ifs.open(nom_fichier);//ouverture du fichier
     if(!ifs.is_open())//si le fichier ne s'est pas ouvert
     {
@@ -127,8 +142,9 @@ void Menu::chargementGraph()
     {
         if(tampon)//si graphe tout de meme construit
             delete tampon;//le supprimer
-        std::cout<<"Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
+        std::cout<<a<<"  Verifie le format du fichier : "<<nom_fichier<<std::endl;//message console
     }
+    std::cout<<"fin du chargement\n";
 }
 
 /**
@@ -165,7 +181,9 @@ void Menu::affichage_vulnerabilite()const
     std::cout<<"1/Suprimer un element du graphe"<<std::endl;
     std::cout<<"2/Affichage nouveau graphe "<<std::endl;
     std::cout<<"3/Calcule indice nouveau graphe "<<std::endl;
-    std::cout<<"4/Annalyse modification du changement"<<std::endl;
+    std::cout<<"4/Connexite"<<std::endl;
+    std::cout<<"5/Annalyse modification du changement"<<std::endl;
+    std::cout<<"6/Parcours"<<std::endl;
 }
 void Menu::vulnerabilite()
 {
@@ -208,20 +226,24 @@ void Menu::vulnerabilite()
             {
                 etude2->calcule_indices();
                 etude2->affichage_poly();
-                std::cout<<"le graph est "<<etude2->k_connexe()<<" conexe(s)"<<std::endl;
             }
                 //calculIndices(etude2);
             break;
-        case 4://Annalyse des modification
+        case 4:
+            if (etude2)
+                etude2->connexite();
+        case 5://Annalyse des modification
             if (etude2)
                 etude2->comparaison_graph(m_etude);
-
+            break;
+        case 6:
+            if (etude2)
+                etude2->parcours();
             break;
         default://si la saisie ne correspond � aucune case
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
         }
     }
 }
-
 
 

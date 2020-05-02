@@ -6,14 +6,14 @@
 ///constructeur
 ///initialisation de donn�es non pass� en param�tre � 0
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
 
 ///Nouvelle Proposition
 Sommet::Sommet(const Sommet* copie)
-    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(copie->m_x),m_y(copie->m_y)
+    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
 {
 
 }
@@ -25,6 +25,11 @@ void Sommet::ajout(Arete*suivant)
 {
     m_suivants.push_back(suivant);
 }
+
+void Sommet::ajoutP(Arete*precedent)
+{
+    m_precedents.push_back(precedent);
+}
 /**FIN CONSTRUCTION SOMMET*/
 
 /**DEBUT AFFICHAGE*/
@@ -33,25 +38,35 @@ void Sommet::affichageconsole()const
 {
     std::cout<<std::setprecision(3)
             <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<")"
-            <<" icp: "<<std::fixed<<m_i_p
+            <<" icp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
             <<" ivp: "<<std::fixed<<m_i_vp
             << " icis: "<<std::fixed<<m_i_is
             <<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
 
 }
 ///Affichage SVG
-void Sommet::affichage(Svgfile& svgout)const
+void Sommet::affichage(Svgfile& svgout,const double&coeff)const
 {
-    svgout.addDisk(m_x*100,m_y*100,10,"BLACK");//Affichage sommet
-    svgout.addText(m_x*100-1,m_y*100-20,m_nom,"BLUE");//Affichage nom sommet
+    std::string couleur;
+    double coef=1-((m_i_i_max-m_i_i_nn)/m_i_i_max);
+    if (coef>=0.5)
+        couleur=makeRGB(100+150*coef,0,0);
+    else if (coef>=0.25)
+        couleur=makeRGB(0,100+155*coef*3,0);
+    else
+        couleur=makeRGB(0,100,155+100*(coef*7));
+
+
+    svgout.addDisk(m_x*coeff,m_y*coeff,3,couleur);//Affichage sommet
+    svgout.addText(m_x*coeff-((double)m_nom.size()/2.0)*1/coeff,(m_y)*coeff-(30)*1/coeff-3,m_nom,"BLUE",coeff);//Affichage nom sommet
 }
 
 void Sommet::affichage_comparaison(Sommet* ancien)const
 {
 
         std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<","<<ancien->m_i_d_nn<<m_i_d_nn<<")"
-            <<" icp: "<<std::fixed<<ancien->m_i_p-m_i_p
+            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
+            <<" icp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
             <<" ivp: "<<std::fixed<<ancien->m_i_vp-m_i_vp
             << " icis: "<<std::fixed<<ancien->m_i_is-m_i_is
             <<" inter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
@@ -84,16 +99,21 @@ double Sommet::get_vp()const
     return m_i_vp;
 }
 
+double Sommet::get_cp()const
+{
+    return m_i_p;
+}
 ///retourne une arete avec les deux sommet aux extremiter
 Arete* Sommet::trouverArete(Sommet* ext1)
 {
     Arete* Art=nullptr;
+
     for(auto s:m_suivants)
     {
         if (s->getext1()==this || s->getext1()==ext1)
             if (s->getext2()==this || s->getext2()==ext1)
                 Art=s;
-    }
+        }
     return Art;
 }
 /**FIN GETTER*/
@@ -124,6 +144,7 @@ void Sommet::indice_vp(std::map<Sommet*,double>&somme,const double& lambda)
 ///normalise l'indice
 void Sommet::calc_icp(double distance,double total)
 {
+    m_i_p_nn=1.0/distance;
     m_i_p=total/distance;
 }
 
@@ -134,7 +155,7 @@ void Sommet::calc_ici_naif(double total,double a)
     m_i_is=total/a;
 }
 ///Ajout les voisin d'un sommet a un veteur passer en parametre
-void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids)
+void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,std::pair<const Sommet*,double>>& poids)
 {
     Sommet* tampon;
     for (auto s: m_suivants)
@@ -144,19 +165,21 @@ void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pai
         {
             Som.push_back(tampon);
             marque[tampon->getnom()].second=this;
-            poids[tampon->getnom()]=poids[this->getnom()]+s->get_poid();
+            poids[tampon->getnom()].second=poids[this->getnom()].second+s->get_poid();
+            poids[tampon->getnom()].first=this;
         }
     }
 }
 
 ///Calcule des indice de centralité d'intermédiarité suivant l'alorithme de Brand
 ///normalisé et non
-void Sommet::Brand(const std::map<const Sommet*,double>&Cb,const double&n)
+void Sommet::Brand(const std::map<const Sommet*,double>&Cb,const double&n,const double &Cb_max)
 {
     m_i_i_nn=0;
     if(Cb.count(this))
         m_i_i_nn=Cb.at(this);
     m_i_i=m_i_i_nn/(n*n-3*n+2);
+    m_i_i_max=Cb_max;
 }
 ///Algortihme de Brand
 void Sommet::Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const
@@ -206,6 +229,9 @@ void Sommet::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std
     for(Arete* a : m_suivants)//parcourir l'ensemble des arets pour aller aux sommets suivants
         a->k_connexe(nombre_chemin,arete,sommet,arrive);
 }
+
+
+
 /**FIN ETUDE DE CONNEXITE*/
 
 ///Sauvegarde
@@ -214,6 +240,40 @@ void Sommet::sauvegarde(std::ofstream&fichier)const
     //ecriture dans le fichier
     fichier<<" indice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
     fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
-    fichier<<"indice de proximite : "<<m_i_p<<"; ";
+    fichier<<"indice de proximite : ("<<m_i_p_nn<<", "<<m_i_p<<"); ";
     fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
+}
+
+
+void Sommet::flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const
+{
+    for(Arete* s : m_suivants)
+        s->flot(carte,file,flot,connexe);
+    for(Arete* p : m_precedents)
+        p->flot(carte,file,flot,connexe);
+}
+
+
+void Sommet::flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
+{
+    double n_max = carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+void Sommet::flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const
+{
+    if(carte.at(this).first.first == nullptr)
+        return;
+    if(n_max>carte.at(this).second.second)
+        n_max=carte.at(this).second.second;
+    carte.at(this).first.second->flot_reccursif(carte.at(this).first.first,carte,flot,n_max);
+}
+
+double Sommet::flot_sortant(const std::map<const Arete*,double> &flot)const
+{
+    double somme=0;
+    for(const Arete* a : m_suivants)
+        if(flot.count(a))
+            somme+=flot.at(a);
+    return somme;
 }

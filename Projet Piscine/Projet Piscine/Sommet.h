@@ -15,16 +15,18 @@ public:
     virtual ~Sommet() = default;//destructeur par default ne fait rien
     /**Ajout d'une arete au sommet*/
     virtual void ajout(Arete*suivant);//ajout d'une arete au sommet
+    void ajoutP(Arete*precedent);
 
     /**AFFICHAGE*/
     void affichageconsole()const;//affichage en console
-    void affichage(Svgfile& svgout)const;//affichage svg
+    void affichage(Svgfile& svgout,const double&coeff)const;//affichage svg
     void affichage_comparaison(Sommet* ancien)const;
     /**Getter*/
     std::string getnom()const;//reccupere le nom du sommet
     double getX()const;//reccupere la position x du sommet
     double getY()const;//reccupere la position y du sommet
     double get_vp()const;//Reccupere l'indice de vecteur propre
+    double get_cp()const;
     Arete* trouverArete(Sommet* ext1);//retourne une arete
 
     /**CALCULE INDICES*/
@@ -38,9 +40,9 @@ public:
     ///intermediarite
     ///naïf
     void calc_ici_naif(double total,double a);
-    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
+    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,std::pair<const Sommet*,double>>& poids);
     ///Brand
-    void Brand(const std::map<const Sommet*,double>&Cb,const double&n);
+    void Brand(const std::map<const Sommet*,double>&Cb,const double&n,const double &Cb_max);
     void Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;
     /**Conexité*/
     int k_connexe(const Sommet* arrive)const;
@@ -49,11 +51,16 @@ public:
     /**Sauvegarde*/
     void sauvegarde(std::ofstream&fichier)const;//sauvegarde des indices
 
+    void flot(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::list<const Sommet*>&file,std::map<const Arete*,double> &flot, const bool& connexe)const;
+    void flot_reccursif(std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    void flot_reccursif(double &n_max ,std::map<const Sommet*,std::pair<std::pair<const Sommet*,const Arete*>, std::pair<bool, double>>>&carte, std::map<const Arete*,double> &flot)const;
+    double flot_sortant(const std::map<const Arete*,double> &flot)const;
 private:
     std::string m_nom;
-    std::vector<Arete*> m_suivants;//arete suivante du graphe
+    std::vector<Arete*> m_suivants,m_precedents;//arete suivante du graphe
     double m_i_d,m_i_vp,m_i_p,m_i_i,m_i_is;//indice normalisé
-    double m_i_i_nn,m_i_d_nn;//indice non normalisé
+    double m_i_p_nn,m_i_i_nn,m_i_d_nn;//indice non normalisé
+    double m_i_i_max;
     double m_x,m_y;//position du sommet
 };
 

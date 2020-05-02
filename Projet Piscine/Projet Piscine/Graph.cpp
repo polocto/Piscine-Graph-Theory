@@ -265,7 +265,7 @@ void Graph::calcule_indices()
     calc_vect_propre();
     calc_icp();
     Brand();
-    if(!m_oriente)
+    //if(!m_oriente)
         calc_ici_naif();
     calc_indice_total();
 }

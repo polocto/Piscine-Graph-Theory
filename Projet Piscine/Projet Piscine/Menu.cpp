@@ -36,7 +36,8 @@ void Menu::affichage()const
             <<"1/Charger Graph"<<std::endl
             <<"2/Charger Ponderation"<<std::endl
             <<"3/Calcule indices"<<std::endl
-            <<"4/Vulnerabilite"<<std::endl;
+            <<"4/Vulnerabilite"<<std::endl
+            <<"5/Calcule de flot entre 2 sommets"<<std::endl;
 }
 
 /**Saisie du choix et appel en fonction du choix
@@ -71,6 +72,8 @@ bool Menu::choix()
     case 4://Test la vuln�rabilit� du graph
         vulnerabilite();
         break;
+    case 5:
+        flot();
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
     }
@@ -216,7 +219,6 @@ void Menu::vulnerabilite()
         case 4://Annalyse des modification
             if (etude2)
                 etude2->comparaison_graph(m_etude);
-
             break;
         default://si la saisie ne correspond � aucune case
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
@@ -224,5 +226,17 @@ void Menu::vulnerabilite()
     }
 }
 
+
+void Menu:: flot()const
+{
+    std::string arriver;
+    std::string depart;
+    std::cout<< "saississez le sommet de depart : ";
+    std::cin>>depart;
+        std::cout<< "saississez le sommet d'arriver : ";
+    std::cin>>arriver;
+
+    m_etude->flot_entre_deux_point(depart,arriver);
+}
 
 

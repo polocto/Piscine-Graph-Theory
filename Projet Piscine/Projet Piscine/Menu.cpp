@@ -35,9 +35,11 @@ void Menu::affichage()const
     std::cout<<"0/Quitter"<<std::endl
             <<"1/Charger Graph"<<std::endl
             <<"2/Charger Ponderation"<<std::endl
-            <<"3/Calcule indices"<<std::endl
-            <<"4/Vulnerabilite"<<std::endl
-            <<"5/Calcule de flot entre 2 sommets"<<std::endl;
+            <<"3/Afficher .svg"<<std::endl
+            <<"4/Calcule indices"<<std::endl
+            <<"5/Tester la connexite du graphe"<<std::endl
+            <<"6/Parcours"<<std::endl
+            <<"7/Vulnerabilite"<<std::endl;
 }
 
 /**Saisie du choix et appel en fonction du choix
@@ -67,13 +69,22 @@ bool Menu::choix()
         chargementPonderation();
         break;
     case 3://calcul affichage et sauvegarde des indices
-        calculIndices();
+        {
+            Svgfile svgout;
+            m_etude->affichage(svgout);
+        }
         break;
     case 4://Test la vuln�rabilit� du graph
-        vulnerabilite();
+        calculIndices();
         break;
     case 5:
-        flot();
+        m_etude->connexite();
+        break;
+    case 6 :
+        m_etude->parcours();
+        break;
+    case 7:
+        vulnerabilite();
         break;
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
@@ -86,7 +97,7 @@ calcul affichage et sauvegarde des indices du graph
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
-    //m_etude->chemin_le_plus_court();
+    m_etude->calcule_indices();
     m_etude->affichage_poly();
 
     if(fichier.is_open())
@@ -225,19 +236,6 @@ void Menu::vulnerabilite()
             std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
         }
     }
-}
-
-
-void Menu:: flot()const
-{
-    std::string arriver;
-    std::string depart;
-    std::cout<< "saississez le sommet de depart : ";
-    std::cin>>depart;
-        std::cout<< "saississez le sommet d'arriver : ";
-    std::cin>>arriver;
-
-    m_etude->flot_entre_deux_point(depart,arriver);
 }
 
 

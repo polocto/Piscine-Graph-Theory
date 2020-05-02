@@ -34,6 +34,7 @@ public:
     std::map<std::string,std::pair<const Sommet*,double>> Dijkstra(Sommet* depart)const;
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     /**Test la k-arete-connexité d'un graphe*/
+    void connexite()const;
     int k_connexe()const;
     bool fortement_connexe()const;
     /**Sauvegarde des différents indices du graphe*/
@@ -44,7 +45,9 @@ public:
     //k_co
     double k_ko()const;
     double recherche_de_flot(const Sommet* s,const Sommet* p , const bool& connexe)const;
-    void flot_entre_deux_point(std::string depart,std::string arriver)const;
+    void flot_entre_deux_point()const;
+
+    void parcours()const;
 private:
     std::vector<Sommet*> m_sommets;//tableau de tous les sommet du graph
     std::vector<Arete*> m_aretes;// tableau de toutes les aretes du graph

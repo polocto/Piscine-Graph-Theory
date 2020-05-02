@@ -78,8 +78,6 @@ Graph::Graph(std::ifstream&ifs)
     m_coeff_aff=x_aff;
     if(y_aff<m_coeff_aff)
         m_coeff_aff=y_aff;
-    calcule_indices();
-
 }
 ///Construction d'un graph partiel
 ///Reccupération du graph à copié et suppression du changment reccupéré en string
@@ -134,7 +132,6 @@ Graph::Graph(Graph* Gmodel,std::string changement)
             }
         }
     }
-    calcule_indices();
 }
 
 ///Destructeur de Graph
@@ -240,15 +237,6 @@ void Graph::affichage_suppression()
 ///utiliser pour verification du chargement du graphe
 void Graph::affichageconsole()const
 {
-    if (m_oriente)
-    {
-        /*if (fortement_connexe())
-            std::cout<< "le graph oriente est fortement connexe\n";
-        else std::cout<<"le graph oriente n'est pas fortement connexe\n";*/
-        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe\n";
-    }
-        else
-    std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
     std::cout<<"l'indice de centralite global du graph est : "<<m_indice<<std::endl;
     std::cout<<" Sommet composant le graphe :"<<std::endl;
 
@@ -257,14 +245,17 @@ void Graph::affichageconsole()const
         s->affichageconsole();//Appel de l'affichage des paramettre des Sommets
         std::cout<<std::endl;
     }
-    /*std::cout <<" Arete composant le graph : "<<std::endl;
-    for (auto s:m_aretes)
-    {
-        s->affichageconsole();//Appel de l'affichage de aretes qui affiche ces attribues
-        std::cout<<std::endl;
-    }*/
 }
 
+
+
+void Graph::connexite()const
+{
+    if (m_oriente)
+        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe"<<std::endl;
+    else
+        std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
+}
 /**CALCULE DES INDICES DU GRAPH*/
 
 
@@ -689,11 +680,6 @@ double Graph::k_ko()const
             if(p!=s)
             {
                 double tampon=recherche_de_flot(s,p,true);
-                /*if(!tampon)
-                {
-                    std::cout<<s->getnom()<<"-->"<<p->getnom();
-                    std::cout<<" = "<<tampon<<std::endl;
-                }*/
                 if(tampon<k || k<0)
                     k=tampon;
             }
@@ -745,26 +731,46 @@ void Graph::chemin_le_plus_court()const
     std::cout<<std::endl;
 }
 
-void Graph::flot_entre_deux_point(std::string depart, std::string arriver)const
+void Graph::flot_entre_deux_point()const
 {
     Sommet* Sdepart=nullptr;
     Sommet* Sarriver=nullptr;
     double poid=0;
+    std::cout<< "saississez le sommet de depart : ";
+    Sdepart=saisie();
+        std::cout<< "saississez le sommet d'arriver : ";
+    Sarriver=saisie();
     //saisir les deux point
-    for (auto s: m_sommets)
-    {
-        if (s->getnom()==depart)
-            Sdepart=s;
-
-        if (s->getnom()==arriver)
-            Sarriver=s;
-    }
-
     if (Sdepart && Sarriver)
     {
         poid=recherche_de_flot(Sdepart,Sarriver,false);
-        std::cout<<"le flot max entre la sation "<<depart << " et la station "<<arriver<<" est egale "<<poid<<std::endl;
+        std::cout<<"le flot max entre la sation "<<Sdepart->getnom() << " et la station "<<Sarriver->getnom()<<" est egale "<<poid<<std::endl;
     }
     else std::cout<< " saisie incorecte des sommets";
 
+}
+
+void Graph::parcours()const
+{
+    std::string choix;
+    if(m_oriente)
+    {
+        do
+        {
+            std::cout<<"1/Parcours entre deux Sommets"<<std::endl;
+            std::cout<<"2/Flot entre deux Sommets"<<std::endl;
+            std::cin>>choix;
+        }while(!is_int(choix));
+        switch(std::stoi(choix))
+        {
+        case 1:
+            chemin_le_plus_court();
+          break;
+        case 2:
+            flot_entre_deux_point();
+            break;
+        }
+    }
+    else
+        chemin_le_plus_court();
 }

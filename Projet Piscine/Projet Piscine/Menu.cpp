@@ -208,7 +208,7 @@ void Menu::vulnerabilite()
             {
                 etude2->calcule_indices();
                 etude2->affichage_poly();
-                //std::cout<<"le graph est "<<etude2->k_connexe()<<" conexe(s)"<<std::endl;
+
             }
                 //calculIndices(etude2);
             break;

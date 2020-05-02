@@ -105,9 +105,11 @@ Sommet*Arete::getext2()
 /**GETTER FIN*/
 
 
-bool Arete::verrif(const std::string&ext1,const std::string&ext2)const
+bool Arete::verrif(const std::string&ext1,const std::string&ext2,const bool&oriente)const
 {
-    return ext1!=m_ext1->getnom() || m_ext2->getnom()!=ext2;
+    if(oriente)
+        return !(ext1==m_ext1->getnom() && m_ext2->getnom()==ext2);
+    return (ext1!=m_ext1->getnom() || m_ext2->getnom()!=ext2) && (ext2!=m_ext1->getnom() || m_ext2->getnom()!=ext1);
 }
 
 /**Indice intermediarite*/

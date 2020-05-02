@@ -197,7 +197,6 @@ void Graph::affichage_poly()const
 {
     {
         Svgfile svgout;
-        svgout.addGrid();
         affichage(svgout);
     }
     affichageconsole();
@@ -207,6 +206,7 @@ void Graph::affichage_poly()const
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
 void Graph::affichage(Svgfile& svgout)const
 {
+    svgout.addGrid();
     int som_max=m_sommets[0]->getY();
     for (auto s: m_sommets)
         if (som_max<s->getY())

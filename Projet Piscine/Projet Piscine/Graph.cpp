@@ -386,7 +386,7 @@ void Graph::calc_icp()
 void Graph::calc_ici_naif()
 {
     const Sommet* actuel=nullptr;
-    double a=((double)(pow(m_sommets.size(),2)+3*m_sommets.size()+2))/2.0;
+    double a=0;//((double)(pow(m_sommets.size(),2)+3*m_sommets.size()+2))/2.0;
     std::map<const Sommet*,double> total;
     for(auto i:m_sommets)
         total[i]=0;
@@ -399,6 +399,8 @@ void Graph::calc_ici_naif()
         for(auto arrive : m_sommets)
         {
             actuel=tampon.at(arrive->getnom()).first;
+            if(actuel != nullptr)
+                a++;
             while(actuel!=nullptr && actuel != i )
             {
                 total.at(actuel)++;

@@ -126,7 +126,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->verrif(ext1,ext2))//selection des aretes à copier
+            if (s->verrif(ext1,ext2,m_oriente))//selection des aretes à copier
             {
                 m_aretes.push_back(new Arete(s,traducteur,m_oriente));//copie des aretes//MODIF
             }

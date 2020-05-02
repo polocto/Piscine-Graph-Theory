@@ -399,7 +399,7 @@ void Graph::calc_ici_naif()
         for(auto arrive : m_sommets)
         {
             actuel=tampon.at(arrive->getnom()).first;
-            if(actuel != nullptr)
+            if(actuel != nullptr && actuel != i)
                 a++;
             while(actuel!=nullptr && actuel != i )
             {

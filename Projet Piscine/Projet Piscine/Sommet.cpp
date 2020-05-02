@@ -13,7 +13,7 @@ Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
 
 ///Nouvelle Proposition
 Sommet::Sommet(const Sommet* copie)
-    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_x(copie->m_x),m_y(copie->m_y)
+    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
 {
 
 }

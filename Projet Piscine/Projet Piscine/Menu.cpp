@@ -231,7 +231,7 @@ void Menu::vulnerabilite()
             break;
         case 4:
             if (etude2)
-                etude2=connexite();
+                etude2->connexite();
         case 5://Annalyse des modification
             if (etude2)
                 etude2->comparaison_graph(m_etude);

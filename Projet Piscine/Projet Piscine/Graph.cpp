@@ -86,14 +86,14 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 {
     std::string ext1="",ext2="";
     unsigned int i=0;
-    while (i<changement.size() && changement[i]!='-')
+    while (i<changement.size() && changement[i]!='/')
         ext1+=changement[i++];
 
     if (i<changement.size())
-        for (unsigned int j=i+1;i<changement.size();i++)
-            ext2=changement[j];
+        for (unsigned int j=i+1;j<changement.size();j++)
+            ext2+=changement[j];
    else       ext2=" ";
-
+    std::cout<<ext1<<std::endl<<ext2<<std::endl;
     std::map<const Sommet*,Sommet*>traducteur;//MODIF
     if (ext2==" ")//retrait d'un sommet
     {

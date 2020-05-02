@@ -745,7 +745,7 @@ void Graph::chemin_le_plus_court()const
     std::cout<<std::endl;
 }
 
-void Graph::flot_entre_deux_point(std::string depart,std::string arriver)const
+void Graph::flot_entre_deux_point(std::string depart, std::string arriver)const
 {
     Sommet* Sdepart=nullptr;
     Sommet* Sarriver=nullptr;
@@ -760,7 +760,7 @@ void Graph::flot_entre_deux_point(std::string depart,std::string arriver)const
             Sarriver=s;
     }
 
-    if (!Sdepart && !Sarriver)
+    if (Sdepart && Sarriver)
     {
         poid=recherche_de_flot(Sdepart,Sarriver,false);
         std::cout<<"le flot max entre la sation "<<depart << " et la station "<<arriver<<" est egale "<<poid<<std::endl;

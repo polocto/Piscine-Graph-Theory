@@ -74,6 +74,7 @@ bool Menu::choix()
         break;
     case 5:
         flot();
+        break;
     default://si la saisie ne correspond � aucune case
         std::cout<<"Ce choix ne fait pas parti des options ci-dessus."<<std::endl;//message console
     }

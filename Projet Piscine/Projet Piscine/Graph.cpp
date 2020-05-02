@@ -392,6 +392,17 @@ void Graph::calc_ici_naif()
         for (unsigned int j=0; j<m_sommets.size()-1; j++)
         std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
 
+        for(auto arrive : m_sommets)
+        {
+            actuel=tampon.at(arrive->getnom()).first;
+            while(actuel!=nullptr && actuel != i )
+            {
+                total.at(actuel)++;
+                actuel = tampon.at(actuel->getnom()).first;
+            }
+        }
+
+        /*for (unsigned int j=0; j<m_sommets.size(); j++)
         {
             if (i!=m_sommets[j])
             {

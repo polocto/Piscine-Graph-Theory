@@ -380,11 +380,11 @@ void Graph::calc_icp()
     for (auto i:m_sommets)
     {
         double distance=0;
-        std::map<std::string,double> tampon=Dijkstra(i);
+        std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
         for(auto s:m_sommets)
         {
             if (s!=i)
-                distance+=tampon.at(s->getnom());
+                distance+=tampon.at(s->getnom()).second;
         }
         i->calc_icp(distance,m_sommets.size()-1);//envoie les valeur pour modifier la valeur de l'indice icp des sommet
     }
@@ -425,7 +425,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 {
     std::vector<Sommet*> Som;
     std::map<std::string,std::pair<bool,Sommet*>> marque;
-    std::map<std::string,double> poids;
+    std::map<std::string,std::pair<const Sommet*,double>> poids;
 
     double poidarete=0;
     Sommet* sommetActif;
@@ -438,7 +438,8 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
     for (auto s: m_sommets)
     {
         marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
-        poids[s->getnom()]=0;
+        poids[s->getnom()].second=0;
+        poids[s->getnom()].first=0;
     }
 
     while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
@@ -447,7 +448,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
         sommetActif=Som[0];
         for (auto s:Som)
         {
-            if (poids[s->getnom()]<poids[sommetActif->getnom()])
+            if (poids[s->getnom()].second<poids[sommetActif->getnom()].second)
                 sommetActif=s;
         }
 
@@ -463,11 +464,11 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 
         if (marque[sommetActif->getnom()].second==nullptr)
         {
-            poids[sommetActif->getnom()]=poidarete;
+            poids[sommetActif->getnom()].second=poidarete;
         }
         else
         {
-            poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
+            poids[sommetActif->getnom()].second=poids[marque[sommetActif->getnom()].second->getnom()].second+poidarete;
         }
 
         //supression de la liste du Sommet actif
@@ -492,12 +493,12 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
-std::map<std::string,double> Graph::Dijkstra(Sommet* depart)const
+std::map<std::string,std::pair<const Sommet*,double>> Graph::Dijkstra(Sommet* depart)const
 {
     //Declaration de variable
     std::vector<Sommet*> Som;
     std::map<std::string,std::pair<bool,Sommet*>> marque;
-    std::map<std::string,double> poids;
+    std::map<std::string,std::pair<const Sommet*,double>> poids;
 
     double poidarete=0;
     Sommet* sommetActif;
@@ -510,7 +511,8 @@ std::map<std::string,double> Graph::Dijkstra(Sommet* depart)const
     for (auto s: m_sommets)
     {
         marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
-        poids[s->getnom()]=0;
+        poids[s->getnom()].second=0;
+        poids[s->getnom()].first=nullptr;
     }
 
     while ( !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
@@ -518,7 +520,7 @@ std::map<std::string,double> Graph::Dijkstra(Sommet* depart)const
         //Determiner le sommet actif
         sommetActif=Som[0];
         for (auto s:Som)
-            if (poids[s->getnom()]<poids[sommetActif->getnom()])
+            if (poids[s->getnom()].second<poids[sommetActif->getnom()].second)
                 sommetActif=s;
 
         sommetActif->ajoutvoisin(Som,marque,poids);
@@ -532,9 +534,9 @@ std::map<std::string,double> Graph::Dijkstra(Sommet* depart)const
         }
 
         if (marque[sommetActif->getnom()].second==nullptr)
-            poids[sommetActif->getnom()]=poidarete;
+            poids[sommetActif->getnom()].second=poidarete;
         else
-            poids[sommetActif->getnom()]=poids[marque[sommetActif->getnom()].second->getnom()]+poidarete;
+            poids[sommetActif->getnom()].second=poids[marque[sommetActif->getnom()].second->getnom()].second+poidarete;
 
         //supression de la liste du Sommet actif
         for (size_t i=0; i<Som.size(); i++)
@@ -576,12 +578,12 @@ bool Graph::fortement_connexe()const
 
     for (auto s:m_sommets)
     {
-        std::map<std::string,double>tampon=Dijkstra(s);
+        std::map<std::string,std::pair<const Sommet*,double>>tampon=Dijkstra(s);
         for (auto i:m_sommets)
         {
             if (s!=i)
             {
-                dist=tampon.at(s->getnom());
+                dist=tampon.at(s->getnom()).second;
             if (dist==0)
                 return 0;
             }
@@ -701,6 +703,46 @@ double Graph::k_ko()const
 
     }
     return k;
+}
+
+Sommet* Graph::saisie()const
+{
+    std::string tampon;
+    Sommet* sommet;
+    bool fin=false;
+    do
+    {
+        std::cin>>tampon;
+        for(Sommet* s : m_sommets)
+        {
+            if(s->getnom()==tampon)
+            {
+                sommet=s;
+                fin = true;
+            }
+        }
+    }while(!fin);
+    return sommet;
+}
+
+void Graph::chemin_le_plus_court()const
+{
+    std::map<std::string,std::pair<const Sommet*,double>> tampon;
+    Sommet*depart=nullptr;
+    const Sommet*arrive=nullptr;
+    std::cout<<"Saisir depart : ";
+    depart=saisie();
+    std::cout<<"Saisir arrive : ";
+    arrive=saisie();
+    tampon=Dijkstra(depart);
+    while(arrive!=nullptr)
+    {
+        std::cout<<arrive->getnom();
+        if(tampon[arrive->getnom()].first!=nullptr)
+            std::cout<<"<--";
+        arrive=tampon[arrive->getnom()].first;
+    }
+    std::cout<<std::endl;
 }
 
 void Graph::flot_entre_deux_point()const

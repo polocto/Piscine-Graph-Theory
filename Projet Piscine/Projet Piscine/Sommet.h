@@ -40,7 +40,7 @@ public:
     ///intermediarite
     ///naïf
     void calc_ici_naif(double total,double a);
-    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids);
+    void ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,std::pair<const Sommet*,double>>& poids);
     ///Brand
     void Brand(const std::map<const Sommet*,double>&Cb,const double&n,const double &Cb_max);
     void Brand(std::map<const Sommet*,double>&distance,std::priority_queue<std::pair<const Sommet*,std::pair<const Sommet*,double>>,std::vector<std::pair<const Sommet*,std::pair<const Sommet*,double>>>,myComparator>&q,std::map<const Sommet*,double>&sigma,std::map<const Sommet*,std::list<const Sommet*>>&predecesseur)const;

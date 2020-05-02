@@ -19,6 +19,10 @@ public:
     void affichage(Svgfile& svgout)const;
     void affichageconsole()const;
     void affichage_suppression();
+    void chemin_le_plus_court()const;
+
+    /**Saisie*/
+    Sommet* saisie()const;
     /**Calcule des différents indice*/
     void calc_indice_total();
     void calcule_indices();
@@ -27,7 +31,7 @@ public:
     void Brand();//intermediatirité
     void calc_icp();//indice de proximité
     void calc_ici_naif();//intermediatirité naïve
-    std::map<std::string,double> Dijkstra(Sommet* depart)const;
+    std::map<std::string,std::pair<const Sommet*,double>> Dijkstra(Sommet* depart)const;
     bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     /**Test la k-arete-connexité d'un graphe*/
     int k_connexe()const;

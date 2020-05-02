@@ -82,6 +82,7 @@ calcul affichage et sauvegarde des indices du graph
 void Menu::calculIndices()
 {
     std::ofstream fichier("sauvegarde.txt");
+    //m_etude->chemin_le_plus_court();
     m_etude->affichage_poly();
 
     if(fichier.is_open())

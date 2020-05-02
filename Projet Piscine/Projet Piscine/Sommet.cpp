@@ -144,7 +144,7 @@ void Sommet::calc_ici_naif(double total,double a)
     m_i_is=total/a;
 }
 ///Ajout les voisin d'un sommet a un veteur passer en parametre
-void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,double>& poids)
+void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pair<bool,Sommet*>>& marque,std::map<std::string,std::pair<const Sommet*,double>>& poids)
 {
     Sommet* tampon;
     for (auto s: m_suivants)
@@ -154,7 +154,8 @@ void Sommet::ajoutvoisin(std::vector<Sommet*>& Som,std::map<std::string,std::pai
         {
             Som.push_back(tampon);
             marque[tampon->getnom()].second=this;
-            poids[tampon->getnom()]=poids[this->getnom()]+s->get_poid();
+            poids[tampon->getnom()].second=poids[this->getnom()].second+s->get_poid();
+            poids[tampon->getnom()].first=this;
         }
     }
 }

@@ -386,14 +386,12 @@ void Graph::calc_icp()
 void Graph::calc_ici_naif()
 {
     const Sommet* actuel=nullptr;
-    double a=0;//((double)(pow(m_sommets.size(),2)+3*m_sommets.size()+2))/2.0;
+    double a=0;
     std::map<const Sommet*,double> total;
     for(auto i:m_sommets)
         total[i]=0;
     for(auto i:m_sommets)
     {
-        //double total=0;
-        //double a=0;
         std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
 
         for(auto arrive : m_sommets)
@@ -407,28 +405,6 @@ void Graph::calc_ici_naif()
                 actuel = tampon.at(actuel->getnom()).first;
             }
         }
-
-        /*for (unsigned int j=0; j<m_sommets.size(); j++)
-        {
-            if (i!=m_sommets[j] && tampon.at(m_sommets[j]->getnom()).second)
-            {
-                for (unsigned int k=j; k<m_sommets.size()-1; k++)
-                {
-                    if (i!=m_sommets[k])
-                    {
-                        if (m_sommets[j]!=m_sommets[k])
-                        {
-                            ///Dijtra renvoie un bool
-                            total+=Dijkstra(m_sommets[j],m_sommets[k],i);
-                            a++;
-                        }
-                    }
-                }
-            }
-        }*/
-        //while()
-        ///initialisation du ici
-        //i->calc_ici_naif(total,a);
     }
     for(auto i:m_sommets)
         i->calc_ici_naif(total.at(i),a);
@@ -504,7 +480,7 @@ bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
         i++;
     }
     return 0;
-}
+}*/
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/

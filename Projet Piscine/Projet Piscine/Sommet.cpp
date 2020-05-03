@@ -6,14 +6,14 @@
 ///constructeur
 ///initialisation de donn�es non pass� en param�tre � 0
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_is_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
 
 ///Nouvelle Proposition
 Sommet::Sommet(const Sommet* copie)
-    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
+    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_is_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
 {
 
 }
@@ -37,11 +37,11 @@ void Sommet::ajoutP(Arete*precedent)
 void Sommet::affichageconsole()const
 {
     std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<")"
-            <<" icp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
-            <<" ivp: "<<std::fixed<<m_i_vp
-            << " icis: "<<std::fixed<<m_i_is
-            <<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
+            <<m_nom<<"\ticd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<") "
+            <<"\ticp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
+            <<"\tivp: ("<<std::fixed<<m_i_vp<<","<<m_i_vp_nn<<") "
+            << "\ticis: ("<<std::fixed<<m_i_is<<","<<m_i_is_nn<<") "
+            <<"\tinter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
 
 }
 ///Affichage SVG
@@ -65,11 +65,11 @@ void Sommet::affichage_comparaison(Sommet* ancien)const
 {
 
         std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
-            <<" icp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
-            <<" ivp: "<<std::fixed<<ancien->m_i_vp-m_i_vp
-            << " icis: "<<std::fixed<<ancien->m_i_is-m_i_is
-            <<" inter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
+            <<m_nom<<" :\ticd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
+            <<"\ticp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
+            <<"\tivp: ("<<std::fixed<<ancien->m_i_vp-m_i_vp<<", "<<ancien->m_i_vp_nn-m_i_vp_nn<<")"
+            << "\ticis: ("<<std::fixed<<ancien->m_i_is-m_i_is<<", "<<ancien->m_i_is_nn-m_i_is_nn<<")"
+            <<"\tinter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
             <<std::endl;
 
 }
@@ -137,6 +137,7 @@ void Sommet::calc_vp(std::map<Sommet*,double>&somme)
 ///normalise l'indice
 void Sommet::indice_vp(std::map<Sommet*,double>&somme,const double& lambda)
 {
+    m_i_vp_nn=somme.at(this);
     m_i_vp=somme.at(this)/lambda;//somme des vecteur propre des sommet voisins divise par lambda
 }
 
@@ -152,6 +153,7 @@ void Sommet::calc_icp(double distance,double total)
 ///normalise l'indice
 void Sommet::calc_ici_naif(double total,double a)
 {
+    m_i_is_nn=total;
     m_i_is=total/a;
 }
 ///Ajout les voisin d'un sommet a un veteur passer en parametre
@@ -238,10 +240,10 @@ void Sommet::k_connexe(int& nombre_chemin,std::map<const Arete*,bool>& arete,std
 void Sommet::sauvegarde(std::ofstream&fichier)const
 {
     //ecriture dans le fichier
-    fichier<<" indice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
-    fichier<<"indice de vecteur propre : "<<m_i_vp<<"; ";
-    fichier<<"indice de proximite : ("<<m_i_p_nn<<", "<<m_i_p<<"); ";
-    fichier<<"indice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
+    fichier<<"\tindice de centrailite de degre : ("<<m_i_d_nn<<", "<<m_i_d<<"); ";
+    fichier<<"\tindice de vecteur propre : ("<<m_i_vp_nn<<", "<<m_i_vp<<"); ";
+    fichier<<"\tindice de proximite : ("<<m_i_p_nn<<", "<<m_i_p<<"); ";
+    fichier<<"\tindice de centralite d'intermediarite : ("<<m_i_i_nn<<", "<<m_i_d<<"); ";
 }
 
 

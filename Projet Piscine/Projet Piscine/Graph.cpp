@@ -126,7 +126,7 @@ Graph::Graph(Graph* Gmodel,std::string changement)
 
         for (auto s: Gmodel->m_aretes)
         {
-            if (s->verrif(ext1,ext2))//selection des aretes à copier
+            if (s->verrif(ext1,ext2,m_oriente))//selection des aretes à copier
             {
                 m_aretes.push_back(new Arete(s,traducteur,m_oriente));//copie des aretes//MODIF
             }
@@ -197,7 +197,6 @@ void Graph::affichage_poly()const
 {
     {
         Svgfile svgout;
-        svgout.addGrid();
         affichage(svgout);
     }
     affichageconsole();
@@ -207,6 +206,7 @@ void Graph::affichage_poly()const
 /// Appel des fonction affichage pour chaque sommets et chaque arretes
 void Graph::affichage(Svgfile& svgout)const
 {
+    svgout.addGrid();
     int som_max=m_sommets[0]->getY();
     for (auto s: m_sommets)
         if (som_max<s->getY())
@@ -258,9 +258,9 @@ void Graph::affichageconsole()const
 void Graph::connexite()const
 {
     if (m_oriente)
-        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe"<<std::endl;
+        std::cout<<"le graphe oriente est " << k_ko()<<" fortement connexe"<<std::endl;
     else
-        std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
+        std::cout<<"le graphe est "<<k_connexe()<<" conexe(s)"<<std::endl;
 }
 /**CALCULE DES INDICES DU GRAPH*/
 
@@ -271,7 +271,7 @@ void Graph::calcule_indices()
     calc_vect_propre();
     calc_icp();
     Brand();
-    if(!m_oriente && k_connexe())
+    //if(!m_oriente)
         calc_ici_naif();
     calc_indice_total();
 }
@@ -391,102 +391,31 @@ void Graph::calc_icp()
 ///considère qu'il n'y a que un plus court chemin
 void Graph::calc_ici_naif()
 {
+    const Sommet* actuel=nullptr;
+    double a=0;
+    std::map<const Sommet*,double> total;
+    for(auto i:m_sommets)
+        total[i]=0;
     for(auto i:m_sommets)
     {
-        double total=0;
-        double a=0;
-        for (unsigned int j=0; j<m_sommets.size()-1; j++)
+        std::map<std::string,std::pair<const Sommet*,double>> tampon=Dijkstra(i);
+
+        for(auto arrive : m_sommets)
         {
-            if (i!=m_sommets[j])
+            actuel=tampon.at(arrive->getnom()).first;
+            if(actuel != nullptr && actuel != i)
+                a++;
+            while(actuel!=nullptr && actuel != i )
             {
-                for (unsigned int k=j; k<m_sommets.size()-1; k++)
-                {
-                    if (i!=m_sommets[k])
-                    {
-                        if (m_sommets[j]!=m_sommets[k])
-                        {
-                            ///Dijtra renvoie un bool
-                            total+=Dijkstra(m_sommets[j],m_sommets[k],i);
-                            a++;
-                        }
-                    }
-                }
+                total.at(actuel)++;
+                actuel = tampon.at(actuel->getnom()).first;
             }
         }
-        ///initialisation du ici
-        i->calc_ici_naif(total,a);
     }
+    for(auto i:m_sommets)
+        i->calc_ici_naif(total.at(i),a);
 }
 /**Début Dijkstra*/
-bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
-{
-    std::vector<Sommet*> Som;
-    std::map<std::string,std::pair<bool,Sommet*>> marque;
-    std::map<std::string,std::pair<const Sommet*,double>> poids;
-
-    double poidarete=0;
-    Sommet* sommetActif;
-    Arete* areteactive;
-
-    //ajout du Sommet de depart a la liste
-    Som.push_back(depart);
-
-    //initialisation des maps utiliser
-    for (auto s: m_sommets)
-    {
-        marque[s->getnom()]=std::pair<bool,Sommet*>(0,nullptr);
-        poids[s->getnom()].second=0;
-        poids[s->getnom()].first=0;
-    }
-
-    while (marque[arriver->getnom()].first==0 && !Som.empty())//La boucle tourne tant que la liste est remplie et le Sommet d'arriver n'est pas marquer
-    {
-        //Determiner le sommet actif
-        sommetActif=Som[0];
-        for (auto s:Som)
-        {
-            if (poids[s->getnom()].second<poids[sommetActif->getnom()].second)
-                sommetActif=s;
-        }
-
-        sommetActif->ajoutvoisin(Som,marque,poids);
-        marque[sommetActif->getnom()].first=1; //Marquage du sommetActif pour qu'il ne soit plus ajouter a la liste des suivant
-
-        //Determination du poidtotal du chemin le plus cours pour chaque arete du graphe tant que sommet n'est pas decouvert
-        if (marque[sommetActif->getnom()].second!=nullptr)
-        {
-            areteactive=marque[sommetActif->getnom()].second->trouverArete(sommetActif);
-            poidarete=areteactive->get_poid();
-        }
-
-        if (marque[sommetActif->getnom()].second==nullptr)
-        {
-            poids[sommetActif->getnom()].second=poidarete;
-        }
-        else
-        {
-            poids[sommetActif->getnom()].second=poids[marque[sommetActif->getnom()].second->getnom()].second+poidarete;
-        }
-
-        //supression de la liste du Sommet actif
-        for (size_t i=0; i<Som.size(); i++)
-        {
-            if (Som[i]==sommetActif)
-                Som.erase(Som.begin()+i);
-        }
-    }
-
-    unsigned int i=0;
-    sommetActif=arriver;
-    while(sommetActif!=depart && i<m_sommets.size())
-    {
-        if (marque[sommetActif->getnom()].second==passage)
-            return 1;
-        sommetActif=marque[sommetActif->getnom()].second;
-        i++;
-    }
-    return 0;
-}
 
 /**Algorithme de dijkstra modifier pour donner la longeur du plus cour chemin entre deux Sommets
 Prend en paramettre l'adresse de depart et l'adresse d'arriver et renvoie une distance total*/
@@ -611,7 +540,7 @@ Graph* Graph::Supression_element()
 {
     Graph* etude_2;
     std::string choix;
-    std::cout<<"quelle element voulez vous supprimer?";
+    std::cout<<"Quel element voulez vous supprimer?";
     std::cin>>choix;//saisie
 
     etude_2=new Graph(this,choix);

@@ -252,9 +252,9 @@ void Graph::affichageconsole()const
 void Graph::connexite()const
 {
     if (m_oriente)
-        std::cout<<"le graph oriente est " << k_ko()<<" fortement connexe"<<std::endl;
+        std::cout<<"le graphe oriente est " << k_ko()<<" fortement connexe"<<std::endl;
     else
-        std::cout<<"le graph est "<<k_connexe()<<" conexe(s)"<<std::endl;
+        std::cout<<"le graphe est "<<k_connexe()<<" conexe(s)"<<std::endl;
 }
 /**CALCULE DES INDICES DU GRAPH*/
 
@@ -605,7 +605,7 @@ Graph* Graph::Supression_element()
 {
     Graph* etude_2;
     std::string choix;
-    std::cout<<"quelle element voulez vous supprimer?";
+    std::cout<<"Quel element voulez vous supprimer?";
     std::cin>>choix;//saisie
 
     etude_2=new Graph(this,choix);

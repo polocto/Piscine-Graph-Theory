@@ -33,10 +33,10 @@ ainsi que l'option pour quitter*/
 void Menu::affichage()const
 {
     std::cout<<"0/Quitter"<<std::endl
-            <<"1/Charger Graph"<<std::endl
+            <<"1/Charger Graphe"<<std::endl
             <<"2/Charger Ponderation"<<std::endl
             <<"3/Afficher .svg"<<std::endl
-            <<"4/Calcule indices"<<std::endl
+            <<"4/Calcul indices"<<std::endl
             <<"5/Tester la connexite du graphe"<<std::endl
             <<"6/Parcours"<<std::endl
             <<"7/Vulnerabilite"<<std::endl;
@@ -54,7 +54,7 @@ bool Menu::choix()
         saisie="99";//metre saisie � 99
     if(!m_etude && std::stoi(saisie)>1)//si etude est null et qu'on ne quitte pas ou qu'on ne charge pas de graph
     {
-        std::cout<<"Veuillez charger un Graph."<<std::endl;//message console
+        std::cout<<"Veuillez charger un Graphe."<<std::endl;//message console
         return true;//retourne vrai
     }
     switch(std::stoi(saisie))
@@ -178,11 +178,11 @@ void Menu::affichage_vulnerabilite()const
 {
     std::cout<<"MENU VULNERABILITE"<<std::endl;
     std::cout<<"0/Retour au menu 1"<<std::endl;
-    std::cout<<"1/Suprimer un element du graphe"<<std::endl;
+    std::cout<<"1/Supprimer un element du graphe"<<std::endl;
     std::cout<<"2/Affichage nouveau graphe "<<std::endl;
-    std::cout<<"3/Calcule indice nouveau graphe "<<std::endl;
+    std::cout<<"3/Calcul indice nouveau graphe "<<std::endl;
     std::cout<<"4/Connexite"<<std::endl;
-    std::cout<<"5/Annalyse modification du changement"<<std::endl;
+    std::cout<<"5/Analyse modification du changement"<<std::endl;
     std::cout<<"6/Parcours"<<std::endl;
 }
 void Menu::vulnerabilite()

@@ -37,11 +37,11 @@ void Sommet::ajoutP(Arete*precedent)
 void Sommet::affichageconsole()const
 {
     std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<") "
-            <<" icp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
-            <<" ivp: ("<<std::fixed<<m_i_vp<<","<<m_i_vp_nn<<") "
-            << " icis: ("<<std::fixed<<m_i_is<<","<<m_i_is_nn<<") "
-            <<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
+            <<m_nom<<"\ticd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<") "
+            <<"\ticp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
+            <<"\tivp: ("<<std::fixed<<m_i_vp<<","<<m_i_vp_nn<<") "
+            << "\ticis: ("<<std::fixed<<m_i_is<<","<<m_i_is_nn<<") "
+            <<"\tinter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
 
 }
 ///Affichage SVG
@@ -65,11 +65,11 @@ void Sommet::affichage_comparaison(Sommet* ancien)const
 {
 
         std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
-            <<" icp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
-            <<" ivp: ("<<std::fixed<<ancien->m_i_vp-m_i_vp<<", "<<ancien->m_i_vp_nn-m_i_vp_nn<<")"
-            << " icis: ("<<std::fixed<<ancien->m_i_is-m_i_is<<", "<<ancien->m_i_is_nn-m_i_is_nn<<")"
-            <<" inter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
+            <<m_nom<<" :\ticd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
+            <<"\ticp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
+            <<"\tivp: ("<<std::fixed<<ancien->m_i_vp-m_i_vp<<", "<<ancien->m_i_vp_nn-m_i_vp_nn<<")"
+            << "\ticis: ("<<std::fixed<<ancien->m_i_is-m_i_is<<", "<<ancien->m_i_is_nn-m_i_is_nn<<")"
+            <<"\tinter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
             <<std::endl;
 
 }

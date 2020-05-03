@@ -117,12 +117,6 @@ void Menu::chargementGraph()
     Graph* tampon=nullptr;
     std::cout<<"Entrez le nom du fichier a charger : ";
     std::cin>>nom_fichier;//saisie console
-    if (nom_fichier=="1")
-        nom_fichier="graphe_etoile1_topo.txt";
-    if (nom_fichier=="3")
-        nom_fichier="graphe_etoile3_topo.txt";
-    if (nom_fichier=="5")
-        nom_fichier="graphe_cycle5_topo.txt";
     if(nom_fichier=="metro")
         nom_fichier="metro.txt";
     ifs.open(nom_fichier);//ouverture du fichier
@@ -159,9 +153,6 @@ void Menu::chargementPonderation()
 
     std::cout<<"entrer le nom du fichier de ponderation : ";
     std::cin>>nom_fichier;//saisie console
-
-    if (nom_fichier=="oui")
-        nom_fichier="graphe_etoile1_Ponderation.txt";
 
     ifs.open(nom_fichier);//ouverture du fichier
     if(!ifs.is_open())//si le fichier n'est pas ouvert

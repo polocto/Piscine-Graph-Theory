@@ -6,14 +6,14 @@
 ///constructeur
 ///initialisation de donn�es non pass� en param�tre � 0
 Sommet::Sommet(const std::string&nom, const double& pos_x, const double& pos_y)
-    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
+    :m_nom(nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_is_nn(0),m_i_i_max(0),m_x(pos_x),m_y(pos_y)
 {
 }
 
 
 ///Nouvelle Proposition
 Sommet::Sommet(const Sommet* copie)
-    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
+    :m_nom(copie->m_nom),m_i_d(0),m_i_vp(1),m_i_p(0),m_i_i(0),m_i_is(0),m_i_vp_nn(0),m_i_p_nn(0),m_i_i_nn(0),m_i_d_nn(0),m_i_is_nn(0),m_i_i_max(0),m_x(copie->m_x),m_y(copie->m_y)
 {
 
 }
@@ -37,10 +37,10 @@ void Sommet::ajoutP(Arete*precedent)
 void Sommet::affichageconsole()const
 {
     std::cout<<std::setprecision(3)
-            <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<")"
+            <<m_nom<<" icd: ("<<std::fixed<<m_i_d<<","<<m_i_d_nn<<") "
             <<" icp: ("<<std::fixed<<m_i_p<<","<<m_i_p_nn<<") "
             <<" ivp: ("<<std::fixed<<m_i_vp<<","<<m_i_vp_nn<<") "
-            << " icis: "<<std::fixed<<m_i_is
+            << " icis: ("<<std::fixed<<m_i_is<<","<<m_i_is_nn<<") "
             <<" inter: ("<<std::fixed<<m_i_i<<", "<<std::fixed<<m_i_i_nn<<")";
 
 }
@@ -68,7 +68,7 @@ void Sommet::affichage_comparaison(Sommet* ancien)const
             <<m_nom<<" icd: ("<<std::fixed<<ancien->m_i_d-m_i_d<<", "<<ancien->m_i_d_nn-m_i_d_nn<<")"
             <<" icp: ("<<std::fixed<<ancien->m_i_p-m_i_p<<", "<<ancien->m_i_p_nn-m_i_p_nn<<")"
             <<" ivp: ("<<std::fixed<<ancien->m_i_vp-m_i_vp<<", "<<ancien->m_i_vp_nn-m_i_vp_nn<<")"
-            << " icis: "<<std::fixed<<ancien->m_i_is-m_i_is
+            << " icis: ("<<std::fixed<<ancien->m_i_is-m_i_is<<", "<<ancien->m_i_is_nn-m_i_is_nn<<")"
             <<" inter: ("<<std::fixed<<ancien->m_i_i-m_i_i<<", "<<std::fixed<<ancien->m_i_i_nn-m_i_i_nn<<")"
             <<std::endl;
 
@@ -153,6 +153,7 @@ void Sommet::calc_icp(double distance,double total)
 ///normalise l'indice
 void Sommet::calc_ici_naif(double total,double a)
 {
+    m_i_is_nn=total;
     m_i_is=total/a;
 }
 ///Ajout les voisin d'un sommet a un veteur passer en parametre

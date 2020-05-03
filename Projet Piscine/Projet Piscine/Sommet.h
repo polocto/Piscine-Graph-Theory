@@ -59,7 +59,7 @@ private:
     std::string m_nom;
     std::vector<Arete*> m_suivants,m_precedents;//arete suivante du graphe
     double m_i_d,m_i_vp,m_i_p,m_i_i,m_i_is;//indice normalisé
-    double m_i_vp_nn,m_i_p_nn,m_i_i_nn,m_i_d_nn;//indice non normalisé
+    double m_i_vp_nn,m_i_p_nn,m_i_i_nn,m_i_d_nn,m_i_is_nn;//indice non normalisé
     double m_i_i_max;
     double m_x,m_y;//position du sommet
 };

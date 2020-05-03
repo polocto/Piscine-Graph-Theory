@@ -410,7 +410,7 @@ void Graph::calc_ici_naif()
         i->calc_ici_naif(total.at(i),a);
 }
 /**Début Dijkstra*/
-bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
+/*bool Graph:: Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage)
 {
     std::vector<Sommet*> Som;
     std::map<std::string,std::pair<bool,Sommet*>> marque;

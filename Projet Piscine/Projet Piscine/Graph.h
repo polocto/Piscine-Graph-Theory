@@ -32,7 +32,7 @@ public:
     void calc_icp();//indice de proximité
     void calc_ici_naif();//intermediatirité naïve
     std::map<std::string,std::pair<const Sommet*,double>> Dijkstra(Sommet* depart)const;
-    bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
+    //bool Dijkstra(Sommet* depart,Sommet* arriver,Sommet* passage);
     /**Test la k-arete-connexité d'un graphe*/
     void connexite()const;
     int k_connexe()const;

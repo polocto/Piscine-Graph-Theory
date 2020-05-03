@@ -212,8 +212,14 @@ void Graph::affichage(Svgfile& svgout)const
         if (som_max<s->getY())
             som_max=s->getY();
     som_max*=m_coeff_aff;
-    for (int i=0;i<255;i++)
-        svgout.addRect(100+3*i,(som_max+20),3,30,makeRGB(i,0,255-i),makeRGB(i,0,255-i));
+    for (int i=0;i<155;i++)
+        svgout.addRect(100+i,(som_max+20),1,30,makeRGB(0,100,155+i),makeRGB(0,100,155+i));
+
+    for (int i=0;i<155;i++)
+        svgout.addRect(255+i,(som_max+20),1,30,makeRGB(0,155+i,0),makeRGB(0,100,155+i));
+
+    for (int i=0;i<155;i++)
+        svgout.addRect(410+i,(som_max+20),1,30,makeRGB(155+i,0,0),makeRGB(155+i,0,0));
 
     for (Arete* A:m_aretes)
         A->affichage(svgout,m_oriente,m_coeff_aff);//affiche l'ensemble des aretes
